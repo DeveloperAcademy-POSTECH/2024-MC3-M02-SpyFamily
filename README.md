@@ -8,7 +8,8 @@ MC3 SpyFamily ( 가칭 스팸 )
 3. 브랜치명을 아래 Convention 에 따라 작성한다.
 4. 브랜치를 만든다!
 
-Convention : 분류(이슈템플릿) / 이슈번호 / 내용  
+Convention : 분류(이슈템플릿) / 이슈번호 / 내용
+
 예시
 - View/#3/MainViewButtons
 - Feat/#17/SwiftDataModelCreate
