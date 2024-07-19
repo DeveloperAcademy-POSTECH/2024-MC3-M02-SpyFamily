@@ -4,7 +4,9 @@ MC3 SpyFamily ( 가칭 스팸 )
 # Branch Naming
 브랜치 만들기 프로세스
 1. 이슈를 생성한다. (View / Feature / Bug 택 1)
-2. 이슈에 들어가서 우측에 create branch 로 브랜치를 만든다.
+2. 이슈에 들어가서 우측에 create branch 를 누른다.
+3. 브랜치명을 아래 Convention 에 따라 작성한다.
+4. 브랜치를 만든다!
 
 Convention : 분류(이슈템플릿) / 이슈번호 / 내용
 예시
