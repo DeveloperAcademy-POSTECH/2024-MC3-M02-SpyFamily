@@ -1,6 +1,6 @@
 ---
 name: "⚙️ Feature"
-about: View 구현 Template
+about: Feature Template
 title: ''
 labels: ''
 assignees: SSub-jun
