@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		900E95372C4FEBA800092CC2 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E95362C4FEBA800092CC2 /* FoodModel.swift */; };
+		900E95392C4FEC5100092CC2 /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E95382C4FEC5100092CC2 /* RecipeModel.swift */; };
+		900E953B2C4FEF7C00092CC2 /* RefrigeratorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */; };
+		900E953D2C4FF06800092CC2 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953C2C4FF06800092CC2 /* HistoryModel.swift */; };
+		900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953E2C4FF23000092CC2 /* BeggarsModel.swift */; };
 		905824472C4B904D003801D3 /* BeggarsGrowingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824462C4B904D003801D3 /* BeggarsGrowingApp.swift */; };
 		905824492C4B904D003801D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824482C4B904D003801D3 /* ContentView.swift */; };
 		9058244B2C4B904E003801D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9058244A2C4B904E003801D3 /* Assets.xcassets */; };
@@ -25,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		900E95362C4FEBA800092CC2 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
+		900E95382C4FEC5100092CC2 /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
+		900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefrigeratorModel.swift; sourceTree = "<group>"; };
+		900E953C2C4FF06800092CC2 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		900E953E2C4FF23000092CC2 /* BeggarsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeggarsModel.swift; sourceTree = "<group>"; };
 		905824432C4B904D003801D3 /* BeggarsGrowing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeggarsGrowing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		905824462C4B904D003801D3 /* BeggarsGrowingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeggarsGrowingApp.swift; sourceTree = "<group>"; };
 		905824482C4B904D003801D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,6 +135,11 @@
 		9058246F2C4B9D0D003801D3 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				900E95362C4FEBA800092CC2 /* FoodModel.swift */,
+				900E95382C4FEC5100092CC2 /* RecipeModel.swift */,
+				900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */,
+				900E953C2C4FF06800092CC2 /* HistoryModel.swift */,
+				900E953E2C4FF23000092CC2 /* BeggarsModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -218,19 +233,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				900E953D2C4FF06800092CC2 /* HistoryModel.swift in Sources */,
 				905824622C4B9CBC003801D3 /* RecipeDetailView.swift in Sources */,
 				9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */,
+				900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */,
+				900E95392C4FEC5100092CC2 /* RecipeModel.swift in Sources */,
 				9058246A2C4B9CE7003801D3 /* CookRecipeDetailView.swift in Sources */,
 				905824662C4B9CD1003801D3 /* CookChoiceFoodView.swift in Sources */,
 				905824602C4B9CB4003801D3 /* RecipeView.swift in Sources */,
 				905824642C4B9CC4003801D3 /* RecipeAddView.swift in Sources */,
 				905824492C4B904D003801D3 /* ContentView.swift in Sources */,
+				900E95372C4FEBA800092CC2 /* FoodModel.swift in Sources */,
 				9058245C2C4B9CA2003801D3 /* RefriView.swift in Sources */,
 				905824572C4B9C61003801D3 /* MainView.swift in Sources */,
 				9058245E2C4B9CAD003801D3 /* RefriAddFoodView.swift in Sources */,
 				905824472C4B904D003801D3 /* BeggarsGrowingApp.swift in Sources */,
 				905824712C4B9D28003801D3 /* NavigationManager.swift in Sources */,
 				905824682C4B9CDE003801D3 /* CookChoiceRecipeView.swift in Sources */,
+				900E953B2C4FEF7C00092CC2 /* RefrigeratorModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
