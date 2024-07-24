@@ -16,8 +16,10 @@ import SwiftData
     var menu: String
     /// 링크
     var link: String?
+    /// 필요 재료들 :
+    var foods: [Food]
     /// 필요 재료들
-    var foods: Dictionary<Food, String>
+    var foodsAmount: [String]
     /// 레시피 이미지
     var image: Data?
     /// 기타 소스
@@ -25,8 +27,9 @@ import SwiftData
     /// 메모
     var memo: String?
     
-    init(menu: String, foods: Dictionary<Food, String>) {
+    init(menu: String, foods: [Food], foodsAmount: [String]) {
         self.menu = menu
         self.foods = foods
+        self.foodsAmount = foodsAmount
     }
 }

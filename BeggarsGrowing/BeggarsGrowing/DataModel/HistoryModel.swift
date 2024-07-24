@@ -14,8 +14,10 @@ import SwiftData
     @Attribute(.unique) var id: UUID = UUID()
     /// 사용된 메뉴명
     var menu: String
-    /// 사용된 재료들 "재료명" : 계산된 가격
-    var foods: Dictionary<Food, Int>
+    /// 사용된 재료들 : 재료명
+    var foods: [Food]
+    /// 사용된 재료들 : 양
+    var foodsPrice: [Int]
     /// 음식값
     var foodPrice: Int
     /// 아껴진 돈
@@ -25,9 +27,10 @@ import SwiftData
     /// 날짜
     var date: Date
     
-    init(menu: String, foods: Dictionary<Food, Int>, foodPrice: Int, savedMoney: Int, date: Date) {
+    init(menu: String, foods: [Food], foodsPrice: [Int], foodPrice: Int, savedMoney: Int, date: Date) {
         self.menu = menu
         self.foods = foods
+        self.foodsPrice = foodsPrice
         self.foodPrice = foodPrice
         self.savedMoney = savedMoney
         self.date = date

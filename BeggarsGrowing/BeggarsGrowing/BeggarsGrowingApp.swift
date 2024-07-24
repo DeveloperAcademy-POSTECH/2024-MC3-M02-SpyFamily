@@ -6,12 +6,25 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BeggarsGrowingApp: App {
+    var modelContainer: ModelContainer = {
+        let schema = Schema([Food.self, Recipe.self, Refrigerator.self, History.self, Beggars.self])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(modelContainer)
         }
     }
 }

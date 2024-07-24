@@ -15,9 +15,10 @@ import SwiftData
     /// 재료명
     var name: String
     /// 이미지
-    var image: Data?
+    var image: Data
 
-    init(name: String) {
+    init(name: String, image: Data) {
         self.name = name
+        self.image = image
     }
 }
