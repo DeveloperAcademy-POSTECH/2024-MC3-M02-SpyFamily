@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct CookRecordView: View {
     @Environment(NavigationManager.self) var navigationManager
     
@@ -144,6 +145,23 @@ struct CookRecordView: View {
             }
     }
 }
+
+//struct CookRecordView: View {
+//    @Environment(NavigationManager.self) var navigationManager
+//
+//    var body: some View {
+//        VStack {
+//            Text("CookRecordView")
+//            Button("인증 완료") {
+//                navigationManager.popToRoot()
+//                navigationManager.push(to: .main)
+//            }
+//        }
+//        .navigationDestination(for: PathType.self) { pathType in
+//            pathType.NavigatingView()
+//        }
+//    }
+//}
 
 #Preview {
     CookRecordView()

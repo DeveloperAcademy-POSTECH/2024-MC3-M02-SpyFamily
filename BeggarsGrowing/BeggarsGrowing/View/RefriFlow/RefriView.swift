@@ -42,6 +42,11 @@ struct RefriView: View {
                 Text("냉장고")
                     .font(.title)
                     .padding(.top)
+                
+                Divider()
+                    .background(Color.black)
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 10, trailing: 16))
+                
                 // 세그먼티드 컨트롤
                 Picker("Select a tab", selection: $selectedTab) {
                     ForEach(0..<tabOptions.count) { index in
@@ -76,7 +81,6 @@ struct RefriView: View {
                     Image("RefriViewButton")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: .infinity)
                         .padding(EdgeInsets(top: 0, leading: 46, bottom: 0, trailing: 46))
                 }
                 .padding(.bottom)
@@ -95,8 +99,7 @@ struct FoodCard: View {
             // 배경 이미지
             Image("FoodBackground")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: .infinity)
+                .aspectRatio(contentMode: .fit)
             
             HStack {
                 ZStack {
@@ -143,9 +146,7 @@ struct FoodCard: View {
                 }
                 .padding(.trailing, 8)
             }
-            .padding(.vertical, 1)
         }
-        .background(Color(UIColor.systemBackground))
         .cornerRadius(4)
         .shadow(radius: 2)
     }
