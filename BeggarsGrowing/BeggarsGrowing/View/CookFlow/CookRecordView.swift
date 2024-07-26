@@ -9,6 +9,8 @@ import SwiftUI
 
 
 struct CookRecordView: View {
+    @Environment(NavigationManager.self) var navigationManager
+    
     @State private var ingredientAmounts = [0.4, 0.45] // dummy 데이터
     @State private var showImagePicker = false
     @State private var selectedImage: Image? = nil
@@ -124,6 +126,8 @@ struct CookRecordView: View {
                 // 완료 버튼
                 Button(action: {
                     // 완료 액션 추가
+                    navigationManager.popToRoot()
+                    navigationManager.push(to: .main)
                 }) {
                     Image("CookRecordViewButton")
                         .resizable()
@@ -134,8 +138,11 @@ struct CookRecordView: View {
             .padding()
             .sheet(isPresented: $showImagePicker) {
                 // ImagePickerView() // 이미지 선택 뷰 추가 필요
-        }
+            }
         }.background(Color(red: 1, green: 0.98, blue: 0.91))
+            .navigationDestination(for: PathType.self) { pathType in
+                pathType.NavigatingView()
+            }
     }
 }
 
