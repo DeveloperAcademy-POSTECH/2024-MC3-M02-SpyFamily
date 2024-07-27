@@ -204,10 +204,16 @@ struct CookRecordView: View {
                     Button(action: {
                         // 완료 액션 추가
                     }) {
-                        RoundedRectangle(cornerRadius: 16)
-                            .frame(height: 60)
-                            .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: 0, leading: 46, bottom: 0, trailing: 46))
+                        Text("완료")
+                            .font(.system(size: 20))
+                            .foregroundColor(Color.gray)
+                            .frame(maxWidth: 300, minHeight: 60)  // 원하는 크기로 조정
+                            .background(Color(red: 238/255, green: 238/255, blue: 238/255))
+                            .cornerRadius(15)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color(red: 30/255, green: 66/255, blue: 66/255), lineWidth: 2)
+                            )
                     }
                 }
                 else {
