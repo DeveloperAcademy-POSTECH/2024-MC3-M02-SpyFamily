@@ -13,7 +13,7 @@ import SwiftData
     /// 냉장고 고유값
     @Attribute(.unique) var id: UUID = UUID()
     /// 재료
-    var food: Food
+    var food: String
     /// 가격
     var price: Int
     /// 냉동 여부
@@ -23,7 +23,7 @@ import SwiftData
     /// 등록 날짜
     var date: Date
     
-    init(food: Food, price: Int, amount: Double, freezing: Bool, date: Date) {
+    init(food: String, price: Int, amount: Double, freezing: Bool, date: Date) {
         self.food = food
         self.price = price
         self.amount = amount

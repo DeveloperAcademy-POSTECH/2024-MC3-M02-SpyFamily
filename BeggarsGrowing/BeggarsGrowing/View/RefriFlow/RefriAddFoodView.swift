@@ -6,22 +6,16 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct RefriAddFoodView: View {
     // 추가된 필드들을 관리할 배열
     @Environment(NavigationManager.self) var navigationManager
-    @State private var fields: [Field] = [
-        Field(재료명: "", 가격: "", isChecked: false)
+    @Environment(\.modelContext) var modelContext
+    
+    @State private var foodsToAdd: [Refrigerator] = [
+        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
     ]
-    
-    
-    struct Field: Identifiable {
-        let id = UUID()
-        var 재료명: String
-        var 가격: String
-        var isChecked: Bool
-    }
     
     var body: some View {
         ZStack{
@@ -59,8 +53,8 @@ struct RefriAddFoodView: View {
                                 .font(.system(size: 20))
                                 .fontWeight(.heavy)
                                 .padding(.bottom, 12)
-                            ForEach($fields) { $index in
-                                TextField("재료명", text: $index.재료명)
+                            ForEach($foodsToAdd) { $index in
+                                TextField("재료명", text: $index.food)
                                         .textFieldStyle(NameTextfieldStyle())
                             }
                         }
@@ -77,12 +71,12 @@ struct RefriAddFoodView: View {
                                     .fontWeight(.heavy)
                             }
                             .padding(.bottom, 12)
-                            ForEach($fields) { $field in
+                            ForEach($foodsToAdd) { $index in
                                 HStack(spacing: 0){
-                                    TextField("가격", text: $field.가격)
+                                    TextField("가격", value: $index.price, formatter: NumberFormatter())
                                         .textFieldStyle(PriceTextfieldStyle())
                                         .padding(.trailing, 25)
-                                    Toggle(isOn: $field.isChecked) {
+                                    Toggle(isOn: $index.freezing) {
                                         Text("")
                                     }
                                     .toggleStyle(CheckboxToggleStyle())
@@ -97,7 +91,7 @@ struct RefriAddFoodView: View {
                     
                     
                     Button(action: {
-                        fields.append(Field(재료명: "", 가격: "", isChecked: false))
+                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
                     }) {
                         ZStack{
                             Circle()
@@ -117,6 +111,9 @@ struct RefriAddFoodView: View {
             VStack(spacing: 0){
                 Spacer()
                 Button(action: {
+                    for foodinRefri in foodsToAdd {
+                        modelContext.insert(foodinRefri)
+                    }
                     navigationManager.pop()
                 }, label: {
                     Image("AddComplete")
@@ -126,6 +123,23 @@ struct RefriAddFoodView: View {
             //재료 추가 완료 버튼
         }
     }
+    
+//    var searchResults: [Food] {
+//        if searchText.isEmpty {
+//            return foodsList
+//        } else {
+//            var uniqueResults: [Food] = []
+//            var addedFoods: Set<String> = Set() // 중복되는 메뉴 제거
+//            
+//            for food in foodsList {
+//                food.name.contains(searchText) && !addedFoods.contains(food.name){
+//                    uniqueResults.append(food)
+//                    addedFoods.insert(food.name)
+//                }
+//            }
+//            return uniqueResults
+//        }
+//    }
 }
 
 struct CheckboxToggleStyle: ToggleStyle {
@@ -186,7 +200,7 @@ struct PriceTextfieldStyle: TextFieldStyle {
     }
 }
 
-#Preview {
-    RefriAddFoodView()
-        .environment(NavigationManager())
-}
+//#Preview {
+//    RefriAddFoodView()
+//        .environment(NavigationManager())
+//}

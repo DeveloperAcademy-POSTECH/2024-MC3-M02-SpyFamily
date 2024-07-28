@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct BeggarsGrowingApp: App {
     var modelContainer: ModelContainer = {
-        let schema = Schema([Food.self, Recipe.self, Refrigerator.self, History.self, Beggars.self])
+        let schema = Schema([Recipe.self, Refrigerator.self, History.self, Beggars.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
