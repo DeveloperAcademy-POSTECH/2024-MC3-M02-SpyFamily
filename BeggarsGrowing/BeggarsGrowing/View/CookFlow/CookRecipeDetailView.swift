@@ -60,8 +60,9 @@ struct CookRecipeDetailView: View {
                             .fontWeight(.heavy)
                             .padding(.bottom, 10)
                         HStack(spacing: 0){
-                            Image(systemName: "play.rectangle.fill")
-                                .foregroundColor(.red)
+                            Image(systemName: "link")
+                                .foregroundColor(.blue)
+                                .bold()
                                 .padding(.trailing, 5)
                             Text(Link)
                                 .foregroundColor(.blue)
