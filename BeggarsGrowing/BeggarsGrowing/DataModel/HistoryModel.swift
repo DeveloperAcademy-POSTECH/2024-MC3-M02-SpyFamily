@@ -15,7 +15,7 @@ import SwiftData
     /// 사용된 메뉴명
     var menu: String
     /// 사용된 재료들 : 재료명
-    var foods: [Food]
+    var foods: [String]
     /// 사용된 재료들 : 양
     var foodsPrice: [Int]
     /// 음식값
@@ -27,7 +27,7 @@ import SwiftData
     /// 날짜
     var date: Date
     
-    init(menu: String, foods: [Food], foodsPrice: [Int], foodPrice: Int, savedMoney: Int, date: Date) {
+    init(menu: String, foods: [String], foodsPrice: [Int], foodPrice: Int, savedMoney: Int, date: Date) {
         self.menu = menu
         self.foods = foods
         self.foodsPrice = foodsPrice
