@@ -115,12 +115,6 @@ struct CookChoiceRecipeView: View {
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
-        
-        
-        .navigationDestination(for: PathType.self) { pathType in
-            //            pathType.NavigatingView()
-            
-        }
     }
 }
 
