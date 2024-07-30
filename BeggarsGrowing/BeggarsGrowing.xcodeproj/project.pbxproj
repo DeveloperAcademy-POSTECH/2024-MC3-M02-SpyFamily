@@ -15,6 +15,7 @@
 		900E953B2C4FEF7C00092CC2 /* RefrigeratorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */; };
 		900E953D2C4FF06800092CC2 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953C2C4FF06800092CC2 /* HistoryModel.swift */; };
 		900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900E953E2C4FF23000092CC2 /* BeggarsModel.swift */; };
+		901F27A42C592831001B0687 /* FilterRecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901F27A32C592831001B0687 /* FilterRecipeModel.swift */; };
 		905824472C4B904D003801D3 /* BeggarsGrowingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824462C4B904D003801D3 /* BeggarsGrowingApp.swift */; };
 		905824492C4B904D003801D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824482C4B904D003801D3 /* ContentView.swift */; };
 		9058244B2C4B904E003801D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9058244A2C4B904E003801D3 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefrigeratorModel.swift; sourceTree = "<group>"; };
 		900E953C2C4FF06800092CC2 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		900E953E2C4FF23000092CC2 /* BeggarsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeggarsModel.swift; sourceTree = "<group>"; };
+		901F27A32C592831001B0687 /* FilterRecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRecipeModel.swift; sourceTree = "<group>"; };
 		905824432C4B904D003801D3 /* BeggarsGrowing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeggarsGrowing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		905824462C4B904D003801D3 /* BeggarsGrowingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeggarsGrowingApp.swift; sourceTree = "<group>"; };
 		905824482C4B904D003801D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				900E953A2C4FEF7C00092CC2 /* RefrigeratorModel.swift */,
 				900E953C2C4FF06800092CC2 /* HistoryModel.swift */,
 				900E953E2C4FF23000092CC2 /* BeggarsModel.swift */,
+				901F27A32C592831001B0687 /* FilterRecipeModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				9006C5982C538038009B5925 /* CSVUtils.swift in Sources */,
 				905824662C4B9CD1003801D3 /* CookChoiceFoodView.swift in Sources */,
 				905824602C4B9CB4003801D3 /* RecipeView.swift in Sources */,
+				901F27A42C592831001B0687 /* FilterRecipeModel.swift in Sources */,
 				905824642C4B9CC4003801D3 /* RecipeAddView.swift in Sources */,
 				905824492C4B904D003801D3 /* ContentView.swift in Sources */,
 				90EB3C632C58BCAA007960FD /* CookViewModel.swift in Sources */,

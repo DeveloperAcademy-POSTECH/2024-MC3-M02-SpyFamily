@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @Environment(NavigationManager.self) var navigationManager
-    
+    @EnvironmentObject var viewModel: CookViewModel
+    @Environment(\.modelContext) private var modelContext
+
     var body: some View {
         VStack {
             Text("MainView")
@@ -27,6 +30,12 @@ struct MainView: View {
         }
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
+        }
+        .onAppear {
+            DispatchQueue.main.async{
+//                viewModel.checkRefriFoodsInRecipe()
+//                print("checkRefriFoodsInRecipe")
+            }
         }
     }
 }

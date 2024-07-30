@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 // 특정 모서리 둥글게 만드는 부분
 extension View {
@@ -30,24 +31,16 @@ struct RoundedCorner: Shape {
 
 struct CookChoiceRecipeView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     
-    struct Recipe {
-        var thumbnail: Image
-        var menus = "감바스 알 아히요"
-        var foods = ["당근", "계란", "바게트", "양파", "짱하연", "완죤 잘 익은 토마토"]
-        var foodsInRefri = ["당근", "계란", "바게트", "사과"]
-    }
+    @Query var recipeData: [Recipe]
+    @Query var foodsInRefri: [Refrigerator]
+    
+    var foodsInRefriStrings: [String] { foodsInRefri.map {$0.food} }
+    
+    var recommendedRecipes: [Recipe] = []
     
     var body: some View {
-        let recipe = Recipe(thumbnail: Image("감바스 알 아히요"))
-        //재료들 중 냉장고에 있는거
-        let includedFoodsInRefri = recipe.foods.filter { recipe.foodsInRefri.contains($0) }
-        //재료들 중 냉장고에 없는 나머지애들
-        let remainingFoods = recipe.foods.filter { !recipe.foodsInRefri.contains($0) }
-        //위 두개 합쳐서 만든 배열
-        let sortedFoods = includedFoodsInRefri + remainingFoods
-        
-        
         ZStack {
             Color(red: 255/255, green: 250/255, blue: 233/255)
                 .ignoresSafeArea()
@@ -59,10 +52,26 @@ struct CookChoiceRecipeView: View {
                 
                 VStack {
                     ScrollView {
-                        ForEach(sortedFoods, id: \.self) { food in
-                            Button(action: {navigationManager.push(to: .cookRecipeDetail)}, label: {
+                        ForEach(viewModel.recommendedRecipeByRefri, id: \.self) { recipe in
+//                            let sortedFoods: [String] = {
+//                                var includedFoodsInRefri: [String] = []
+//                                var remainingFoods: [String] = []
+//                                for food in recipe.foods {
+//                                    if foodsInRefriStrings.contains(food) {
+//                                        includedFoodsInRefri.append(food)
+//                                    } else {
+//                                        remainingFoods.append(food)
+//                                    }
+//                                }
+//                                return includedFoodsInRefri + remainingFoods
+//                            }()
+                            
+                            Button(action: {
+                                viewModel.selectedRecipe = recipe
+                                navigationManager.push(to: .cookRecipeDetail)},
+                                   label: {
                                 ZStack {
-                                    recipe.thumbnail
+                                    Image(recipe.image ?? "")
                                         .resizable()
                                         .frame(width: 330, height: 180)
                                         .cornerRadius(8, corners: [.topLeft, .topRight])
@@ -74,7 +83,7 @@ struct CookChoiceRecipeView: View {
                                                     .foregroundColor(.white)
                                                 VStack(spacing: 0) {
                                                     HStack {
-                                                        Text(recipe.menus)
+                                                        Text(recipe.menu)
                                                             .font(.headline)
                                                             .foregroundColor(.black)
                                                             .padding(.bottom, 10)
@@ -82,17 +91,17 @@ struct CookChoiceRecipeView: View {
                                                     }
                                                     .padding(.leading, 8)
                                                     HStack(spacing: 0) {
-                                                        ForEach(sortedFoods.indices, id: \.self) { ingredients in
-                                                            Text(sortedFoods[ingredients])
-                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-                                                                .lineLimit(1)
-                                                            //마지막 쉼표 빼는거
-                                                            if ingredients != sortedFoods.count - 1 {
-                                                                Text(", ")
-                                                                    .foregroundColor(.black)
-                                                            }
-                                                        }
+//                                                        ForEach(recipe.foods, id: \.self) { ingredients in
+//                                                            Text(sortedFoods[ingredients])
+//                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
+//                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
+//                                                                .lineLimit(1)
+//                                                            //마지막 쉼표 빼는거
+//                                                            if ingredients != sortedFoods.count - 1 {
+//                                                                Text(", ")
+//                                                                    .foregroundColor(.black)
+//                                                            }
+//                                                        }
                                                     }
                                                     .lineLimit(1)
                                                     .truncationMode(.tail)
@@ -110,6 +119,7 @@ struct CookChoiceRecipeView: View {
                 }
             }
         }
+
         .navigationTitle("레시피 선택")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in
@@ -123,26 +133,3 @@ struct CookChoiceRecipeView: View {
         }
     }
 }
-
-//import SwiftUI
-//
-//struct CookChoiceRecipeView: View {
-//    @Environment(NavigationManager.self) var navigationManager
-//    
-//    var body: some View {
-//        VStack {
-//            Text("CookChoiceRecipeView")
-//            Button("요리 선택 완료") {
-//                navigationManager.push(to: .cookRecipeDetail)
-//            }
-//        }
-//        .navigationDestination(for: PathType.self) { pathType in
-//            pathType.NavigatingView()
-//        }
-//    }
-//}
-//
-//#Preview {
-//    CookChoiceRecipeView()
-//        .environment(NavigationManager())
-//}
