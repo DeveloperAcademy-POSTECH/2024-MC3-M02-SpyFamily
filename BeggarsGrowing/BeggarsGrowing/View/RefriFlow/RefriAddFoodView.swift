@@ -13,9 +13,13 @@ struct RefriAddFoodView: View {
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
     
-    @State private var foodsToAdd: [Refrigerator] = [
-        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
+    @State var foodsToAdd: [Refrigerator] = [
+//        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
     ]
+    
+    @State var showingSelectFoodSheet: Bool = false
+    @State var selectedFoodsList: [Food] = []
+    private var imageName = FoodImageName()
     
     var body: some View {
         ZStack{
@@ -25,18 +29,17 @@ struct RefriAddFoodView: View {
                 
                 //재료-x
                 HStack(spacing: 0){
-                    Text("재료")
+                    Text("재료추가")
                         .font(.system(size: 20))
                         .fontWeight(.heavy)
                     Spacer()
                     Button(action: {
-                        navigationManager.pop()
+                        showingSelectFoodSheet.toggle()
                     }, label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Image(systemName: "plus.rectangle.fill")
                             .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.gray)
-                        
+                            .frame(width: 40, height: 34)
+                            .foregroundColor(.orange)
                     })
                 }
                 .padding(.top, 14)
@@ -53,9 +56,15 @@ struct RefriAddFoodView: View {
                                 .font(.system(size: 20))
                                 .fontWeight(.heavy)
                                 .padding(.bottom, 12)
-                            ForEach($foodsToAdd) { $index in
-                                TextField("재료명", text: $index.food)
-                                        .textFieldStyle(NameTextfieldStyle())
+                            ForEach($foodsToAdd, id:\.id) { $food in
+                                HStack{
+                                    Text(food.food)
+                                    Image(imageName.getImageName(for: food.food) ?? "")
+                                        .resizable()
+                                        .frame(width:32, height:32)
+                                }
+                                .frame(height:40)
+                                .padding(.bottom, 12)
                             }
                         }
                         .padding(.trailing, 16)
@@ -90,19 +99,19 @@ struct RefriAddFoodView: View {
                     .padding(.trailing, 25)
                     
                     
-                    Button(action: {
-                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
-                    }) {
-                        ZStack{
-                            Circle()
-                                .frame(width: 60, height: 60)
-                                .foregroundColor(.green)
-                            Text("+")
-                                .font(.system(size: 40))
-                                .foregroundColor(.black)
-                        }
-                    }
-                    .padding(.top, 36)
+//                    Button(action: {
+//                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
+//                    }) {
+//                        ZStack{
+//                            Circle()
+//                                .frame(width: 60, height: 60)
+//                                .foregroundColor(.green)
+//                            Text("+")
+//                                .font(.system(size: 40))
+//                                .foregroundColor(.black)
+//                        }
+//                    }
+//                    .padding(.top, 36)
                     Spacer()
                 }
             } //-- v스택 끝
@@ -122,24 +131,11 @@ struct RefriAddFoodView: View {
             }
             //재료 추가 완료 버튼
         }
+        .sheet(isPresented: $showingSelectFoodSheet){
+            SelectFoodSheetView(selectedFoodsList: $foodsToAdd)
+                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
+        }
     }
-    
-//    var searchResults: [Food] {
-//        if searchText.isEmpty {
-//            return foodsList
-//        } else {
-//            var uniqueResults: [Food] = []
-//            var addedFoods: Set<String> = Set() // 중복되는 메뉴 제거
-//            
-//            for food in foodsList {
-//                food.name.contains(searchText) && !addedFoods.contains(food.name){
-//                    uniqueResults.append(food)
-//                    addedFoods.insert(food.name)
-//                }
-//            }
-//            return uniqueResults
-//        }
-//    }
 }
 
 struct CheckboxToggleStyle: ToggleStyle {
