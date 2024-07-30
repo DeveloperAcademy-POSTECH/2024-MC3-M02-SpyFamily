@@ -30,6 +30,7 @@
 		9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9058246B2C4B9CF5003801D3 /* CookRecordView.swift */; };
 		905824712C4B9D28003801D3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824702C4B9D28003801D3 /* NavigationManager.swift */; };
 		90EB3C5B2C5543EC007960FD /* Recipe.csv in Resources */ = {isa = PBXBuildFile; fileRef = 90EB3C5A2C5543EC007960FD /* Recipe.csv */; };
+		90EB3C5D2C57CA25007960FD /* SelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		9058246B2C4B9CF5003801D3 /* CookRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecordView.swift; sourceTree = "<group>"; };
 		905824702C4B9D28003801D3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		90EB3C5A2C5543EC007960FD /* Recipe.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Recipe.csv; sourceTree = "<group>"; };
+		90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFoodSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				9058245B2C4B9CA2003801D3 /* RefriView.swift */,
 				9058245D2C4B9CAD003801D3 /* RefriAddFoodView.swift */,
+				90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */,
 			);
 			path = RefriFlow;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */,
 				900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */,
 				900E95392C4FEC5100092CC2 /* RecipeModel.swift in Sources */,
+				90EB3C5D2C57CA25007960FD /* SelectFoodSheet.swift in Sources */,
 				9058246A2C4B9CE7003801D3 /* CookRecipeDetailView.swift in Sources */,
 				9006C5982C538038009B5925 /* CSVUtils.swift in Sources */,
 				905824662C4B9CD1003801D3 /* CookChoiceFoodView.swift in Sources */,

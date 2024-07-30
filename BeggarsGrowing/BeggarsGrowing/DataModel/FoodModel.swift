@@ -15,7 +15,7 @@ struct Food {
 struct FoodImageName {
     // 고정된 데이터
     let ingredients: [Food] = [
-        Food(name: "계란", imageName: "Pork"),
+        Food(name: "계란", imageName: "Egg"),
         Food(name: "사과", imageName: "Apple"),
         Food(name: "당근", imageName: "carrot"),
         Food(name: "돼지고기", imageName: "Pork")
