@@ -24,7 +24,6 @@
 		9058245E2C4B9CAD003801D3 /* RefriAddFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9058245D2C4B9CAD003801D3 /* RefriAddFoodView.swift */; };
 		905824602C4B9CB4003801D3 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9058245F2C4B9CB4003801D3 /* RecipeView.swift */; };
 		905824622C4B9CBC003801D3 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824612C4B9CBC003801D3 /* RecipeDetailView.swift */; };
-		905824642C4B9CC4003801D3 /* RecipeAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824632C4B9CC4003801D3 /* RecipeAddView.swift */; };
 		905824662C4B9CD1003801D3 /* CookChoiceFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824652C4B9CD1003801D3 /* CookChoiceFoodView.swift */; };
 		905824682C4B9CDE003801D3 /* CookChoiceRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824672C4B9CDE003801D3 /* CookChoiceRecipeView.swift */; };
 		9058246A2C4B9CE7003801D3 /* CookRecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */; };
@@ -32,6 +31,10 @@
 		905824712C4B9D28003801D3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824702C4B9D28003801D3 /* NavigationManager.swift */; };
 		90EB3C5B2C5543EC007960FD /* Recipe.csv in Resources */ = {isa = PBXBuildFile; fileRef = 90EB3C5A2C5543EC007960FD /* Recipe.csv */; };
 		90EB3C5D2C57CA25007960FD /* SelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */; };
+		9F7D343A2C58DEDA003F4204 /* RecipeAddView_Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D34392C58DEDA003F4204 /* RecipeAddView_Picture.swift */; };
+		9F7D343C2C58DF5C003F4204 /* RecipeAddView_Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D343B2C58DF5C003F4204 /* RecipeAddView_Link.swift */; };
+		9F7D343E2C58DF81003F4204 /* RecipeAddView_Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D343D2C58DF81003F4204 /* RecipeAddView_Memo.swift */; };
+		9F7D34442C58E03F003F4204 /* RecipeAddView_Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7D34432C58E03F003F4204 /* RecipeAddView_Name.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +56,6 @@
 		9058245D2C4B9CAD003801D3 /* RefriAddFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefriAddFoodView.swift; sourceTree = "<group>"; };
 		9058245F2C4B9CB4003801D3 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		905824612C4B9CBC003801D3 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
-		905824632C4B9CC4003801D3 /* RecipeAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAddView.swift; sourceTree = "<group>"; };
 		905824652C4B9CD1003801D3 /* CookChoiceFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookChoiceFoodView.swift; sourceTree = "<group>"; };
 		905824672C4B9CDE003801D3 /* CookChoiceRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookChoiceRecipeView.swift; sourceTree = "<group>"; };
 		905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecipeDetailView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,10 @@
 		905824702C4B9D28003801D3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		90EB3C5A2C5543EC007960FD /* Recipe.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Recipe.csv; sourceTree = "<group>"; };
 		90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFoodSheet.swift; sourceTree = "<group>"; };
+		9F7D34392C58DEDA003F4204 /* RecipeAddView_Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAddView_Picture.swift; sourceTree = "<group>"; };
+		9F7D343B2C58DF5C003F4204 /* RecipeAddView_Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAddView_Link.swift; sourceTree = "<group>"; };
+		9F7D343D2C58DF81003F4204 /* RecipeAddView_Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAddView_Memo.swift; sourceTree = "<group>"; };
+		9F7D34432C58E03F003F4204 /* RecipeAddView_Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAddView_Name.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,7 +195,10 @@
 			children = (
 				9058245F2C4B9CB4003801D3 /* RecipeView.swift */,
 				905824612C4B9CBC003801D3 /* RecipeDetailView.swift */,
-				905824632C4B9CC4003801D3 /* RecipeAddView.swift */,
+				9F7D34432C58E03F003F4204 /* RecipeAddView_Name.swift */,
+				9F7D34392C58DEDA003F4204 /* RecipeAddView_Picture.swift */,
+				9F7D343B2C58DF5C003F4204 /* RecipeAddView_Link.swift */,
+				9F7D343D2C58DF81003F4204 /* RecipeAddView_Memo.swift */,
 			);
 			path = RecipeFlow;
 			sourceTree = "<group>";
@@ -270,16 +279,19 @@
 				905824622C4B9CBC003801D3 /* RecipeDetailView.swift in Sources */,
 				9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */,
 				900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */,
+				9F7D343E2C58DF81003F4204 /* RecipeAddView_Memo.swift in Sources */,
 				900E95392C4FEC5100092CC2 /* RecipeModel.swift in Sources */,
 				90EB3C5D2C57CA25007960FD /* SelectFoodSheet.swift in Sources */,
 				9058246A2C4B9CE7003801D3 /* CookRecipeDetailView.swift in Sources */,
 				9006C5982C538038009B5925 /* CSVUtils.swift in Sources */,
 				905824662C4B9CD1003801D3 /* CookChoiceFoodView.swift in Sources */,
+				9F7D343A2C58DEDA003F4204 /* RecipeAddView_Picture.swift in Sources */,
 				905824602C4B9CB4003801D3 /* RecipeView.swift in Sources */,
-				905824642C4B9CC4003801D3 /* RecipeAddView.swift in Sources */,
 				905824492C4B904D003801D3 /* ContentView.swift in Sources */,
 				900E95372C4FEBA800092CC2 /* FoodModel.swift in Sources */,
 				9058245C2C4B9CA2003801D3 /* RefriView.swift in Sources */,
+				9F7D34442C58E03F003F4204 /* RecipeAddView_Name.swift in Sources */,
+				9F7D343C2C58DF5C003F4204 /* RecipeAddView_Link.swift in Sources */,
 				905824572C4B9C61003801D3 /* MainView.swift in Sources */,
 				9058245E2C4B9CAD003801D3 /* RefriAddFoodView.swift in Sources */,
 				905824472C4B904D003801D3 /* BeggarsGrowingApp.swift in Sources */,
