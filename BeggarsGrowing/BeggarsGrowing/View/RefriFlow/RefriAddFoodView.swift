@@ -6,22 +6,20 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct RefriAddFoodView: View {
     // 추가된 필드들을 관리할 배열
     @Environment(NavigationManager.self) var navigationManager
-    @State private var fields: [Field] = [
-        Field(재료명: "", 가격: "", isChecked: false)
-
+    @Environment(\.modelContext) var modelContext
+    
+    @State var foodsToAdd: [Refrigerator] = [
+//        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
     ]
     
-    struct Field: Identifiable {
-        let id = UUID()
-        var 재료명: String
-        var 가격: String
-        var isChecked: Bool
-    }
+    @State var showingSelectFoodSheet: Bool = false
+    @State var selectedFoodsList: [Food] = []
+    private var imageName = FoodImageName()
     
     var body: some View {
         ZStack{
@@ -31,18 +29,17 @@ struct RefriAddFoodView: View {
                 
                 //재료-x
                 HStack(spacing: 0){
-                    Text("재료")
+                    Text("재료추가")
                         .font(.system(size: 20))
                         .fontWeight(.heavy)
                     Spacer()
                     Button(action: {
-                        navigationManager.pop()
+                        showingSelectFoodSheet.toggle()
                     }, label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Image(systemName: "plus.rectangle.fill")
                             .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.gray)
-                        
+                            .frame(width: 40, height: 34)
+                            .foregroundColor(.orange)
                     })
                 }
                 .padding(.top, 14)
@@ -59,9 +56,15 @@ struct RefriAddFoodView: View {
                                 .font(.system(size: 20))
                                 .fontWeight(.heavy)
                                 .padding(.bottom, 12)
-                            ForEach($fields) { $index in
-                                TextField("재료명", text: $index.재료명)
-                                        .textFieldStyle(NameTextfieldStyle())
+                            ForEach($foodsToAdd, id:\.id) { $food in
+                                HStack{
+                                    Text(food.food)
+                                    Image(imageName.getImageName(for: food.food) ?? "")
+                                        .resizable()
+                                        .frame(width:32, height:32)
+                                }
+                                .frame(height:40)
+                                .padding(.bottom, 12)
                             }
                         }
                         .padding(.trailing, 16)
@@ -77,12 +80,12 @@ struct RefriAddFoodView: View {
                                     .fontWeight(.heavy)
                             }
                             .padding(.bottom, 12)
-                            ForEach($fields) { $field in
+                            ForEach($foodsToAdd) { $index in
                                 HStack(spacing: 0){
-                                    TextField("가격", text: $field.가격)
+                                    TextField("가격", value: $index.price, formatter: NumberFormatter())
                                         .textFieldStyle(PriceTextfieldStyle())
                                         .padding(.trailing, 25)
-                                    Toggle(isOn: $field.isChecked) {
+                                    Toggle(isOn: $index.freezing) {
                                         Text("")
                                     }
                                     .toggleStyle(CheckboxToggleStyle())
@@ -96,19 +99,19 @@ struct RefriAddFoodView: View {
                     .padding(.trailing, 25)
                     
                     
-                    Button(action: {
-                        fields.append(Field(재료명: "", 가격: "", isChecked: false))
-                    }) {
-                        ZStack{
-                            Circle()
-                                .frame(width: 60, height: 60)
-                                .foregroundColor(.green)
-                            Text("+")
-                                .font(.system(size: 40))
-                                .foregroundColor(.black)
-                        }
-                    }
-                    .padding(.top, 36)
+//                    Button(action: {
+//                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
+//                    }) {
+//                        ZStack{
+//                            Circle()
+//                                .frame(width: 60, height: 60)
+//                                .foregroundColor(.green)
+//                            Text("+")
+//                                .font(.system(size: 40))
+//                                .foregroundColor(.black)
+//                        }
+//                    }
+//                    .padding(.top, 36)
                     Spacer()
                 }
             } //-- v스택 끝
@@ -117,6 +120,9 @@ struct RefriAddFoodView: View {
             VStack(spacing: 0){
                 Spacer()
                 Button(action: {
+                    for foodinRefri in foodsToAdd {
+                        modelContext.insert(foodinRefri)
+                    }
                     navigationManager.pop()
                 }, label: {
                     Image("AddComplete")
@@ -124,6 +130,10 @@ struct RefriAddFoodView: View {
                 .padding(.bottom, 54)
             }
             //재료 추가 완료 버튼
+        }
+        .sheet(isPresented: $showingSelectFoodSheet){
+            SelectFoodSheetView(selectedFoodsList: $foodsToAdd)
+                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
         }
     }
 }
@@ -186,7 +196,7 @@ struct PriceTextfieldStyle: TextFieldStyle {
     }
 }
 
-#Preview {
-    RefriAddFoodView()
-        .environment(NavigationManager())
-}
+//#Preview {
+//    RefriAddFoodView()
+//        .environment(NavigationManager())
+//}

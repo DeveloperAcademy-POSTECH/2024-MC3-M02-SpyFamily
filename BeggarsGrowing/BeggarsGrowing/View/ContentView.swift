@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @State private var navigationManager = NavigationManager()
-
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true // CSV 불러왔는지 True, False로 UserDefaults 저장
+    @Environment(\.modelContext) var modelContext
+    
+//    @State private var foodCSVData: [Food] = []
+    
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
             VStack {
@@ -23,10 +28,17 @@ struct ContentView: View {
             }
         }
         .environment(navigationManager)
-        
+        .onAppear {
+            if isFirstLaunch { // 사용자의 기기에서 첫 실행때만 동작
+//                CSVUtils.saveFoodData(fooddata: &foodCSVData, modelContext: modelContext)
+                print("Run CSV File")
+                isFirstLaunch = false
+            }
+        }
     }
+       
 }
-
-#Preview {
-    ContentView()
-}
+//
+//#Preview {
+//    ContentView()
+//}
