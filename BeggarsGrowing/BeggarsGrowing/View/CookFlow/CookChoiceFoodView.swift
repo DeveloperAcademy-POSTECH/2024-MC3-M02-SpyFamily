@@ -5,22 +5,27 @@
 //  Created by 변준섭 on 7/20/24.
 //
 import SwiftUI
+import SwiftData
 
 struct CookChoiceFoodView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     @State private var showView = false
     
     @State var selectedTab: Int = 0
-    @State var selectedFoods: [String: (Bool, String)] = [:]
+    @State var selectedFoods: [Refrigerator] = []
     
-    var Refrifood = ["당근", "달걀", "바게트"]
-    var Freezefood = ["사과"]
-    var amount = 40
-    var date = 10
+    @Query var foodsInRefri : [Refrigerator]
     
-    var selectedFood: [String] {
-        selectedFoods.filter { $0.value.0 }.map { $0.key }
+    var freezingFoods: [Refrigerator] {
+        foodsInRefri.filter { $0.freezing == true}
     }
+    
+    var notFreezingFoods: [Refrigerator] {
+        foodsInRefri.filter { $0.freezing == false}
+    }
+    
+    var imageName = FoodImageName()
     
     var body: some View {
         
@@ -42,9 +47,9 @@ struct CookChoiceFoodView: View {
                 .padding(16)
                 
                 if selectedTab == 0 {
-                    RefriView(foods: Refrifood, amount: Int(amount), date: Int(date), selectedFoods: $selectedFoods)
+                    RefriView(foods: notFreezingFoods, selectedFoods: $selectedFoods)
                 } else {
-                    FreezeView(foods: Freezefood, amount: Int(amount), date: Int(date), selectedFoods: $selectedFoods)
+                    FreezeView(foods: freezingFoods, selectedFoods: $selectedFoods)
                 }
                 
                 Divider()
@@ -65,12 +70,11 @@ struct CookChoiceFoodView: View {
                             
                         }}
                     .padding(.bottom, 20)
-                    
                     HStack {
                         ForEach(0..<3) { food in
-                            if food < selectedFood.count {
+                            if food < selectedFoods.count {
                                 ZStack {
-                                    Image(selectedFood[food])
+                                    Image(imageName.getImageName(for: selectedFoods[food].food) ?? "")
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 43, height: 43)
@@ -78,7 +82,7 @@ struct CookChoiceFoodView: View {
                                         .padding(.leading, 2)
                                         .padding(.horizontal, 7)
                                     
-                                    if selectedFoods[selectedFood[food]]?.1 == "Freeze" {
+                                    if selectedFoods[food].freezing == true {
                                         Image(systemName: "snowflake")
                                             .foregroundColor(.white)
                                             .offset(x: -13, y: -15)
@@ -123,8 +127,6 @@ struct CookChoiceFoodView: View {
                 .animation(.easeInOut(duration: 0.5), value: showView) // 애니메이션 설정
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 화면 크기에 맞게 원 크기 설정
         )
-        //        .opacity(showView ? 1 : 0)
-        //        .animation(.easeInOut(duration: 0.5), value: showView)
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
@@ -136,11 +138,10 @@ struct CookChoiceFoodView: View {
     
     // // // 냉장 // // //
     struct RefriView: View {
-        var foods: [String]
-        var amount: Int
-        var date: Int
+        var foods: [Refrigerator]
         
-        @Binding var selectedFoods: [String: (Bool, String)]
+        @Binding var selectedFoods: [Refrigerator]
+        var imageName = FoodImageName()
         
         var body: some View {
             VStack {
@@ -166,21 +167,33 @@ struct CookChoiceFoodView: View {
                                         .padding(.bottom, 50)
                                 )
                                 .frame(width: 361, height: 100)
-                                .opacity(selectedFoods[food]?.0 ?? false ? 1 : 0)
+                                .opacity(selectedFoods.contains(food) ? 1 : 0)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    toggleFoodSelection(for: food, source: "Refri")
+                                    if selectedFoods.count >= 3 {
+                                        if selectedFoods.contains(food) {
+                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                        }
+                                    } else {
+                                        if selectedFoods.contains(food) {
+                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                        } else {
+                                            selectedFoods.append(food)
+                                        }
+                                    }
                                 }
                             HStack {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
                                         .frame(width: 76, height: 76)
-                                        .overlay(Image("\(food)"))
+                                        .overlay{Image(imageName.getImageName(for: food.food) ?? "")
+                                                .resizable()
+                                            .frame(width:68, height:68)}
                                         .padding(.leading, 3)
                                     RoundedRectangle(cornerRadius: 13.5)
                                         .overlay(
-                                            Text("D+\(date)")
+                                            Text("D+\(food.date)")
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 15))
                                         )
@@ -190,7 +203,7 @@ struct CookChoiceFoodView: View {
                                         .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
                                 }
                                 
-                                Text(food)
+                                Text(food.food)
                                     .font(.title2)
                                     .fontWeight(.black)
                                 
@@ -199,7 +212,7 @@ struct CookChoiceFoodView: View {
                                 Text("남은 양")
                                 
                                 VStack {
-                                    Text("\(amount)%")
+                                    Text("\(Int(food.amount*100))%")
                                         .font(.title2)
                                         .fontWeight(.bold)
                                 }
@@ -209,28 +222,16 @@ struct CookChoiceFoodView: View {
                     }
                     Spacer()
                 }
-            }
-        }
-        
-        private func toggleFoodSelection(for food: String, source: String) {
-            if selectedFoods[food]?.0 == true {
-                selectedFoods[food] = (false, source)
-            } else {
-                if selectedFoods.filter({ $0.value.0 }).count >= 3 {
-                    return
-                }
-                selectedFoods[food] = (true, source)
             }
         }
     }
     
     // // // 냉동 // // //
     struct FreezeView: View {
-        var foods: [String]
-        var amount: Int
-        var date: Int
+        var foods: [Refrigerator]
         
-        @Binding var selectedFoods: [String: (Bool, String)]
+        @Binding var selectedFoods: [Refrigerator]
+        var imageName = FoodImageName()
         
         var body: some View {
             VStack {
@@ -256,21 +257,33 @@ struct CookChoiceFoodView: View {
                                         .padding(.bottom, 50)
                                 )
                                 .frame(width: 361, height: 100)
-                                .opacity(selectedFoods[food]?.0 ?? false ? 1 : 0)
+                                .opacity(selectedFoods.contains(food) ? 1 : 0)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    toggleFoodSelection(for: food, source: "Freeze")
+                                    if selectedFoods.count >= 3 {
+                                        if selectedFoods.contains(food) {
+                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                        }
+                                    } else {
+                                        if selectedFoods.contains(food) {
+                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                        } else {
+                                            selectedFoods.append(food)
+                                        }
+                                    }
                                 }
                             HStack {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
                                         .frame(width: 76, height: 76)
-                                        .overlay(Image("\(food)"))
+                                        .overlay{Image(imageName.getImageName(for: food.food) ?? "")
+                                                .resizable()
+                                            .frame(width:68, height:68)}
                                         .padding(.leading, 3)
                                     RoundedRectangle(cornerRadius: 13.5)
                                         .overlay(
-                                            Text("D+\(date)")
+                                            Text("D+\(food.date)")
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 15))
                                         )
@@ -280,7 +293,7 @@ struct CookChoiceFoodView: View {
                                         .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
                                 }
                                 
-                                Text(food)
+                                Text(food.food)
                                     .font(.title2)
                                     .fontWeight(.black)
                                 
@@ -289,7 +302,7 @@ struct CookChoiceFoodView: View {
                                 Text("남은 양")
                                 
                                 VStack {
-                                    Text("\(amount)%")
+                                    Text("\(Int(food.amount*100))%")
                                         .font(.title2)
                                         .fontWeight(.bold)
                                 }
@@ -301,64 +314,5 @@ struct CookChoiceFoodView: View {
                 }
             }
         }
-        
-        private func toggleFoodSelection(for food: String, source: String) {
-            if selectedFoods[food]?.0 == true {
-                selectedFoods[food] = (false, source)
-            } else {
-                if selectedFoods.filter({ $0.value.0 }).count >= 3 {
-                    return
-                }
-                selectedFoods[food] = (true, source)
-            }
-        }
     }
 }
-
-//
-//#Preview {
-//    CookChoiceFoodView()
-//        .environment(NavigationManager())
-//}
-//
-//import SwiftUI
-//
-//struct CookChoiceFoodView: View {
-//    @Environment(NavigationManager.self) var navigationManager
-//    @State private var showView = false
-//    
-//    var body: some View {
-//        ZStack{
-//            
-//            Color.yellow
-//                .ignoresSafeArea()
-//            
-//            VStack {
-//                Text("CookChoiceFoodView")
-//                Button("재료 선택 완료") {
-//                    navigationManager.push(to: .cookChoiceRecipe)
-//                }
-//            }
-//        }
-//        .mask(
-//            Circle()
-//                .scale(showView ? 3 : 0.1) // 원의 크기 조절
-//                .animation(.easeInOut(duration: 0.5), value: showView) // 애니메이션 설정
-//                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 화면 크기에 맞게 원 크기 설정
-//        )
-//        //        .opacity(showView ? 1 : 0)
-//        //        .animation(.easeInOut(duration: 0.5), value: showView)
-//        .navigationDestination(for: PathType.self) { pathType in
-//            pathType.NavigatingView()
-//        }
-//        .onAppear{
-//            showView = true
-//            UINavigationBar.setAnimationsEnabled(true)
-//        }
-//    }
-//}
-//
-//#Preview {
-//    CookChoiceFoodView()
-//        .environment(NavigationManager())
-//}
