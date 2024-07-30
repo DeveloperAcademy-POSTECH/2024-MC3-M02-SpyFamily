@@ -10,8 +10,8 @@ import SwiftData
 struct CookChoiceFoodView: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: CookViewModel
-    @State private var showView = false
     
+    @State private var showView = false
     @State var selectedTab: Int = 0
     @State var selectedFoods: [Refrigerator] = []
     
@@ -100,7 +100,10 @@ struct CookChoiceFoodView: View {
                 }
                 
                 // 선택한 재료를 토대로 레시피 추천
-                Button(action: {navigationManager.push(to: .cookChoiceRecipe)}, label: {
+                Button(action: {
+                    viewModel.selectedFoods = selectedFoods
+                    navigationManager.push(to: .cookChoiceRecipe)
+                }, label: {
                     Image("NextButton")
                         .padding(.bottom, 12)
                 })
@@ -193,7 +196,7 @@ struct CookChoiceFoodView: View {
                                         .padding(.leading, 3)
                                     RoundedRectangle(cornerRadius: 13.5)
                                         .overlay(
-                                            Text("D+\(food.date)")
+                                            Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 15))
                                         )
@@ -283,7 +286,7 @@ struct CookChoiceFoodView: View {
                                         .padding(.leading, 3)
                                     RoundedRectangle(cornerRadius: 13.5)
                                         .overlay(
-                                            Text("D+\(food.date)")
+                                            Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 15))
                                         )
@@ -315,4 +318,10 @@ struct CookChoiceFoodView: View {
             }
         }
     }
+}
+
+func calculateDaysToToday(date1: Date) -> Int? {
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.day], from: date1, to: Date())
+    return components.day
 }

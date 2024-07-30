@@ -9,4 +9,6 @@ import SwiftUI
 
 class CookViewModel : ObservableObject {
     
+    @Published var selectedFoods: [Refrigerator] = []
+    
 }
