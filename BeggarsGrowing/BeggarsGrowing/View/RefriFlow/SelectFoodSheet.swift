@@ -46,13 +46,13 @@ struct SelectFoodSheetView: View {
             return foods.filter { $0.name.contains(searchText) }
         }
     }
-
+    
     var body: some View {
-        VStack {
-            HStack {
+        VStack(spacing: 0){
+            HStack(spacing: 0){
                 Text("재료")
-                    .font(.title)
-                    .bold()
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
                 Spacer()
                 Button(action: {
                     // 완료 버튼 액션
@@ -62,23 +62,29 @@ struct SelectFoodSheetView: View {
                         }
                         presentationMode.wrappedValue.dismiss()
                     }
-                }) {
+                }){
                     Text("완료")
                         .foregroundColor(.orange)
+                        .font(.system(size: 16))
+                        .fontWeight(.heavy)
                 }
             }
-            .padding()
-
+            .padding(.horizontal, 16)
+            .padding(.bottom, 26)
+            .padding(.top, 17)
             SearchBar(text: $searchText)
-
+                .frame(height: 36)
+                .padding(.horizontal, 8)
+                .padding(.bottom, 9)
+            
             ScrollView {
-                VStack(spacing: 10) { // 요소 사이의 여백 설정
+                VStack(spacing: 0) {
                     ForEach(filteredFoods, id: \.name) { food in
                         ZStack {
-                            RoundedRectangle(cornerRadius: 10)
+                            RoundedRectangle(cornerRadius: 8)
                                 .fill(selectedIngredients.contains(food.name) ? Color.yellow.opacity(0.3) : Color(red: 242/255, green: 245/255, blue: 240/255))
-                            
-                            HStack {
+                                .frame(height: 50)
+                            HStack(spacing: 0){
                                 Button(action: {
                                     if selectedIngredients.contains(food.name) {
                                         selectedIngredients.remove(food.name)
@@ -91,47 +97,48 @@ struct SelectFoodSheetView: View {
                                         .foregroundColor(.orange)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                
+                                .padding(.leading, 15)
                                 Image(food.imageName)
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .padding(.leading)
-                                  
+                                    .padding(.leading, 20)
                                 Text(food.name)
                                     .font(.body)
                                     .foregroundColor(.black)
+                                    .padding(.leading, 10)
 
                                 Spacer()
                             }
-                            .padding()
                         }
+                        .padding(.bottom, 8)
                     }
                 }
-            }
-        }
-        .padding(.horizontal)
+                .padding(.horizontal, 16)
+
+            } // scrl
+        } //v
     }
 }
 
 struct SearchBar: UIViewRepresentable {
     @Binding var text: String
-
+    
     class Coordinator: NSObject, UISearchBarDelegate {
         @Binding var text: String
-
+        
         init(text: Binding<String>) {
             _text = text
         }
-
+        
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
         }
     }
-
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator(text: $text)
     }
-
+    
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
@@ -139,7 +146,7 @@ struct SearchBar: UIViewRepresentable {
         searchBar.backgroundImage = UIImage() // 위아래 Divider 없애기
         return searchBar
     }
-
+    
     func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
         uiView.text = text
     }

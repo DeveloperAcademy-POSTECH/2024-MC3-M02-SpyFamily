@@ -27,14 +27,14 @@ struct RefriView: View {
     var body: some View {
         
         ZStack {
-            VStack {
-                Text("냉장고")
-                    .font(.title)
-                    .padding(.top)
-                
+            Color(red: 255/255, green: 250/255, blue: 233/255)
+                .edgesIgnoringSafeArea(.all)
+            VStack(spacing: 0){
                 Divider()
+                    .frame(minHeight: 1)
                     .background(Color.black)
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 10, trailing: 16))
+                    .padding(.top, 1)
+                    .padding(.bottom, 12)
                 
                 // 세그먼티드 컨트롤
                 Picker("Select a tab", selection: $selectedTab) {
@@ -50,19 +50,18 @@ struct RefriView: View {
                 .background(Color.brown)
                 .cornerRadius(9)
                 .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
+                .padding(.bottom, 14)
                 
                 // 냉장고 재료 리스트
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 0){
                         ForEach(filteredFoods) { food in
                             FoodCard(foodInRefri: food)
-                                .padding(.bottom, 10)
                         }
+                        .padding(.vertical, 10)
                     }
-                    .padding()
                 }
-                
+            Spacer()
                 Button(action: {
                     // 식재료 추가하기 동작
                     navigationManager.push(to: .refriAddFood)
@@ -72,11 +71,29 @@ struct RefriView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(EdgeInsets(top: 0, leading: 46, bottom: 0, trailing: 46))
                 }
-                .padding(.bottom)
-            }        .navigationDestination(for: PathType.self) { pathType in
+                .padding(.bottom, 54)
+            }
+            .padding(.horizontal, 16)
+            .navigationDestination(for: PathType.self) { pathType in
                 pathType.NavigatingView()
             }
-        }.background(Color(red: 1, green: 0.98, blue: 0.91))
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("냉장고")
+                        .font(.system(size: 20))
+                        .fontWeight(.heavy)
+                }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    navigationManager.pop()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                }
+            }
+            }
     }
 }
 
