@@ -18,6 +18,7 @@ struct UsedIngredient: Identifiable{
 
 struct CookRecordView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     
     @State private var showImagePicker = false
     @State private var selectedImage: Image? = nil
@@ -28,11 +29,14 @@ struct CookRecordView: View {
         ZStack {
             VStack{
                 // 이미지 등록 뷰
+//                if let selectedImage = viewModel.recentImage {
+//                    Image(uiImage: selectedImage)
+//                }
                 Button(action: {
-                    showImagePicker = true
+                    navigationManager.push(to: .cookRecordCamera)
                 }) {
-                    if let selectedImage = selectedImage {
-                        selectedImage
+                    if let selectedImage = viewModel.recentImage {
+                        Image(uiImage: selectedImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 230)
@@ -66,129 +70,71 @@ struct CookRecordView: View {
                     Text("재료를 얼마나 사용하셨나요?")
                         .font(.title3)
                     Spacer()
+                    
+                    // 재료 추가 버튼
+                    // 내 냉장고 재료들을 보여주는 시트가 올라오도록 변경해야 함.
+                    Button(action: {
+                        usedIngredients.append(UsedIngredient(image: Image(""), name: "추가 데이터", amount: 0, isCustom: true))
+                    }) {
+                        Image("AddButton")
+                            .resizable()
+                            .frame(maxWidth: 24,maxHeight: 24)
+                    }
                 }.padding(.vertical,20)
                 
                 // 재료 사용량 리스트
                 ScrollView{
                     ForEach(usedIngredients.indices, id: \.self) { index in
-                        // 재료 추가버튼 클릭시 비어있는 UsedIngredient 타입 원소 추가, 해당 원소의 isCustom이 true 경우 Textfield를 보여줌.
-                        if usedIngredients[index].isCustom == false{
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .frame(width: 60, height: 60)
-                                        .foregroundStyle(Color(red: 0.99, green: 0.94, blue: 0.82))
-                                    usedIngredients[index].image // 실제 이미지 넣기
-                                        .resizable()
-                                        .frame(width: 60, height: 60)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
-                                        )
-                                }
-                                
-                                Text(usedIngredients[index].name)
-                                    .font(.body)
-                                    .padding(.leading, 16)
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Button(action: {
-                                        if usedIngredients[index].amount > 0 {
-                                            usedIngredients[index].amount -= 0.05
-                                        }
-                                    }) {
-                                        Image("-")
-                                            .resizable()
-                                            .frame(width: 45,height: 32)
-                                    }
-                                    
-                                    Text("\(Int(usedIngredients[index].amount * 100))%")
-                                        .font(.body)
-                                        .frame(width: 45)
-                                    
-                                    Button(action: {
-                                        if usedIngredients[index].amount < 1 {
-                                            usedIngredients[index].amount += 0.05
-                                        }
-                                    }) {
-                                        Image("+")
-                                            .resizable()
-                                            .frame(width: 45,height: 32)
-                                    }
-                                    
-                                }
-                            }.padding(2)
-                        }
-                        else{
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .frame(width: 60, height: 60)
-                                        .foregroundStyle(Color(red: 0.99, green: 0.94, blue: 0.82))
-                                    usedIngredients[index].image // 실제 이미지 넣기
-                                        .resizable()
-                                        .frame(width: 60, height: 60)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
-                                        )
-                                }
-                                TextField("재료명 입력", text: $usedIngredients[index].name)
-                                    .font(.body)
-                                    .padding(.leading, 16)
+                        HStack {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .frame(width: 60, height: 60)
+                                    .foregroundStyle(Color(red: 0.99, green: 0.94, blue: 0.82))
+                                usedIngredients[index].image // 실제 이미지 넣기
+                                    .resizable()
+                                    .frame(width: 60, height: 60)
                                     .overlay(
-                                        Rectangle()
-                                            .frame(height: 1)
-                                            .opacity(0.5)
-                                            .padding(.horizontal, 16)
-                                            .foregroundColor(Color.gray),
-                                        alignment: .bottom
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
                                     )
-                                
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Button(action: {
-                                        if usedIngredients[index].amount > 0 {
-                                            usedIngredients[index].amount -= 0.05
-                                        }
-                                    }) {
-                                        Image("-")
-                                            .resizable()
-                                            .frame(width: 45,height: 32)
+                            }
+                            
+                            Text(usedIngredients[index].name)
+                                .font(.body)
+                                .padding(.leading, 16)
+                            
+                            Spacer()
+                            
+                            HStack {
+                                Button(action: {
+                                    if usedIngredients[index].amount > 0 {
+                                        usedIngredients[index].amount -= 0.05
                                     }
-                                    
-                                    Text("\(Int(usedIngredients[index].amount * 100))%")
-                                        .font(.body)
-                                        .frame(width: 45)
-                                    
-                                    Button(action: {
-                                        if usedIngredients[index].amount < 1 {
-                                            usedIngredients[index].amount += 0.05
-                                        }
-                                    }) {
-                                        Image("+")
-                                            .resizable()
-                                            .frame(width: 45,height: 32)
-                                    }
-                                    
+                                }) {
+                                    Image("MinusStepper")
+                                        .resizable()
+                                        .frame(width: 40,height: 34)
                                 }
-                            }.padding(2)
-                        }
+                                
+                                Text("\(Int(usedIngredients[index].amount * 100))%")
+                                    .font(.body)
+                                    .frame(width: 45)
+                                
+                                Button(action: {
+                                    if usedIngredients[index].amount < 1 {
+                                        usedIngredients[index].amount += 0.05
+                                    }
+                                }) {
+                                    Image("PlusStepper")
+                                        .resizable()
+                                        .frame(width: 40,height: 34)
+                                }
+                                
+                            }
+                        }.padding(2)
                     }
                 }
                 
-                // 재료 추가 버튼
-                Button(action: {
-                    usedIngredients.append(UsedIngredient(image: Image(""), name: "", amount: 0, isCustom: true))
-                }) {
-                    Image("AddCircle")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                }.padding(.bottom, 20)
                 
                 if selectedImage == nil {
                     Text("사진을 등록하셔야 해요!")
@@ -233,10 +179,13 @@ struct CookRecordView: View {
             .sheet(isPresented: $showImagePicker) {
                 // ImagePickerView() // 이미지 선택 뷰 추가 필요
             }
-        }.background(Color(red: 1, green: 0.98, blue: 0.91))
-            .navigationDestination(for: PathType.self) { pathType in
-                pathType.NavigatingView()
-            }
+        }
+        .background(Color(red: 1, green: 0.98, blue: 0.91))
+        .navigationTitle("요리 등록")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: PathType.self) { pathType in
+            pathType.NavigatingView()
+        }
     }
 }
 

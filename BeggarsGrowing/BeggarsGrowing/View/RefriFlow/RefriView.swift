@@ -25,15 +25,10 @@ struct RefriView: View {
     }
     
     var body: some View {
-        
         ZStack {
             VStack {
-                Text("냉장고")
-                    .font(.title)
-                    .padding(.top)
-                
                 Divider()
-                    .background(Color.black)
+                    .foregroundColor(.black)
                     .padding(EdgeInsets(top: 0, leading: 16, bottom: 10, trailing: 16))
                 
                 // 세그먼티드 컨트롤
@@ -77,6 +72,8 @@ struct RefriView: View {
                 pathType.NavigatingView()
             }
         }.background(Color(red: 1, green: 0.98, blue: 0.91))
+        .navigationTitle("냉장고")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct BeggarsGrowingApp: App {
     var modelContainer: ModelContainer = {
-        let schema = Schema([Recipe.self, Refrigerator.self, History.self, Beggars.self])
+        let schema = Schema([Recipe.self, Refrigerator.self, History.self, Beggars.self, FilterRecipe.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
@@ -21,9 +21,12 @@ struct BeggarsGrowingApp: App {
         }
     }()
     
+    @StateObject var viewModel = CookViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel)
                 .modelContainer(modelContainer)
         }
     }

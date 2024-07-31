@@ -11,9 +11,16 @@ import SwiftData
 struct ContentView: View {
     @State private var navigationManager = NavigationManager()
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true // CSV 불러왔는지 True, False로 UserDefaults 저장
-    @Environment(\.modelContext) var modelContext
     
-//    @State private var foodCSVData: [Food] = []
+    @Environment(\.modelContext) var modelContext
+    @Query var foodsInRefri : [Refrigerator]
+    @Query var recipeData : [Recipe]
+    @Query var filterRecipes : [FilterRecipe]
+    
+    
+    @EnvironmentObject var viewModel: CookViewModel
+    
+    @State private var recipeCSVData: [Recipe] = []
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
@@ -26,11 +33,24 @@ struct ContentView: View {
             .navigationDestination(for: PathType.self) { pathType in
                 pathType.NavigatingView()
             }
+            ForEach(filterRecipes) { recipe in
+                Text(recipe.food)
+                Text(recipe.recipes.map {$0.uuidString}.joined(separator: "\n") )
+            }
         }
         .environment(navigationManager)
         .onAppear {
+            DispatchQueue.main.async{
+                viewModel.foodsInRefri = foodsInRefri
+                viewModel.recipeData = recipeData
+                viewModel.recipeIdsforFilter = filterRecipes
+                viewModel.checkRefriFoodsInRecipe()
+                print("checkRefriFoodsInRecipe")
+            }
+            
             if isFirstLaunch { // 사용자의 기기에서 첫 실행때만 동작
 //                CSVUtils.saveFoodData(fooddata: &foodCSVData, modelContext: modelContext)
+                CSVUtils.saveRecipeData(fooddata: &recipeCSVData, modelContext: modelContext)
                 print("Run CSV File")
                 isFirstLaunch = false
             }
