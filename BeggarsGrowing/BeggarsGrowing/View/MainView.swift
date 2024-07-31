@@ -7,9 +7,13 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @Environment(NavigationManager.self) var navigationManager
+
+    @EnvironmentObject var viewModel: CookViewModel
+    @Environment(\.modelContext) private var modelContext
     
     @State private var progressValue: Float = 20000
     @State private var maxValue: Float = 20000
@@ -125,6 +129,12 @@ struct MainView: View {
             }
         }.navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
+        }
+        .onAppear {
+            DispatchQueue.main.async{
+//                viewModel.checkRefriFoodsInRecipe()
+//                print("checkRefriFoodsInRecipe")
+            }
         }
     }
 }

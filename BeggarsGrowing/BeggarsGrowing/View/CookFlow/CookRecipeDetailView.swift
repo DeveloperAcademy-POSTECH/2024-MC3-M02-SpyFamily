@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CookRecipeDetailView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     
     @State private var RecipeName: String = "돼지고기 김치찌개"
     @State private var Link: String = "맛있는 김치찌개 만들기ㅣ백종원의 요리비책 가나다라마바사"
