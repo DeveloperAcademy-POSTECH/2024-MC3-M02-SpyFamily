@@ -28,7 +28,6 @@ struct CookChoiceFoodView: View {
     var imageName = FoodImageName()
     
     var body: some View {
-        
         ZStack {
             Color(red: 255/255, green: 250/255, blue: 233/255)
                 .ignoresSafeArea()
@@ -117,12 +116,13 @@ struct CookChoiceFoodView: View {
                 Spacer()
             }
         }
+        
         .navigationTitle("재료 선택")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
-        
+
         // // // //
         .mask(
             Circle()
@@ -137,6 +137,23 @@ struct CookChoiceFoodView: View {
             showView = true
             UINavigationBar.setAnimationsEnabled(true)
         }
+
+        //        .mask(
+        //            Circle()
+        //                .scale(showView ? 3 : 0.1) // 원의 크기 조절
+        //                .animation(.easeInOut(duration: 0.5), value: showView) // 애니메이션 설정
+        //                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 화면 크기에 맞게 원 크기 설정
+        //        )
+        //        .opacity(showView ? 1 : 0)
+        //        .animation(.easeInOut(duration: 0.5), value: showView)
+        //        .navigationDestination(for: PathType.self) { pathType in
+        //            pathType.NavigatingView()
+        //        }
+        //        .onAppear{
+        //            showView = true
+        //            UINavigationBar.setAnimationsEnabled(true)
+        //        }
+
     }
     
     // // // 냉장 // // //
@@ -319,6 +336,7 @@ struct CookChoiceFoodView: View {
         }
     }
 }
+
 
 func calculateDaysToToday(date1: Date) -> Int? {
     let calendar = Calendar.current

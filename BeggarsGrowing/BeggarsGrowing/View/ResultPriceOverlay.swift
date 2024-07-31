@@ -79,7 +79,7 @@ struct ResultPriceOverlay: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
-
-#Preview {
-    SampleView()
-}
+//
+//#Preview {
+//    SampleView()
+//}
