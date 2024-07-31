@@ -143,20 +143,9 @@ struct RecipeDetailView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 50)
-                    
-                    Button(action: {
-                        navigationManager.push(to: .cookRecord)
-                    }, label: {
-                        Image("RecordPhoto")
-                    })
-                    .padding(.bottom, 66)
-                    .navigationDestination(for: PathType.self) { pathType in
-                        pathType.NavigatingView()
-                    }
-                    
                 }
             }
-        }
+        }.navigationTitle("레시피")
     }
 }
 

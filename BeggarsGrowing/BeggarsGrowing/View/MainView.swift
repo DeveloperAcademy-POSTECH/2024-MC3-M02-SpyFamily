@@ -70,23 +70,45 @@ struct MainView: View {
                 
                 Spacer()
                 
+                
+                
                 // Text Box
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Color.black)
-                        .frame(width: 300, height: 80)
-                        .overlay(
-                            VStack {
-                                Text("미스탕후루씨")
-                                    .foregroundColor(.yellow)
-                                    .bold()
-                                
-                                Text("오늘은 마라탕을 먹고 싶어....")
-                                    .foregroundColor(.white)
-                            }
-                        )
+                ZStack(alignment: .top) {
+                    Image("MainDialog")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 330, height: 94)
+                    
+                    VStack {
+                        
+                        HStack {
+                            Text("미스탕후루씨")
+                                .multilineTextAlignment(.center)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        stops: [
+                                            Gradient.Stop(color: Color(red: 0.93, green: 0.8, blue: 0.25), location: 0.00),
+                                            Gradient.Stop(color: Color(red: 0.93, green: 0.69, blue: 0.27), location: 1.00),
+                                        ],
+                                        startPoint: UnitPoint(x: 0.5, y: 0),
+                                        endPoint: UnitPoint(x: 0.5, y: 1)
+                                    )
+                                )
+                            Spacer()
+                        }.padding(EdgeInsets(top: 15, leading: 18, bottom: 5, trailing: 0))
+                        
+                        Text("오늘은 마라탕을 먹고싶어... 나는 변준섭인데 귀찮지만 할거는 다해")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(Color.white)
+                            .padding(.horizontal, 30)
+                            .padding(.top, -15)
+                            .frame(width: 330,height: 44) // 너비를 330으로 제한하여 텍스트 줄바꿈
+                    }
+                    .frame(width: 330, height: 88)
                 }
-                .padding()
+                .padding(.bottom, 20)
+
                 
                 // 요리하기 버튼
                 Button(action: {
