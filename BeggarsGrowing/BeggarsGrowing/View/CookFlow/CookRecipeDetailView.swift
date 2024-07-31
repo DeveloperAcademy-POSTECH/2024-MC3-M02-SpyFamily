@@ -9,10 +9,12 @@ import SwiftUI
 
 struct CookRecipeDetailView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     
     var body: some View {
         VStack {
             Text("CookRecipeDetailView")
+            Text(viewModel.selectedRecipe.menu)
             Button("인증하러 가기") {
                 navigationManager.push(to: .cookRecord)
             }

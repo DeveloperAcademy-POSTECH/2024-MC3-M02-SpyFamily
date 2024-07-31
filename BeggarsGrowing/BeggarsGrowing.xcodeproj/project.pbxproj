@@ -31,6 +31,8 @@
 		9058246A2C4B9CE7003801D3 /* CookRecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */; };
 		9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9058246B2C4B9CF5003801D3 /* CookRecordView.swift */; };
 		905824712C4B9D28003801D3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905824702C4B9D28003801D3 /* NavigationManager.swift */; };
+		90A4AA842C59DFBE000293F6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA832C59DFBE000293F6 /* CameraView.swift */; };
+		90A4AA862C59DFC5000293F6 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA852C59DFC5000293F6 /* CameraModel.swift */; };
 		90EB3C5B2C5543EC007960FD /* Recipe.csv in Resources */ = {isa = PBXBuildFile; fileRef = 90EB3C5A2C5543EC007960FD /* Recipe.csv */; };
 		90EB3C5D2C57CA25007960FD /* SelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */; };
 		90EB3C632C58BCAA007960FD /* CookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C622C58BCAA007960FD /* CookViewModel.swift */; };
@@ -62,6 +64,8 @@
 		905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecipeDetailView.swift; sourceTree = "<group>"; };
 		9058246B2C4B9CF5003801D3 /* CookRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookRecordView.swift; sourceTree = "<group>"; };
 		905824702C4B9D28003801D3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		90A4AA832C59DFBE000293F6 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		90A4AA852C59DFC5000293F6 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 		90EB3C5A2C5543EC007960FD /* Recipe.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Recipe.csv; sourceTree = "<group>"; };
 		90EB3C5C2C57CA25007960FD /* SelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFoodSheet.swift; sourceTree = "<group>"; };
 		90EB3C622C58BCAA007960FD /* CookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookViewModel.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				905824672C4B9CDE003801D3 /* CookChoiceRecipeView.swift */,
 				905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */,
 				9058246B2C4B9CF5003801D3 /* CookRecordView.swift */,
+				90A4AA822C59DF92000293F6 /* New Group */,
 				90EB3C622C58BCAA007960FD /* CookViewModel.swift */,
 			);
 			path = CookFlow;
@@ -198,6 +203,15 @@
 				905824632C4B9CC4003801D3 /* RecipeAddView.swift */,
 			);
 			path = RecipeFlow;
+			sourceTree = "<group>";
+		};
+		90A4AA822C59DF92000293F6 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				90A4AA832C59DFBE000293F6 /* CameraView.swift */,
+				90A4AA852C59DFC5000293F6 /* CameraModel.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +288,7 @@
 			files = (
 				900E953D2C4FF06800092CC2 /* HistoryModel.swift in Sources */,
 				905824622C4B9CBC003801D3 /* RecipeDetailView.swift in Sources */,
+				90A4AA862C59DFC5000293F6 /* CameraModel.swift in Sources */,
 				9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */,
 				900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */,
 				900E95392C4FEC5100092CC2 /* RecipeModel.swift in Sources */,
@@ -287,6 +302,7 @@
 				905824492C4B904D003801D3 /* ContentView.swift in Sources */,
 				90EB3C632C58BCAA007960FD /* CookViewModel.swift in Sources */,
 				900E95372C4FEBA800092CC2 /* FoodModel.swift in Sources */,
+				90A4AA842C59DFBE000293F6 /* CameraView.swift in Sources */,
 				9058245C2C4B9CA2003801D3 /* RefriView.swift in Sources */,
 				905824572C4B9C61003801D3 /* MainView.swift in Sources */,
 				9058245E2C4B9CAD003801D3 /* RefriAddFoodView.swift in Sources */,
@@ -428,9 +444,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeggarsGrowing/Preview Content\"";
-				DEVELOPMENT_TEAM = 6G7PQ3DVAX;
+				DEVELOPMENT_TEAM = 5Z2TRCRXZZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -457,9 +474,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BeggarsGrowing/Preview Content\"";
-				DEVELOPMENT_TEAM = 6G7PQ3DVAX;
+				DEVELOPMENT_TEAM = 5Z2TRCRXZZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

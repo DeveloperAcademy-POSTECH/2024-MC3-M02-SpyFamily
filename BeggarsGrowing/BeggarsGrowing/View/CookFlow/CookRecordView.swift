@@ -18,6 +18,7 @@ struct UsedIngredient: Identifiable{
 
 struct CookRecordView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: CookViewModel
     
     @State private var showImagePicker = false
     @State private var selectedImage: Image? = nil
@@ -28,11 +29,14 @@ struct CookRecordView: View {
         ZStack {
             VStack{
                 // 이미지 등록 뷰
+//                if let selectedImage = viewModel.recentImage {
+//                    Image(uiImage: selectedImage)
+//                }
                 Button(action: {
-                    showImagePicker = true
+                    navigationManager.push(to: .cookRecordCamera)
                 }) {
-                    if let selectedImage = selectedImage {
-                        selectedImage
+                    if let selectedImage = viewModel.recentImage {
+                        Image(uiImage: selectedImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 230)

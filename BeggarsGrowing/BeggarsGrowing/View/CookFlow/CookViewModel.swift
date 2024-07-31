@@ -21,6 +21,8 @@ class CookViewModel : ObservableObject {
     @Published var filteredRecipeIDsByRefri: Set<UUID> = []
     @Published var recommendedRecipeByRefri: [Recipe] = []
     
+    @Published var recentImage: UIImage?
+    
     func checkRefriFoodsInRecipe() {
         filteredRecipeIDsByRefri.removeAll()
         
