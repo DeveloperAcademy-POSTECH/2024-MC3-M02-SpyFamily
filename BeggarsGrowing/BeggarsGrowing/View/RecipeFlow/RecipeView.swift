@@ -14,10 +14,9 @@ struct RecipeView: View {
         var foods = ["당근", "새우", "버섯", "마늘", "양파"]
     }
     @Environment(NavigationManager.self) var navigationManager
+    @State private var recipe = Recipe(thumbnail: Image("감바스 알 아히요"))
     
     var body: some View {
-        let recipe = Recipe(thumbnail: Image("감바스 알 아히요"))
-        
         ZStack {
             Color(red: 255/255, green: 250/255, blue: 233/255)
                 .ignoresSafeArea()
@@ -25,16 +24,19 @@ struct RecipeView: View {
             VStack(spacing: 0) {
                 Divider()
                     .foregroundColor(.black)
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
                 
-                ScrollView {
+                List {
                     ForEach(recipe.menus, id: \.self) { menu in
-                        Button(action: {navigationManager.push(to: .recipeDetail)}, label: {
+                        Button(action: {navigationManager.push(to: .recipeDetail)}){
+                            VStack(spacing: 0) {
                             HStack(spacing: 0) {
                                 recipe.thumbnail
                                     .resizable()
                                     .frame(width: 110, height: 70)
                                     .cornerRadius(4)
+                                    .padding(.leading, 16)
                                 
                                 VStack(spacing: 0) {
                                     HStack {
@@ -59,15 +61,23 @@ struct RecipeView: View {
                                     .padding(.leading, 20)
                                 }
                             }
-                            .padding(.horizontal, 16)
-                        })
-                        Divider()
-                            .foregroundColor(.black)
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 4)
+                                Divider()
+                                  .padding(8)
+
+                        }
+                        }
                     }
+                    .onDelete(perform: deleteMenu)
+                    .listRowBackground(Color(red: 255/255, green: 250/255, blue: 233/255))
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
                 }
-                Spacer()
+                .onAppear{
+                    UITableView.appearance().backgroundColor = .clear
+                }
+                .listStyle(.plain)
+//                .environment(\.defaultMinListRowHeight, 0)
+                
                 Button(action: {navigationManager.push(to: .recipeAdd)}, label: {Image("AddRecipeButton").resizable()
                         .frame(maxWidth: 300, maxHeight: 60)
                         .aspectRatio(contentMode: .fit)
@@ -77,6 +87,11 @@ struct RecipeView: View {
         .navigationTitle("레시피 관리")
         .navigationBarTitleDisplayMode(.inline)
     }
+    
+    func deleteMenu(at offsets: IndexSet) {
+        recipe.menus.remove(atOffsets: offsets)
+    }
+    
 }
 
 
