@@ -23,6 +23,8 @@ class CookViewModel : ObservableObject {
     
     @Published var recentImage: UIImage?
     
+    @Published var usedFoods: [(Refrigerator, Int)] = []
+    
     func checkRefriFoodsInRecipe() {
         filteredRecipeIDsByRefri.removeAll()
         
@@ -37,5 +39,17 @@ class CookViewModel : ObservableObject {
         self.recommendedRecipeByRefri = recipeData.filter { filteredRecipeIDsByRefri.contains($0.id) }
         print(self.recommendedRecipeByRefri)
         print("filtered \(filteredRecipeIDsByRefri)")
+    }
+    
+    func finishCookRecord() -> History{
+        let menu = selectedRecipe.menu
+        let foods = usedFoods.map { $0.0.food }
+        let foodsPrice = usedFoods.map { Int(Double($0.0.price) * (Double($0.1) / Double(100))) }
+        let menuPrice = foodsPrice.reduce(0, +)
+        let savedMoney = 15000 - menuPrice
+        
+        let historyToAdd = History(menu: menu, foods: foods, foodsPrice: foodsPrice, menuPrice: foodsPrice.reduce(0, +), savedMoney: savedMoney, date: Date())
+        print("history Success")
+        return historyToAdd
     }
 }

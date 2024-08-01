@@ -19,11 +19,11 @@ import SwiftData
     /// 냉동 여부
     var freezing: Bool
     /// 현재 잔량
-    var amount: Double
+    var amount: Int
     /// 등록 날짜
     var date: Date
     
-    init(food: String, price: Int, amount: Double, freezing: Bool, date: Date) {
+    init(food: String, price: Int, amount: Int, freezing: Bool, date: Date) {
         self.food = food
         self.price = price
         self.amount = amount

@@ -9,12 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct RefriAddFoodView: View {
-    // 추가된 필드들을 관리할 배열
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
     
     @State var foodsToAdd: [Refrigerator] = [
-//        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
     ]
     
     @State var showingSelectFoodSheet: Bool = false
@@ -97,26 +95,10 @@ struct RefriAddFoodView: View {
                     }
                     .padding(.leading, 16)
                     .padding(.trailing, 25)
-                    
-                    
-//                    Button(action: {
-//                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
-//                    }) {
-//                        ZStack{
-//                            Circle()
-//                                .frame(width: 60, height: 60)
-//                                .foregroundColor(.green)
-//                            Text("+")
-//                                .font(.system(size: 40))
-//                                .foregroundColor(.black)
-//                        }
-//                    }
-//                    .padding(.top, 36)
                     Spacer()
                 }
             } //-- v스택 끝
             
-            //재료 추가 완료 버튼
             VStack(spacing: 0){
                 Spacer()
                 Button(action: {
@@ -129,10 +111,9 @@ struct RefriAddFoodView: View {
                 })
                 .padding(.bottom, 54)
             }
-            //재료 추가 완료 버튼
         }
         .sheet(isPresented: $showingSelectFoodSheet){
-            SelectFoodSheetView(selectedFoodsList: $foodsToAdd)
+            RefriSelectFoodSheetView(selectedFoodsList: $foodsToAdd)
                 .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
         }
     }

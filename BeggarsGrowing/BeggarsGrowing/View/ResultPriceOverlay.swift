@@ -7,42 +7,10 @@
 
 import SwiftUI
 
-struct SampleView: View {
-    @State private var showOverlay = false
-
-    var body: some View {
-        ZStack {
-            // Your main content
-            VStack {
-                Text("테스트")
-                    .font(.largeTitle)
-                    .padding()
-
-                Button(action: {
-                    showOverlay.toggle()
-                }) {
-                    Text("거지 다키웠수다!")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-
-            // 조건 달성 시 오버레이 띄우기
-            if showOverlay {
-                ResultPriceOverlay()
-                    .transition(.opacity)
-                    .onTapGesture {
-                        showOverlay = false
-                    }
-            }
-        }
-        .animation(.easeInOut, value: showOverlay)
-    }
-}
-
 struct ResultPriceOverlay: View {
+    
+    var historyToShow: History
+    
     var body: some View {
         ZStack {
             Image("OverlayBG")
@@ -56,11 +24,11 @@ struct ResultPriceOverlay: View {
                     .fontWeight(.bold)
                     .padding(.top, 20)
 
-                Text("이번 요리에서는 총\n2700원이 소요되었어요.")
+                Text("이번 요리에서는 총\n\(historyToShow.menuPrice)원이 소요되었어요.")
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
 
-                Text("총 13000원을 아끼셨군요!\n거지에게 기부해주세요.")
+                Text("총 \(historyToShow.savedMoney)을 아끼셨군요!\n거지에게 기부해주세요.")
                     .multilineTextAlignment(.center)
 
                 Button(action: {
@@ -79,7 +47,3 @@ struct ResultPriceOverlay: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
-//
-//#Preview {
-//    SampleView()
-//}

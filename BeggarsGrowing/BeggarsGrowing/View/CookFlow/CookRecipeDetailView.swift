@@ -159,6 +159,7 @@ struct CookRecipeDetailView: View {
                     
                     Button(action: {
                         navigationManager.push(to: .cookRecord)
+                        
                     }, label: {
                         Image("RecordPhoto")
                             .resizable()
