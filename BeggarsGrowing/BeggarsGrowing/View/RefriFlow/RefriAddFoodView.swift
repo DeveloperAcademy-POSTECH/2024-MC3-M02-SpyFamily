@@ -14,7 +14,7 @@ struct RefriAddFoodView: View {
     @Environment(\.modelContext) var modelContext
     
     @State var foodsToAdd: [Refrigerator] = [
-//        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
+        //        Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date())
     ]
     
     @State var showingSelectFoodSheet: Bool = false
@@ -26,98 +26,53 @@ struct RefriAddFoodView: View {
             Color(red: 255 / 255, green: 250 / 255, blue: 233 / 255)
                 .ignoresSafeArea()
             VStack(spacing: 0){
-                
-                //재료-x
+                Divider()
+                    .frame(minHeight: 1)
+                    .background(Color.black)
+                    .padding(.top, 1)
+                    .padding(.bottom, 20)
                 HStack(spacing: 0){
-                    Text("재료추가")
+                    Text("재료명")
                         .font(.system(size: 20))
                         .fontWeight(.heavy)
+                        .padding(.leading, 59)
                     Spacer()
-                    Button(action: {
-                        showingSelectFoodSheet.toggle()
-                    }, label: {
-                        Image(systemName: "plus.rectangle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 34)
-                            .foregroundColor(.orange)
-                    })
+                    Text("가격")
+                        .font(.system(size: 20))
+                        .fontWeight(.heavy)
+                        .padding(.trailing, 63)
+                    Text("냉동")
+                        .font(.system(size: 20))
+                        .fontWeight(.heavy)
+                        .padding(.trailing, 5)
                 }
-                .padding(.top, 14)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 47)
-                //재료-x
-                
+                .padding(.bottom, 15)
                 ScrollView {
-                    
-                    //재료명-가격-냉동
-                    HStack(spacing: 0){
-                        VStack(spacing: 0){
-                            Text("재료명")
-                                .font(.system(size: 20))
-                                .fontWeight(.heavy)
-                                .padding(.bottom, 12)
-                            ForEach($foodsToAdd, id:\.id) { $food in
-                                HStack{
-                                    Text(food.food)
-                                    Image(imageName.getImageName(for: food.food) ?? "")
-                                        .resizable()
-                                        .frame(width:32, height:32)
-                                }
-                                .frame(height:40)
-                                .padding(.bottom, 12)
+                    ForEach($foodsToAdd, id:\.id) { $food in
+                        HStack(spacing: 0){
+                            Image(systemName: "minus.circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                            Image(imageName.getImageName(for: food.food) ?? "")
+                                .resizable()
+                                .frame(width:32, height:32)
+                                .padding(.leading, 15)
+                            Text(food.food)
+                                .padding(.leading, 8)
+                            Spacer()
+                            TextField("가격", value: $food.price, formatter: NumberFormatter())
+                                .frame(width: 109)
+                                .textFieldStyle(PriceTextfieldStyle())
+                                .padding(.trailing, 30)
+                            Toggle(isOn: $food.freezing) {
+                                Text("")
                             }
+                            .toggleStyle(CheckboxToggleStyle())
+                            .padding(.trailing, 10)
                         }
-                        .padding(.trailing, 16)
-                        VStack(spacing: 0){
-                            HStack(spacing: 0){
-                                Text("가격")
-                                    .font(.system(size: 20))
-                                    .fontWeight(.heavy)
-                                    .padding(.leading, 39)
-                                Spacer()
-                                Text("냉동")
-                                    .font(.system(size: 20))
-                                    .fontWeight(.heavy)
-                            }
-                            .padding(.bottom, 12)
-                            ForEach($foodsToAdd) { $index in
-                                HStack(spacing: 0){
-                                    TextField("가격", value: $index.price, formatter: NumberFormatter())
-                                        .textFieldStyle(PriceTextfieldStyle())
-                                        .padding(.trailing, 25)
-                                    Toggle(isOn: $index.freezing) {
-                                        Text("")
-                                    }
-                                    .toggleStyle(CheckboxToggleStyle())
-                                    .padding(0)
-                                }
-                                .padding(.trailing, 2)
-                            }
-                        }
+                        .padding(.vertical, 4)
                     }
-                    .padding(.leading, 16)
-                    .padding(.trailing, 25)
-                    
-                    
-//                    Button(action: {
-//                        foodsToAdd.append(Refrigerator(food: "", price: 0, amount: 1.0, freezing: false, date: Date()))
-//                    }) {
-//                        ZStack{
-//                            Circle()
-//                                .frame(width: 60, height: 60)
-//                                .foregroundColor(.green)
-//                            Text("+")
-//                                .font(.system(size: 40))
-//                                .foregroundColor(.black)
-//                        }
-//                    }
-//                    .padding(.top, 36)
-                    Spacer()
                 }
-            } //-- v스택 끝
-            
-            //재료 추가 완료 버튼
-            VStack(spacing: 0){
                 Spacer()
                 Button(action: {
                     for foodinRefri in foodsToAdd {
@@ -129,7 +84,35 @@ struct RefriAddFoodView: View {
                 })
                 .padding(.bottom, 54)
             }
-            //재료 추가 완료 버튼
+            .padding(.horizontal, 16)
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("식재료 추가하기")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showingSelectFoodSheet.toggle()
+                }, label: {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .frame(width: 19, height: 19)
+                        .bold()
+                        .foregroundColor(.orange)
+                        .padding(.trailing, 8)
+                })
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    navigationManager.pop()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                }
+            }
         }
         .sheet(isPresented: $showingSelectFoodSheet){
             SelectFoodSheetView(selectedFoodsList: $foodsToAdd)
@@ -145,7 +128,7 @@ struct CheckboxToggleStyle: ToggleStyle {
         }) {
             Image(systemName: configuration.isOn ? "checkmark.square.fill" : "square")
                 .resizable()
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 25)
                 .foregroundColor(configuration.isOn ? .black : .black)
                 .imageScale(.large)
         }
@@ -153,45 +136,20 @@ struct CheckboxToggleStyle: ToggleStyle {
     }
 }
 
-struct NameTextfieldStyle: TextFieldStyle {
-    
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        
-        ZStack {
-            RoundedRectangle(cornerRadius: 6)
-                .fill(Color.white) // 흰색 배경
-                .frame(height: 40)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.black, lineWidth: 1) // 검정색 테두리
-                )
-            
-            // 텍스트필드
-            configuration
-                .font(.system(size: 17))
-                .padding()
-        }
-    }
-}
-
 struct PriceTextfieldStyle: TextFieldStyle {
-    
     func _body(configuration: TextField<Self._Label>) -> some View {
-        
         ZStack {
             RoundedRectangle(cornerRadius: 6)
                 .fill(Color.white) // 흰색 배경
                 .frame(height: 40)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.black, lineWidth: 1) // 검정색 테두리
+                        .stroke(Color.black, lineWidth: 1)
                 )
-            
-            // 텍스트필드
             configuration
                 .multilineTextAlignment(.trailing)
                 .font(.system(size: 17))
-                .padding()
+                .padding(10)
         }
     }
 }
