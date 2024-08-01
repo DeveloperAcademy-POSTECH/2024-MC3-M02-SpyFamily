@@ -9,34 +9,11 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: RecipeViewModel
+    var imageName = FoodImageName()
     
-    @State private var RecipeName: String = "돼지고기 김치찌개"
-    @State private var Link: String = "맛있는 김치찌개 만들기ㅣ백종원의 요리비책 가나다라마바사"
-    @State private var Foodicon: String = "carrot"
-    @State private var FoodName: [String] = [
-        "돼지고기",
-        "배추김치",
-        "양파",
-        "다진마늘"
-    ]
-    @State private var FoodAmount: [String] = [
-        "600g",
-        "100g",
-        "1알",
-        "2스푼"
-    ]
-    @State private var SauceName: [String] = [
-        "간장",
-        "소금",
-        "설탕"
-    ]
-    @State private var SauceAmount: [String] = [
-        "1스푼",
-        "2꼬집",
-        "10g"
-    ]
-    @State private var Memo: String = "며느리에게도 알려주지 않는 비법소스"
-
+    @State var recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+    
     var body: some View {
         ZStack{
             Color(red: 255 / 255, green: 250 / 255, blue: 233 / 255)
@@ -49,7 +26,7 @@ struct RecipeDetailView: View {
                         .padding(.bottom, 12)
                     VStack(alignment: .leading, spacing: 0){
                         HStack{
-                            Text(RecipeName)
+                            Text(recipe.menu)
                                 .font(.system(size: 28))
                                 .fontWeight(.heavy)
                             Spacer()
@@ -64,7 +41,7 @@ struct RecipeDetailView: View {
                                 .foregroundColor(.blue)
                                 .bold()
                                 .padding(.trailing, 5)
-                            Text(Link)
+                            Text(recipe.link ?? "")
                                 .foregroundColor(.blue)
                                 .underline()
                                 .lineLimit(1)
@@ -80,16 +57,16 @@ struct RecipeDetailView: View {
                             .frame(minHeight: 1)
                             .background(Color.black)
                             .padding(.bottom, 4)
-                        ForEach(Array(FoodName.enumerated()), id: \.offset) { index, FoodName in
+                        ForEach(Array(recipe.foods.enumerated()), id: \.offset) { index, food in
                             HStack(spacing: 0){
-                                Image(Foodicon)
+                                Image(imageName.getImageName(for: food) ?? "")
                                     .resizable()
                                     .frame(width: 30, height: 30)
                                     .padding(.trailing, 10)
-                                Text(FoodName)
+                                Text(food)
                                     .font(.system(size: 17))
                                 Spacer()
-                                Text(FoodAmount[index])
+                                Text(recipe.foodsAmount[index])
                                     .font(.system(size: 17))
                             }
                             .padding(.vertical, 14)
@@ -105,26 +82,27 @@ struct RecipeDetailView: View {
                             .frame(minHeight: 1)
                             .background(Color.black)
                             .padding(.bottom, 8)
-
-                        ForEach(Array(SauceName.enumerated()), id: \.offset) { index, SauceName in
-                            HStack(spacing: 0){
-                                Text(SauceName)
-                                    .font(.system(size: 17))
-                                Spacer()
-                                Text(SauceAmount[index])
-                                    .font(.system(size: 17))
+                        if let sauces = recipe.sauces{
+                            ForEach(Array(sauces.enumerated()), id: \.offset) { index, sauce in
+                                HStack(spacing: 0){
+                                    Text(sauce)
+                                        .font(.system(size: 17))
+                                    Spacer()
+                                    Text(recipe.saucesAmount?[index] ?? "")
+                                        .font(.system(size: 17))
+                                }
+                                .padding(.vertical, 14)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 20)
                             }
-                            .padding(.vertical, 14)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 20)
                         }
-                        
+
                         Text("메모")
                             .font(.system(size: 17))
                             .fontWeight(.heavy)
                             .padding(.top, 18)
                             .padding(.bottom, 8)
-
+                        
                         
                         Divider()
                             .frame(minHeight: 1)
@@ -137,7 +115,7 @@ struct RecipeDetailView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 6)
                                         .stroke(Color.gray, lineWidth: 1))
-                            Text(Memo)
+                            Text(recipe.memo ?? "")
                                 .padding(10)
                         }
                     }
@@ -145,7 +123,11 @@ struct RecipeDetailView: View {
                     .padding(.bottom, 50)
                 }
             }
-        }.navigationTitle("레시피")
+        }
+        .navigationTitle("레시피")
+        .onAppear{
+            recipe = viewModel.selectedRecipeforDetail
+        }
     }
 }
 
