@@ -232,7 +232,7 @@ struct CookChoiceFoodView: View {
                                 Text("남은 양")
                                 
                                 VStack {
-                                    Text("\(Int(food.amount*100))%")
+                                    Text("\(Int(food.amount))%")
                                         .font(.title2)
                                         .fontWeight(.bold)
                                 }
@@ -322,7 +322,7 @@ struct CookChoiceFoodView: View {
                                 Text("남은 양")
                                 
                                 VStack {
-                                    Text("\(Int(food.amount*100))%")
+                                    Text("\(Int(food.amount))%")
                                         .font(.title2)
                                         .fontWeight(.bold)
                                 }

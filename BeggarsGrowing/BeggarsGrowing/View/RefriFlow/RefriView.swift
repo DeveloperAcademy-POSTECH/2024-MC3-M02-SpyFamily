@@ -141,7 +141,7 @@ struct FoodCard: View {
                             .cornerRadius(13.5)
                     }.padding(.bottom, 8)
                     
-                    Text("\(foodInRefri.price)원 / 남은 양 \(Int(foodInRefri.amount*100))%")
+                    Text("\(foodInRefri.price)원 / 남은 양 \(Int(foodInRefri.amount))%")
                         .font(.subheadline)
                 }
                 

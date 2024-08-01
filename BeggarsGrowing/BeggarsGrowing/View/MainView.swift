@@ -1,4 +1,4 @@
-//
+///
 //  MainView.swift
 //  BeggarsGrowing
 //
@@ -11,12 +11,18 @@ import SwiftData
 
 struct MainView: View {
     @Environment(NavigationManager.self) var navigationManager
-
+    
     @EnvironmentObject var viewModel: CookViewModel
     @Environment(\.modelContext) private var modelContext
     
+    @State var receivedHistory: History?
+    @State var shouldNavigate = false
+    @State var showOverlay = false
+    
     @State private var progressValue: Float = 20000
     @State private var maxValue: Float = 20000
+    
+    @Query var histories: [History]
     
     var body: some View {
         ZStack{
@@ -112,7 +118,7 @@ struct MainView: View {
                     .frame(width: 330, height: 88)
                 }
                 .padding(.bottom, 20)
-
+                
                 
                 // 요리하기 버튼
                 Button(action: {
@@ -127,13 +133,27 @@ struct MainView: View {
                 }
                 .padding(.bottom, 50)
             }
+            
+            if showOverlay {
+                ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()))
+                    .transition(.opacity)
+                    .onTapGesture {
+                        showOverlay = false
+                    }
+            }
         }.navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
         .onAppear {
-            DispatchQueue.main.async{
-//                viewModel.checkRefriFoodsInRecipe()
-//                print("checkRefriFoodsInRecipe")
+            NotificationCenter.default.addObserver(forName: .finishCookRecordNotification, object: nil, queue: .main) { notification in
+                print("notification receive")
+                if let history = notification.object as? History {
+                    DispatchQueue.main.async{
+                        self.receivedHistory = history
+                        self.shouldNavigate = true
+                        self.showOverlay = true
+                    }
+                }
             }
         }
     }
@@ -184,35 +204,3 @@ struct CustomProgressBar: View {
         )
     }
 }
-
-//import SwiftUI
-//
-//struct MainView: View {
-//    @Environment(NavigationManager.self) var navigationManager
-//    
-//    var body: some View {
-//        VStack {
-//            Text("MainView")
-//            Button("냉장고 버튼") {
-//                navigationManager.push(to: .refri)
-//            }
-//            Button("레시피 버튼") {
-//                navigationManager.push(to: .recipe)
-//            }
-//            Button("요리하기 버튼") {
-//                    UINavigationBar.setAnimationsEnabled(false)
-//                    navigationManager.push(to:.cookChoiceFood)
-//                    
-//            }
-//        }
-//        .navigationDestination(for: PathType.self) { pathType in
-//            pathType.NavigatingView()
-//        }
-//    }
-//}
-//
-//#Preview {
-//    MainView()
-//        .environment(NavigationManager())
-//}
-//

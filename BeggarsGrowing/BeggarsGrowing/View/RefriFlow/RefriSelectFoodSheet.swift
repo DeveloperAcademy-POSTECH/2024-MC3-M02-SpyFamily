@@ -30,7 +30,7 @@ struct Ingredient: Identifiable {
 //    }
 //}
 
-struct SelectFoodSheetView: View {
+struct RefriSelectFoodSheetView: View {
     @State private var searchText = ""
     @State private var selectedIngredients: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
@@ -58,7 +58,7 @@ struct SelectFoodSheetView: View {
                     // 완료 버튼 액션
                     DispatchQueue.main.async{
                         for food in selectedIngredients {
-                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 1.0, freezing: false, date: Date()))
+                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 100, freezing: false, date: Date()))
                         }
                         presentationMode.wrappedValue.dismiss()
                     }

@@ -37,6 +37,8 @@ struct CookRecipeDetailView: View {
         "10g"
     ]
     @State private var Memo: String = "며느리에게도 알려주지 않는 비법소스"
+    @State var recipe: Recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+    private var imageName = FoodImageName()
 
     var body: some View {
         ZStack{
@@ -50,7 +52,7 @@ struct CookRecipeDetailView: View {
                         .padding(.bottom, 12)
                     VStack(alignment: .leading, spacing: 0){
                         HStack{
-                            Text(RecipeName)
+                            Text(recipe.menu)
                                 .font(.system(size: 28))
                                 .fontWeight(.heavy)
                             Spacer()
@@ -65,7 +67,7 @@ struct CookRecipeDetailView: View {
                                 .foregroundColor(.blue)
                                 .bold()
                                 .padding(.trailing, 5)
-                            Text(Link)
+                            Text(recipe.link ?? "링크가 없습니다.")
                                 .foregroundColor(.blue)
                                 .underline()
                                 .lineLimit(1)
@@ -82,16 +84,16 @@ struct CookRecipeDetailView: View {
                             .background(Color.black)
                             .padding(.bottom, 4)
                         
-                        ForEach(Array(FoodName.enumerated()), id: \.offset) { index, FoodName in
+                        ForEach(Array(recipe.foods.enumerated()), id: \.offset) { index, foodName in
                             HStack(spacing: 0){
-                                Image(Foodicon)
+                                Image(imageName.getImageName(for: foodName) ?? "")
                                     .resizable()
                                     .frame(width: 30, height: 30)
                                     .padding(.trailing, 10)
-                                Text(FoodName)
+                                Text(foodName)
                                     .font(.system(size: 17))
                                 Spacer()
-                                Text(FoodAmount[index])
+                                Text(recipe.foodsAmount[index])
                                     .font(.system(size: 17))
                             }
                             .padding(.vertical, 14)
@@ -109,18 +111,25 @@ struct CookRecipeDetailView: View {
                             .frame(minHeight: 1)
                             .background(Color.black)
                             .padding(.bottom, 8)
-
-                        ForEach(Array(SauceName.enumerated()), id: \.offset) { index, SauceName in
-                            HStack(spacing: 0){
-                                Text(SauceName)
-                                    .font(.system(size: 17))
-                                Spacer()
-                                Text(SauceAmount[index])
-                                    .font(.system(size: 17))
+                        if recipe.sauces?.count ?? 0 >= 1{
+                            ForEach(Array(recipe.sauces?.enumerated() ?? [""].enumerated()), id: \.offset) { index, sauceName in
+                                HStack(spacing: 0){
+                                    Text(sauceName)
+                                        .font(.system(size: 17))
+                                    Spacer()
+                                    if let saucesAmount = recipe.saucesAmount {
+                                        Text("\(saucesAmount[index])")
+                                            .font(.system(size: 17))
+                                    } else {
+                                        Text("??")
+                                    }
+                                }
+                                .padding(.vertical, 14)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 20)
                             }
-                            .padding(.vertical, 14)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 20)
+                        } else {
+                            Text("기타 소스가 없습니다.")
                         }
                         
                         Text("메모")
@@ -141,7 +150,7 @@ struct CookRecipeDetailView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 6)
                                         .stroke(Color.gray, lineWidth: 1))
-                            Text(Memo)
+                            Text(recipe.memo ?? "")
                                 .padding(10)
                         }
                     }
@@ -150,6 +159,7 @@ struct CookRecipeDetailView: View {
                     
                     Button(action: {
                         navigationManager.push(to: .cookRecord)
+                        
                     }, label: {
                         Image("RecordPhoto")
                             .resizable()
@@ -163,6 +173,9 @@ struct CookRecipeDetailView: View {
                     
                 }
             }
+        }
+        .onAppear{
+            self.recipe = viewModel.selectedRecipe
         }
     }
 }
