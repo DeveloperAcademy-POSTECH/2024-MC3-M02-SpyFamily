@@ -30,14 +30,12 @@ struct MainView: View {
                     .frame(height: 40)
                     .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
                 
-                
                 // 첫번째 줄 버튼 두개
                 HStack{
                     Button(action: {
                         // 거지의전당 버튼 액션
-                        navigationManager.push(to:.cookChoiceFood)
                     }) {
-                        Image("MainBeggarCollection")
+                        Image("MainBeggarHOF")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: 77)
@@ -84,11 +82,10 @@ struct MainView: View {
                         .frame(width: 330, height: 94)
                     
                     VStack {
-                        
                         HStack {
                             Text("미스탕후루씨")
                                 .multilineTextAlignment(.center)
-                                .fontWeight(.semibold)
+                                .font(.DGMFootnote)
                                 .foregroundStyle(
                                     LinearGradient(
                                         stops: [
@@ -103,6 +100,7 @@ struct MainView: View {
                         }.padding(EdgeInsets(top: 15, leading: 18, bottom: 5, trailing: 0))
                         
                         Text("오늘은 마라탕을 먹고싶어... 나는 변준섭인데 귀찮지만 할거는 다해")
+                            .font(.DGMFootnote)
                             .multilineTextAlignment(.center)
                             .foregroundColor(Color.white)
                             .padding(.horizontal, 30)
@@ -176,14 +174,22 @@ struct CustomProgressBar: View {
         }
         .frame(height: 40)
         .overlay(
-            Text("\(Int(value)) / \(Int(maxValue))")
-                .font(.body)
+            Text("\(formattedAmount(Int(value))) / \(formattedAmount(Int(maxValue)))")
+                .font(.DGMTitle3)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity)
         )
     }
 }
+
+func formattedAmount(_ amount: Int) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.groupingSeparator = ""
+        return numberFormatter.string(from: NSNumber(value: amount)) ?? "\(amount)"
+    }
+
 
 //import SwiftUI
 //
