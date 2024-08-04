@@ -25,9 +25,7 @@ struct MainView: View {
     @Query var histories: [History]
     
     var body: some View {
-        //        ZStack{
-        // 배경 색
-        
+    
         VStack {
             // 커스텀 프로그레스 바
             CustomProgressBar(value: progressValue, maxValue: maxValue)
