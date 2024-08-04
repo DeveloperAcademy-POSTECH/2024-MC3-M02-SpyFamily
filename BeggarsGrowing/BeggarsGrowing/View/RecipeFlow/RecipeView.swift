@@ -34,11 +34,31 @@ struct RecipeView: View {
                         }){
                             VStack(spacing: 0) {
                                 HStack(spacing: 0) {
-                                    Image(recipe.image ?? "")
-                                        .resizable()
-                                        .frame(width: 110, height: 70)
-                                        .cornerRadius(4)
-                                        .padding(.leading, 16)
+                                    
+                                    if let recipeImage = recipe.image {
+                                        if isValidUUID(uuidString: recipeImage){
+                                            if let loadedImage = loadImage(imageName: recipeImage) {
+                                                Image(uiImage: loadedImage)
+                                                    .resizable()
+                                                    .frame(width: 110, height: 70)
+                                                    .cornerRadius(4)
+                                                    .padding(.leading, 16)
+                                            } else {
+                                                Image("")
+                                                    .resizable()
+                                                    .frame(width: 110, height: 70)
+                                                    .cornerRadius(4)
+                                                    .padding(.leading, 16)
+                                            }
+                                        } else {
+                                            Image(recipeImage)
+                                                .resizable()
+                                                .frame(width: 110, height: 70)
+                                                .cornerRadius(4)
+                                                .padding(.leading, 16)
+                                        }
+                                    }
+                                    
                                     
                                     VStack(spacing: 0) {
                                         HStack {
@@ -78,7 +98,11 @@ struct RecipeView: View {
                     UITableView.appearance().backgroundColor = .clear
                 }
                 .listStyle(.plain)
-                Button(action: {navigationManager.push(to: .recipeAdd)}, label: {Image("AddRecipeButton").resizable()
+                Button(action: {
+                    viewModel.reset()
+                    navigationManager.push(to: .recipeAddName)
+                }, label: {
+                    Image("AddRecipeButton").resizable()
                         .frame(maxWidth: 300, maxHeight: 60)
                         .aspectRatio(contentMode: .fit)
                     .padding(.bottom, 80)})
@@ -98,5 +122,23 @@ struct RecipeView: View {
         } catch {
             print("Failed to save context: \(error.localizedDescription)")
         }
+    }
+    
+    func loadImage(imageName: String) -> UIImage? {
+        let fileManager = FileManager.default
+        let imagePath = getDocumentsDirectory().appendingPathComponent("\(imageName).png").path
+        if fileManager.fileExists(atPath: imagePath) {
+            return UIImage(contentsOfFile: imagePath)
+        }
+        return nil
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func isValidUUID(uuidString: String) -> Bool {
+        return UUID(uuidString: uuidString) != nil
     }
 }

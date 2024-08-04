@@ -1,19 +1,22 @@
 //
-//  SelectFoodSheet.swift
+//  RecipeSelectSauceSheet.swift
 //  BeggarsGrowing
 //
-//  Created by 변준섭 on 7/29/24.
+//  Created by 변준섭 on 8/2/24.
 //
+
+
 import SwiftUI
 
-struct RefriSelectFoodSheetView: View {
+struct RecipeSelectSauceSheetView: View {
     @State private var searchText = ""
     @State private var selectedIngredients: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
     
     let foods = FoodImageName().ingredients
     
-    @Binding var selectedFoodsList: [Refrigerator]
+    @Binding var selectedSaucesList: [String]
+    @Binding var selectedSaucesAmountList: [String]
     
     var filteredFoods: [Food] {
         if searchText.isEmpty {
@@ -34,7 +37,8 @@ struct RefriSelectFoodSheetView: View {
                     // 완료 버튼 액션
                     DispatchQueue.main.async{
                         for food in selectedIngredients {
-                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 100, freezing: false, date: Date()))
+                            selectedSaucesList.append(food)
+                            selectedSaucesAmountList.append("")
                         }
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -95,39 +99,3 @@ struct RefriSelectFoodSheetView: View {
         } //v
     }
 }
-
-struct SearchBar: UIViewRepresentable {
-    @Binding var text: String
-    
-    class Coordinator: NSObject, UISearchBarDelegate {
-        @Binding var text: String
-        
-        init(text: Binding<String>) {
-            _text = text
-        }
-        
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            text = searchText
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text)
-    }
-    
-    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
-        let searchBar = UISearchBar(frame: .zero)
-        searchBar.delegate = context.coordinator
-        searchBar.placeholder = "Search"
-        searchBar.backgroundImage = UIImage() // 위아래 Divider 없애기
-        return searchBar
-    }
-    
-    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
-        uiView.text = text
-    }
-}
-//
-//#Preview {
-//    IngredientSelectSheet()
-//}

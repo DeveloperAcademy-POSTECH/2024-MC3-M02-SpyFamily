@@ -8,14 +8,6 @@
 import SwiftUI
 import SwiftData
 
-struct UsedIngredient: Identifiable{
-    var id = UUID()
-    var image: Image
-    var name: String
-    var amount: Double
-    var isCustom: Bool
-}
-
 struct CookRecordView: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: CookViewModel

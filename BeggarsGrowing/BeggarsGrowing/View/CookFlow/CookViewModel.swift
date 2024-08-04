@@ -52,4 +52,16 @@ class CookViewModel : ObservableObject {
         print("history Success")
         return historyToAdd
     }
+    
+    func reset() {
+            self.selectedFoods = []
+            self.selectedRecipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+            self.foodsInRefri = []
+            self.recipeData = []
+            self.recipeIdsforFilter = []
+            self.filteredRecipeIDsByRefri = []
+            self.recommendedRecipeByRefri = []
+            self.recentImage = nil
+            self.usedFoods = []
+        }
 }

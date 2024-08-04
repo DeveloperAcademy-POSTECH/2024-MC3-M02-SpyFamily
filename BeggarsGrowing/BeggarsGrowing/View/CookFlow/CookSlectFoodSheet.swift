@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct CookSelectFoodSheetView: View {
-    @State private var searchText = ""
-    @State private var selectedIngredients: Set<String> = []
+    @State var searchText = ""
+    @State var selectedIngredients: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
     
     @Binding var selectedFoodsList: [Refrigerator]
