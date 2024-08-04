@@ -34,7 +34,7 @@ struct RefriSelectFoodSheetView: View {
                     // 완료 버튼 액션
                     DispatchQueue.main.async{
                         for food in selectedIngredients {
-                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 100, freezing: false, date: Date()))
+                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 100.0, freezing: false, date: Date()))
                         }
                         presentationMode.wrappedValue.dismiss()
                     }

@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ResultPriceOverlay: View {
+    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0
     
     var historyToShow: History
+    @Binding var showOverlay: Bool
+    @EnvironmentObject var mainViewModel: MainViewModel
     
     var body: some View {
         ZStack {
@@ -17,22 +20,23 @@ struct ResultPriceOverlay: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 343, height: 370)
-
+            
             VStack(spacing: 20) {
                 Text("추정 소요금액")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding(.top, 20)
-
+                
                 Text("이번 요리에서는 총\n\(historyToShow.menuPrice)원이 소요되었어요.")
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
-
+                
                 Text("총 \(historyToShow.savedMoney)을 아끼셨군요!\n거지에게 기부해주세요.")
                     .multilineTextAlignment(.center)
-
+                
                 Button(action: {
-                    // 기부하기 액션
+                    showOverlay = false
+                    moneyForSave = historyToShow.savedMoney
                 }) {
                     Image("OverlayButton")
                         .resizable()

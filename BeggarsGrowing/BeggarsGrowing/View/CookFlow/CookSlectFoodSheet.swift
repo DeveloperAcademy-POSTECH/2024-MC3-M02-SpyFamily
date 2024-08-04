@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct CookSelectFoodSheetView: View {
+    @EnvironmentObject var viewModel: CookViewModel
+
     @State var searchText = ""
     @State var selectedIngredients: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
@@ -36,11 +38,6 @@ struct CookSelectFoodSheetView: View {
                     .bold()
                 Spacer()
                 Button(action: {
-                    // 완료 버튼 액션
-                    
-                    //                        for food in selectedIngredients {
-                    //                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 1.0, freezing: false, date: Date()))
-                    //                        }
                     presentationMode.wrappedValue.dismiss()
                     
                 }) {
@@ -90,6 +87,9 @@ struct CookSelectFoodSheetView: View {
                     }
                 }
             }
+        }
+        .onAppear{
+            
         }
         .padding(.horizontal)
     }

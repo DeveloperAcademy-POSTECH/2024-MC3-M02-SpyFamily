@@ -11,7 +11,7 @@ import SwiftData
 struct RefriAddFoodView: View {
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
-    
+
     @State var foodsToAdd: [Refrigerator] = []
     
     @State var showingSelectFoodSheet: Bool = false

@@ -23,12 +23,14 @@ struct BeggarsGrowingApp: App {
     
     @StateObject var cookViewModel = CookViewModel()
     @StateObject var recipeViewModel = RecipeViewModel()
+    @StateObject var mainViewModel = MainViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(cookViewModel)
                 .environmentObject(recipeViewModel)
+                .environmentObject(mainViewModel)
                 .modelContainer(modelContainer)
         }
     }

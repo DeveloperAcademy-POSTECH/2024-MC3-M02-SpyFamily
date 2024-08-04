@@ -23,7 +23,7 @@ class CookViewModel : ObservableObject {
     
     @Published var recentImage: UIImage?
     
-    @Published var usedFoods: [(Refrigerator, Int)] = []
+    @Published var usedFoods: [(Refrigerator, Double)] = []
     
     func checkRefriFoodsInRecipe() {
         filteredRecipeIDsByRefri.removeAll()
@@ -44,9 +44,14 @@ class CookViewModel : ObservableObject {
     func finishCookRecord() -> History{
         let menu = selectedRecipe.menu
         let foods = usedFoods.map { $0.0.food }
-        let foodsPrice = usedFoods.map { Int(Double($0.0.price) * (Double($0.1) / Double(100))) }
+        let foodsPrice = usedFoods.map { Int(Double($0.0.price) * ($0.1 / Double(100))) }
         let menuPrice = foodsPrice.reduce(0, +)
-        let savedMoney = 15000 - menuPrice
+        var savedMoney = 0
+        
+        if 13000 - menuPrice > 0 {
+            savedMoney = 13000 - menuPrice
+        }
+        
         
         let historyToAdd = History(menu: menu, foods: foods, foodsPrice: foodsPrice, menuPrice: foodsPrice.reduce(0, +), savedMoney: savedMoney, date: Date())
         print("history Success")
@@ -54,14 +59,11 @@ class CookViewModel : ObservableObject {
     }
     
     func reset() {
-            self.selectedFoods = []
-            self.selectedRecipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
-            self.foodsInRefri = []
-            self.recipeData = []
-            self.recipeIdsforFilter = []
-            self.filteredRecipeIDsByRefri = []
-            self.recommendedRecipeByRefri = []
-            self.recentImage = nil
-            self.usedFoods = []
-        }
+        self.selectedFoods = []
+        self.selectedRecipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+        self.foodsInRefri = []
+        self.recipeData = []
+        self.recentImage = nil
+        self.usedFoods = []
+    }
 }
