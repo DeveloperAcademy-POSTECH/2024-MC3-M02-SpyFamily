@@ -6,32 +6,25 @@
 //
 
 import SwiftUI
-
-
-struct UsedIngredient: Identifiable{
-    var id = UUID()
-    var image: Image
-    var name: String
-    var amount: Double
-    var isCustom: Bool
-}
+import SwiftData
 
 struct CookRecordView: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: CookViewModel
+    @Environment(\.modelContext) private var modelContext
     
     @State private var showImagePicker = false
-    @State private var selectedImage: Image? = nil
     
-    @State private var usedIngredients = [UsedIngredient(image: Image(""), name: "양파", amount: 0.5, isCustom: false),UsedIngredient(image: Image(""), name: "당근", amount: 0.6, isCustom: false),UsedIngredient(image: Image(""), name: "닭고기", amount: 1, isCustom: false),UsedIngredient(image: Image(""), name: "청양고추", amount: 0.4, isCustom: false)]
+    @State var showingSelectFoodSheet: Bool = false
+    @State var selectedFoodsList: [Refrigerator] = []
+    @Query var foodsInRefri: [Refrigerator]
+        
+    var imageName = FoodImageName()
     
     var body: some View {
         ZStack {
             VStack{
                 // 이미지 등록 뷰
-//                if let selectedImage = viewModel.recentImage {
-//                    Image(uiImage: selectedImage)
-//                }
                 Button(action: {
                     navigationManager.push(to: .cookRecordCamera)
                 }) {
@@ -74,7 +67,7 @@ struct CookRecordView: View {
                     // 재료 추가 버튼
                     // 내 냉장고 재료들을 보여주는 시트가 올라오도록 변경해야 함.
                     Button(action: {
-                        usedIngredients.append(UsedIngredient(image: Image(""), name: "추가 데이터", amount: 0, isCustom: true))
+                        showingSelectFoodSheet.toggle()
                     }) {
                         Image("AddButton")
                             .resizable()
@@ -84,13 +77,16 @@ struct CookRecordView: View {
                 
                 // 재료 사용량 리스트
                 ScrollView{
-                    ForEach(usedIngredients.indices, id: \.self) { index in
+                    ForEach(viewModel.usedFoods.indices, id: \.self) { index in
+                        let food = viewModel.usedFoods[index].0
+                        var usage = viewModel.usedFoods[index].1
+                        let foodName = food.food
                         HStack {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 5)
                                     .frame(width: 60, height: 60)
                                     .foregroundStyle(Color(red: 0.99, green: 0.94, blue: 0.82))
-                                usedIngredients[index].image // 실제 이미지 넣기
+                                Image(imageName.getImageName(for: foodName) ?? "")
                                     .resizable()
                                     .frame(width: 60, height: 60)
                                     .overlay(
@@ -99,44 +95,46 @@ struct CookRecordView: View {
                                     )
                             }
                             
-                            Text(usedIngredients[index].name)
+                            Text(foodName)
                                 .font(.body)
                                 .padding(.leading, 16)
                             
                             Spacer()
-                            
+                            Text("\(food.amount-usage)%")
+                            Spacer()
                             HStack {
                                 Button(action: {
-                                    if usedIngredients[index].amount > 0 {
-                                        usedIngredients[index].amount -= 0.05
+                                    if viewModel.usedFoods[index].1 > 0 {
+                                        viewModel.usedFoods[index].1 -= 5
                                     }
                                 }) {
                                     Image("MinusStepper")
                                         .resizable()
                                         .frame(width: 40,height: 34)
                                 }
-                                
-                                Text("\(Int(usedIngredients[index].amount * 100))%")
+                                Text("\(viewModel.usedFoods[index].1)%")
                                     .font(.body)
                                     .frame(width: 45)
                                 
                                 Button(action: {
-                                    if usedIngredients[index].amount < 1 {
-                                        usedIngredients[index].amount += 0.05
+                                    if viewModel.usedFoods[index].1 < food.amount {
+                                        viewModel.usedFoods[index].1 += 5
                                     }
                                 }) {
                                     Image("PlusStepper")
                                         .resizable()
                                         .frame(width: 40,height: 34)
                                 }
-                                
                             }
-                        }.padding(2)
+                        }
+                        .padding(2)
+                        .onAppear{
+                        }
                     }
                 }
                 
                 
-                if selectedImage == nil {
+                if viewModel.recentImage == nil {
                     Text("사진을 등록하셔야 해요!")
                         .font(.footnote)
                         .padding(EdgeInsets(top: 6, leading: 30, bottom: 6, trailing: 30))
@@ -165,6 +163,11 @@ struct CookRecordView: View {
                 else {
                     Button(action: {
                         // 완료 액션 추가
+                        DispatchQueue.main.async{
+                            let newHistory = viewModel.finishCookRecord()
+                            modelContext.insert(newHistory)
+                            NotificationCenter.default.post(name: .finishCookRecordNotification, object: newHistory)
+                        }
                         navigationManager.popToRoot()
                         navigationManager.push(to: .main)
                     }) {
@@ -180,6 +183,18 @@ struct CookRecordView: View {
                 // ImagePickerView() // 이미지 선택 뷰 추가 필요
             }
         }
+        .sheet(isPresented: $showingSelectFoodSheet, 
+               onDismiss: {
+            viewModel.usedFoods = selectedFoodsList.map{ ($0, 0) }
+        },
+               content: {
+            CookSelectFoodSheetView(selectedFoodsList: $selectedFoodsList, foodsInRefri: foodsInRefri)
+                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
+        })
+//        .sheet(isPresented: $showingSelectFoodSheet){
+//            CookSelectFoodSheetView(selectedFoodsList: $selectedFoodsList, foodsInRefri: foodsInRefri)
+//                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
+//        }
         .background(Color(red: 1, green: 0.98, blue: 0.91))
         .navigationTitle("요리 등록")
         .navigationBarTitleDisplayMode(.inline)
@@ -189,24 +204,6 @@ struct CookRecordView: View {
     }
 }
 
-//struct CookRecordView: View {
-//    @Environment(NavigationManager.self) var navigationManager
-//
-//    var body: some View {
-//        VStack {
-//            Text("CookRecordView")
-//            Button("인증 완료") {
-//                navigationManager.popToRoot()
-//                navigationManager.push(to: .main)
-//            }
-//        }
-//        .navigationDestination(for: PathType.self) { pathType in
-//            pathType.NavigatingView()
-//        }
-//    }
-//}
-
-#Preview {
-    CookRecordView()
-        .environment(NavigationManager())
+extension Notification.Name {
+    static let finishCookRecordNotification = Notification.Name("finishCookRecordNotification")
 }

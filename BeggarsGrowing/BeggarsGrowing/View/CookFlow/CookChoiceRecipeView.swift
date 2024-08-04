@@ -68,6 +68,8 @@ struct CookChoiceRecipeView: View {
                             
                             Button(action: {
                                 viewModel.selectedRecipe = recipe
+                                let selectingFoodsForUse = foodsInRefri.filter { recipe.foods.contains($0.food)}
+                                viewModel.usedFoods = selectingFoodsForUse.map { ($0, 0) }
                                 navigationManager.push(to: .cookRecipeDetail)},
                                    label: {
                                 ZStack {

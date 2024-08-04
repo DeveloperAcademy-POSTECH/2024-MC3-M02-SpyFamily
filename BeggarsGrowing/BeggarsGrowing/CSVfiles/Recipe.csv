@@ -1,4 +1,4 @@
-menu,link,foods,foodsAmount,image,sauce,memo
-계란볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"계란,양파","100g,반개",EggFriedRice,,
-야채볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"당근,사과","1개, 1/4개",VegetableFriedRice,,
-돼지고기볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"돼지고기","600g",PorkFriedRice,,
+menu,link,foods,foodsAmount,image,sauces,saucesAmount,memo
+계란볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"계란,양파","100g,반개",EggFriedRice,"간장,참기름","한큰술,5ml",
+야채볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"당근,사과","1개, 1/4개",VegetableFriedRice,"식용유,고춧가루","한바퀴,두숟갈",가나다라마바사
+돼지고기볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"돼지고기","600g",PorkFriedRice,"굴소스","1큰술",

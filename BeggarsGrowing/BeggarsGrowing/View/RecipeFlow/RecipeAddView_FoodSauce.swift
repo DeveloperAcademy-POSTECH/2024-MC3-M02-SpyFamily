@@ -8,147 +8,175 @@
 import SwiftUI
 
 struct RecipeAddView_FoodSauce: View {
-    @Environment(\.dismiss) var dismiss // 현재 뷰를 닫기 위한 dismiss 환경 변수 선언
+    @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var viewModel: RecipeViewModel
+    
     let numbers = [1, 2, 3, 4, 5]
-    //    @State private var FoodIcon: String = "Carrot"
-    @State private var FoodIcons: [String] = ["Carrot", "Carrot", "Carrot", "Carrot"]
-    @State private var FoodNames: [String] = ["사과", "당근", "계란", "빵"]
-    @State private var FoodQuantities: [String] = ["1개", "2개", "", ""]
     
-    @State private var SauceNames: [String] = ["간장", "소금", "설탕", "고추장"]
-    @State private var SauceQuantities: [String] = ["3개", "4개", "", ""]
+    @State var showingSelectFoodSheet: Bool = false
+    @State var foodNames: [String] = []
+    @State var foodQuantities: [String] = []
     
+    @State var showingSelectSauceSheet: Bool = false
+    @State var SauceNames: [String] = []
+    @State var SauceQuantities: [String] = []
+    
+    
+    
+    private var imageName = FoodImageName()
     
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Color(red: 255/255, green: 250/255, blue: 233/255)
-                    .edgesIgnoringSafeArea(.all)
-                ScrollView{
-                    VStack(spacing: 0){
-                        Divider()
-                            .frame(minHeight: 1)
-                            .background(Color.black)
-                            .padding(.bottom, 30)
-                        HStack(spacing: 0){
-                            ForEach(numbers, id: \.self) { number in
-                                ZStack {
-                                    Circle()
-                                        .fill(number == 4 ? Color(red: 246/255, green: 153/255, blue: 39/255) : Color(red: 242/255, green: 245/255, blue: 240/255)
-                                        )
-                                        .frame(width: 30, height: 30)
-                                    Text("\(number)")
-                                        .foregroundColor(number == 4 ? Color.white : Color.black)
-                                        .font(.system(size: 17))
-                                        .bold()
-                                }
-                                .padding(.trailing, 10)
+        ZStack{
+            Color(red: 255/255, green: 250/255, blue: 233/255)
+                .edgesIgnoringSafeArea(.all)
+            ScrollView{
+                VStack(spacing: 0){
+                    Divider()
+                        .frame(minHeight: 1)
+                        .background(Color.black)
+                        .padding(.bottom, 30)
+                    HStack(spacing: 0){
+                        ForEach(numbers, id: \.self) { number in
+                            ZStack {
+                                Circle()
+                                    .fill(number == 4 ? Color(red: 246/255, green: 153/255, blue: 39/255) : Color(red: 242/255, green: 245/255, blue: 240/255)
+                                    )
+                                    .frame(width: 30, height: 30)
+                                Text("\(number)")
+                                    .foregroundColor(number == 4 ? Color.white : Color.black)
+                                    .font(.system(size: 17))
+                                    .bold()
                             }
-                            Spacer()
+                            .padding(.trailing, 10)
                         }
-                        .padding(.bottom, 40)
-                        HStack(spacing: 0){
-                            Text("재료 등록")
-                                .font(.system(size: 22))
-                                .fontWeight(.heavy)
-                            Spacer()
+                        Spacer()
+                        
+                    }
+                    .padding(.bottom, 40)
+                    HStack(spacing: 0){
+                        Text("재료 등록")
+                            .font(.system(size: 22))
+                            .fontWeight(.heavy)
+                        Spacer()
+                        Button(action:{
+                            showingSelectFoodSheet.toggle()
+                        }, label:{
                             Image(systemName: "plus.rectangle.fill")
                                 .resizable()
                                 .frame(width: 32, height: 25)
-                            .foregroundColor(Color(red: 246/255, green: 153/255, blue: 39/255))
-                            .padding(.trailing, 4)
-                        }
-                        .padding(.bottom, 10)
-                        Divider()
-                            .frame(minHeight: 1)
-                            .background(Color.black)
-                            .padding(.bottom, 9)
-
-                        ForEach(FoodNames.indices, id: \.self) { index in
-                            HStack(spacing: 0){
+                                .foregroundColor(Color(red: 246/255, green: 153/255, blue: 39/255))
+                                .padding(.trailing, 4)
+                        })
+                        
+                    }
+                    .padding(.bottom, 10)
+                    Divider()
+                        .frame(minHeight: 1)
+                        .background(Color.black)
+                        .padding(.bottom, 9)
+                    
+                    ForEach(foodNames.indices, id: \.self) { index in
+                        HStack(spacing: 0){
+                            Button(action:{
+                                foodNames.remove(at: index)
+                                foodQuantities.remove(at: index)
+                            }, label:{
                                 Image(systemName: "minus.circle")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .padding(.trailing, 15)
-                                Image(FoodIcons[index])
-                                    .resizable()
-                                    .frame(width: 32, height: 32)
-                                    .padding(.trailing, 7)
-                                Text(FoodNames[index])
-                                    .font(.system(size: 17))
-                                    .fontWeight(.heavy)
-                                Spacer()
-                                TextField("용량과 단위", text: $FoodQuantities[index])
-                                    .frame(width: 140)
-                                    .textFieldStyle(TextfieldStyle())
-                            }
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-
-                        HStack(spacing: 0){
-                            Text("소스 등록")
-                                .font(.system(size: 22))
+                            })
+                            Image(imageName.getImageName(for: foodNames[index]) ?? "")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .padding(.trailing, 7)
+                            Text(foodNames[index])
+                                .font(.system(size: 17))
                                 .fontWeight(.heavy)
                             Spacer()
+                            TextField("용량과 단위", text: $foodQuantities[index])
+                                .frame(width: 140)
+                                .textFieldStyle(TextfieldStyle())
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    
+                    HStack(spacing: 0){
+                        Text("소스 등록")
+                            .font(.system(size: 22))
+                            .fontWeight(.heavy)
+                        Spacer()
+                        Button(action:{
+                            showingSelectSauceSheet.toggle()
+                        }, label:{
                             Image(systemName: "plus.rectangle.fill")
                                 .resizable()
                                 .frame(width: 32, height: 25)
-                            .foregroundColor(Color(red: 246/255, green: 153/255, blue: 39/255))
-                            .padding(.trailing, 4)
-                        }
-                        .padding(.bottom, 10)
-                        .padding(.top, 45)
-
-                        Divider()
-                            .frame(minHeight: 1)
-                            .background(Color.black)
-                            .padding(.bottom, 9)
-                        ForEach(FoodNames.indices, id: \.self) { index in
-                            HStack(spacing: 0){
+                                .foregroundColor(Color(red: 246/255, green: 153/255, blue: 39/255))
+                                .padding(.trailing, 4)
+                        })
+                    }
+                    .padding(.bottom, 10)
+                    .padding(.top, 45)
+                    
+                    Divider()
+                        .frame(minHeight: 1)
+                        .background(Color.black)
+                        .padding(.bottom, 9)
+                    ForEach(SauceNames.indices, id: \.self) { index in
+                        HStack(spacing: 0){
+                            Button(action:{
+                                SauceNames.remove(at: index)
+                                SauceQuantities.remove(at: index)
+                            }, label:{
                                 Image(systemName: "minus.circle")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .padding(.trailing, 20)
-                                Text(SauceNames[index])
-                                    .font(.system(size: 17))
-                                    .fontWeight(.heavy)
-                                Spacer()
-                                TextField("용량과 단위", text: $SauceQuantities[index])
-                                    .frame(width: 140)
-                                    .textFieldStyle(TextfieldStyle())
-                            }
+                            })
+                            Text(SauceNames[index])
+                                .font(.system(size: 17))
+                                .fontWeight(.heavy)
+                            Spacer()
+                            TextField("용량과 단위", text: $SauceQuantities[index])
+                                .frame(width: 140)
+                                .textFieldStyle(TextfieldStyle())
                         }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    
+                    Button(action:{
+                        viewModel.inputFoods = foodNames
+                        viewModel.inputFoodsAmount = foodQuantities
+                        viewModel.inputSauces = SauceNames
+                        viewModel.inputSaucesAmount = SauceQuantities
+                        navigationManager.push(to: .recipeAddMemo)
+                    }, label:{
+                        Text("입력 완료")
+                    })
                 }
+                
+                .padding(.horizontal, 16)
             }
         }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("레시피 등록")
-                    .font(.system(size: 20))
-                    .fontWeight(.heavy)
-                    .foregroundColor(.black)
-            }
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.black)
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: RecipeAddView_Memo()){
-                    Text("다음")
-                        .foregroundStyle(.black)
-                }
-            }
+        .onAppear{
+            foodNames = viewModel.inputFoods
+            foodQuantities = viewModel.inputFoodsAmount
+            SauceNames = viewModel.inputSauces
+            SauceQuantities = viewModel.inputSaucesAmount
         }
+        .sheet(isPresented: $showingSelectFoodSheet){
+            RecipeSelectFoodSheetView(selectedFoodsList: $foodNames, selectedFoodsAmountList: $foodQuantities)
+                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
+        }
+        .sheet(isPresented: $showingSelectSauceSheet){
+            RecipeSelectSauceSheetView(selectedSaucesList: $SauceNames, selectedSaucesAmountList: $SauceQuantities)
+                .presentationDetents([.fraction(0.75)]) // 시트 높이를 3/4로 설정
+        }
+        .navigationTitle("레시피 등록")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
