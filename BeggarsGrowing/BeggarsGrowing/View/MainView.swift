@@ -122,6 +122,7 @@ struct MainView: View {
                 Button(action: {
                     // 요리하기 버튼 액션
                     UINavigationBar.setAnimationsEnabled(false)
+                    viewModel.reset()
                     navigationManager.push(to:.cookChoiceFood)
                 }) {
                     Image("MainCookButton")
