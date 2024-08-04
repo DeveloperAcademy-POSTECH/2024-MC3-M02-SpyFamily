@@ -13,10 +13,10 @@ struct ResultPriceOverlay: View {
     
     var body: some View {
         ZStack {
-            Image("OverlayBG")
+            Image("MainResultOverlay")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 343, height: 460)
+                .frame(width: 343, height: 370)
 
             VStack(spacing: 20) {
                 Text("추정 소요금액")
@@ -47,3 +47,4 @@ struct ResultPriceOverlay: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
+

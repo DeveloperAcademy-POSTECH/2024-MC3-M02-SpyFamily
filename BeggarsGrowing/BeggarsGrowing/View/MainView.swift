@@ -25,122 +25,130 @@ struct MainView: View {
     @Query var histories: [History]
     
     var body: some View {
-        ZStack{
-            // 배경 색
-            Color(red: 255/255, green: 250/255, blue: 233/255)
-                .ignoresSafeArea()
+        //        ZStack{
+        // 배경 색
+        
+        VStack {
+            // 커스텀 프로그레스 바
+            CustomProgressBar(value: progressValue, maxValue: maxValue)
+                .frame(height: 40)
+                .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
             
-            VStack {
-                // 커스텀 프로그레스 바
-                CustomProgressBar(value: progressValue, maxValue: maxValue)
-                    .frame(height: 40)
-                    .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
-                
-                // 첫번째 줄 버튼 두개
-                HStack{
-                    Button(action: {
-                        // 거지의전당 버튼 액션
-                    }) {
-                        Image("MainBeggarHOF")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 77)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // 냉장고 버튼 액션
-                        navigationManager.push(to:.refri)
-                    }) {
-                        Image("MainRefriButton")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 77)
-                    }
-                }.padding(.horizontal, 13)
-                
-                // 두번째 줄 버튼
-                HStack{
-                    Spacer()
-                    
-                    Button(action: {
-                        // 레시피 버튼 액션
-                        navigationManager.push(to:.recipe)
-                    }) {
-                        Image("MainRecipeButton")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 77)
-                    }
-                    
-                }.padding(.horizontal, 13)
+            // 첫번째 줄 버튼 두개
+            HStack{
+                Button(action: {
+                    // 거지의전당 버튼 액션
+                }) {
+                    Image("MainBeggarHOF")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 77)
+                }
                 
                 Spacer()
                 
-                
-                
-                // Text Box
-                ZStack(alignment: .top) {
-                    Image("MainDialog")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 330, height: 94)
-                    
-                    VStack {
-                        HStack {
-                            Text("미스탕후루씨")
-                                .multilineTextAlignment(.center)
-                                .font(.DGMFootnote)
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        stops: [
-                                            Gradient.Stop(color: Color(red: 0.93, green: 0.8, blue: 0.25), location: 0.00),
-                                            Gradient.Stop(color: Color(red: 0.93, green: 0.69, blue: 0.27), location: 1.00),
-                                        ],
-                                        startPoint: UnitPoint(x: 0.5, y: 0),
-                                        endPoint: UnitPoint(x: 0.5, y: 1)
-                                    )
-                                )
-                            Spacer()
-                        }.padding(EdgeInsets(top: 15, leading: 18, bottom: 5, trailing: 0))
-                        
-                        Text("오늘은 마라탕을 먹고싶어... 나는 변준섭인데 귀찮지만 할거는 다해")
-                            .font(.DGMFootnote)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(Color.white)
-                            .padding(.horizontal, 30)
-                            .padding(.top, -15)
-                            .frame(width: 330,height: 44) // 너비를 330으로 제한하여 텍스트 줄바꿈
-                    }
-                    .frame(width: 330, height: 88)
-                }
-                .padding(.bottom, 20)
-                
-                
-                // 요리하기 버튼
                 Button(action: {
-                    // 요리하기 버튼 액션
-                    UINavigationBar.setAnimationsEnabled(false)
-                    viewModel.reset()
-                    navigationManager.push(to:.cookChoiceFood)
+                    // 냉장고 버튼 액션
+                    navigationManager.push(to:.refri)
                 }) {
-                    Image("MainCookButton")
+                    Image("MainRefriButton")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 230, maxHeight: 70)
+                        .frame(maxWidth: 77)
                 }
-                .padding(.bottom, 50)
-            }
+            }.padding(.horizontal, 13)
             
-            if showOverlay {
-                ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()))
-                    .transition(.opacity)
-                    .onTapGesture {
-                        showOverlay = false
-                    }
+            // 두번째 줄 버튼
+            HStack{
+                Button(action: {
+                    // 스토리 버튼 액션
+                }) {
+                    Image("MainStoryButton")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 77)
+                }
+                Spacer()
+                
+                Button(action: {
+                    // 레시피 버튼 액션
+                    navigationManager.push(to:.recipe)
+                }) {
+                    Image("MainRecipeButton")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 77)
+                }
+                
+            }.padding(.horizontal, 13)
+            
+            
+            Image("Beggar01")
+                .resizable()
+                .frame(maxWidth: 190,maxHeight: 286)
+                .scaledToFit()
+            
+            
+            
+            
+            // Text Box
+            ZStack(alignment: .top) {
+                Image("MainDialog")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 330, height: 94)
+                
+                VStack {
+                    HStack {
+                        Text("미스탕후루씨")
+                            .multilineTextAlignment(.center)
+                            .font(.DGMFootnote)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    stops: [
+                                        Gradient.Stop(color: Color(red: 0.93, green: 0.8, blue: 0.25), location: 0.00),
+                                        Gradient.Stop(color: Color(red: 0.93, green: 0.69, blue: 0.27), location: 1.00),
+                                    ],
+                                    startPoint: UnitPoint(x: 0.5, y: 0),
+                                    endPoint: UnitPoint(x: 0.5, y: 1)
+                                )
+                            )
+                        Spacer()
+                    }.padding(EdgeInsets(top: 15, leading: 18, bottom: 5, trailing: 0))
+                    
+                    Text("오늘은 마라탕을 먹고싶어... 나는 변준섭인데 귀찮지만 할거는 다해")
+                        .font(.DGMFootnote)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.white)
+                        .padding(.horizontal, 30)
+                        .padding(.top, -15)
+                        .frame(width: 330,height: 44) // 너비를 330으로 제한하여 텍스트 줄바꿈
+                }
+                .frame(width: 330, height: 88)
             }
-        }.navigationDestination(for: PathType.self) { pathType in
+            .padding(.bottom, 20)
+            
+            
+            // 요리하기 버튼
+            Button(action: {
+                // 요리하기 버튼 액션
+                UINavigationBar.setAnimationsEnabled(false)
+                viewModel.reset()
+                navigationManager.push(to:.cookChoiceFood)
+            }) {
+                Image("MainCookButton")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 230, maxHeight: 70)
+            }
+            .padding(.bottom, 50)
+        }
+        // 배경 이미지
+        .background(Image("MainBG01")
+            .resizable()
+            .scaledToFill()
+            .edgesIgnoringSafeArea(.all))
+        .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
         .onAppear {
@@ -155,8 +163,18 @@ struct MainView: View {
                 }
             }
         }
+        
+        if showOverlay {
+            ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()))
+                .transition(.opacity)
+                .onTapGesture {
+                    showOverlay = false
+                }
+        }
     }
+    
 }
+
 // 프로그레스바 커스텀
 struct CustomProgressBar: View {
     var value: Float
