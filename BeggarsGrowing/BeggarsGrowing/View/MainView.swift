@@ -10,32 +10,46 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
+    @AppStorage("StoryStage") var storyStage: Int = 0
+    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0
+    
     @Environment(NavigationManager.self) var navigationManager
     
     @EnvironmentObject var viewModel: CookViewModel
+    @EnvironmentObject var mainViewModel: MainViewModel
     @Environment(\.modelContext) private var modelContext
     
     @State var receivedHistory: History?
     @State var shouldNavigate = false
     @State var showOverlay = false
+    @State var animationToggle = false
+    @State var moneyTobeChanged = 0
     
-    @State private var progressValue: Float = 20000
+    @State private var progressValue: Float = 25000
     @State private var maxValue: Float = 20000
     
     @Query var histories: [History]
+    @Query var beggars: [Beggars]
+    @Query var foodsInRefri: [Refrigerator]
     
     var body: some View {
-    
+        
         VStack {
             // 커스텀 프로그레스 바
-            CustomProgressBar(value: progressValue, maxValue: maxValue)
+            Text("\(storyStage)")
+            CustomProgressBar(value: Float(mainViewModel.nowBeggar.nowMoney), maxValue: Float(mainViewModel.nowBeggar.goalMoney))
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
+                .onChange(of:animationToggle){
+                    if animationToggle == true{
+                        successAnimation()
+                    }
+                }
             
             // 첫번째 줄 버튼 두개
             HStack{
                 Button(action: {
-                    // 거지의전당 버튼 액션
+                    navigationManager.push(to:.beggarsHOF)
                 }) {
                     Image("MainBeggarHOF")
                         .resizable()
@@ -81,13 +95,10 @@ struct MainView: View {
             }.padding(.horizontal, 13)
             
             
-            Image("Beggar01")
+            Image(mainViewModel.nowBeggar.image)
                 .resizable()
                 .frame(maxWidth: 190,maxHeight: 286)
                 .scaledToFit()
-            
-            
-            
             
             // Text Box
             ZStack(alignment: .top) {
@@ -98,7 +109,7 @@ struct MainView: View {
                 
                 VStack {
                     HStack {
-                        Text("미스탕후루씨")
+                        Text(mainViewModel.nowBeggar.name)
                             .multilineTextAlignment(.center)
                             .font(.DGMFootnote)
                             .foregroundStyle(
@@ -114,7 +125,7 @@ struct MainView: View {
                         Spacer()
                     }.padding(EdgeInsets(top: 15, leading: 18, bottom: 5, trailing: 0))
                     
-                    Text("오늘은 마라탕을 먹고싶어... 나는 변준섭인데 귀찮지만 할거는 다해")
+                    Text(BeggarsList().beggars[storyStage].ment.randomElement() ?? "")
                         .font(.DGMFootnote)
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.white)
@@ -141,6 +152,12 @@ struct MainView: View {
             }
             .padding(.bottom, 50)
         }
+        .overlay{
+            if showOverlay {
+                ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()), showOverlay: $showOverlay)
+                    .transition(.opacity)
+            }
+        }
         // 배경 이미지
         .background(Image("MainBG01")
             .resizable()
@@ -160,17 +177,55 @@ struct MainView: View {
                     }
                 }
             }
-        }
-        
-        if showOverlay {
-            ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()))
-                .transition(.opacity)
-                .onTapGesture {
-                    showOverlay = false
+            mainViewModel.beggars = beggars
+            DispatchQueue.main.async{
+                mainViewModel.nowBeggar = beggars.filter {$0.stage == storyStage}[0]
+                if moneyForSave != 0{
+                    checkSaveMoney()
                 }
+            }
+        }
+        .onChange(of:showOverlay) {
+            if showOverlay == false{
+                checkSaveMoney()
+                for usedFood in viewModel.usedFoods {
+                    if let index = foodsInRefri.firstIndex(where: { $0.id == usedFood.0.id }) {
+                        foodsInRefri[index].amount -= usedFood.1
+                        if foodsInRefri[index].amount <= 0 {
+                            DispatchQueue.main.async{
+                                foodsInRefri[index].amount = 0
+                                modelContext.delete(foodsInRefri[index])
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     
+    func successAnimation() {
+        DispatchQueue.main.async{
+            withAnimation(Animation.easeInOut(duration: 3.0)) {
+                mainViewModel.nowBeggar.nowMoney = self.moneyTobeChanged
+            }
+            animationToggle.toggle()
+            if mainViewModel.nowBeggar.nowMoney == mainViewModel.nowBeggar.goalMoney{
+                if BeggarsList().beggars.count > storyStage {
+                    storyStage += 1
+                    let newBeggar = BeggarsList().beggars[storyStage]
+                    modelContext.insert(Beggars(stage: storyStage, name: newBeggar.name, image: newBeggar.image, goalMoney: newBeggar.goalMoney, nowMoney: 0))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                        navigationManager.push(to:.beggarsHOF)
+                    }
+                }
+            }
+        }
+        
+    }
+    func checkSaveMoney() {
+        moneyTobeChanged = mainViewModel.giveMoneyToBeggars()
+        animationToggle.toggle()
+    }
 }
 
 // 프로그레스바 커스텀
@@ -221,42 +276,8 @@ struct CustomProgressBar: View {
 }
 
 func formattedAmount(_ amount: Int) -> String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.groupingSeparator = ""
-        return numberFormatter.string(from: NSNumber(value: amount)) ?? "\(amount)"
-    }
-
-
-//import SwiftUI
-//
-//struct MainView: View {
-//    @Environment(NavigationManager.self) var navigationManager
-//    
-//    var body: some View {
-//        VStack {
-//            Text("MainView")
-//            Button("냉장고 버튼") {
-//                navigationManager.push(to: .refri)
-//            }
-//            Button("레시피 버튼") {
-//                navigationManager.push(to: .recipe)
-//            }
-//            Button("요리하기 버튼") {
-//                    UINavigationBar.setAnimationsEnabled(false)
-//                    navigationManager.push(to:.cookChoiceFood)
-//                    
-//            }
-//        }
-//        .navigationDestination(for: PathType.self) { pathType in
-//            pathType.NavigatingView()
-//        }
-//    }
-//}
-//
-//#Preview {
-//    MainView()
-//        .environment(NavigationManager())
-//}
-//
-
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    numberFormatter.groupingSeparator = ""
+    return numberFormatter.string(from: NSNumber(value: amount)) ?? "\(amount)"
+}

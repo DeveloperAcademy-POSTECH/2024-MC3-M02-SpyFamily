@@ -11,12 +11,12 @@ import SwiftData
 struct ContentView: View {
     @State private var navigationManager = NavigationManager()
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true // CSV 불러왔는지 True, False로 UserDefaults 저장
-    
+
     @Environment(\.modelContext) var modelContext
+    
     @Query var foodsInRefri : [Refrigerator]
     @Query var recipeData : [Recipe]
     @Query var filterRecipes : [FilterRecipe]
-    
     
     @EnvironmentObject var viewModel: CookViewModel
     
@@ -52,6 +52,15 @@ struct ContentView: View {
 //                CSVUtils.saveFoodData(fooddata: &foodCSVData, modelContext: modelContext)
                 CSVUtils.saveRecipeData(fooddata: &recipeCSVData, modelContext: modelContext)
                 print("Run CSV File")
+                
+                DispatchQueue.main.async{
+                    let beggar = BeggarsList().beggars[0]
+                    let name = beggar.name
+                    let image = beggar.image
+                    let goalMoney = beggar.goalMoney
+                    modelContext.insert(Beggars(stage: 0, name: name, image: image, goalMoney: goalMoney, nowMoney: 0))
+                }
+                
                 isFirstLaunch = false
             }
         }

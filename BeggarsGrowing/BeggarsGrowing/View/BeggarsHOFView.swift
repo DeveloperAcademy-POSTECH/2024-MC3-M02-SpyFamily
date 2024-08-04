@@ -78,7 +78,7 @@ struct BeggarsHOFView: View {
             }
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    
+                    navigationManager.pop()
                 }) {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.black)
