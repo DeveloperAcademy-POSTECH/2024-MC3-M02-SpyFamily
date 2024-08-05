@@ -9,8 +9,9 @@ import SwiftUI
 struct RecipeAddView_Name: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: RecipeViewModel
-
+    
     @State private var name = ""
+    @State private var isAlertPresented = false
     
     var body: some View {
         
@@ -109,5 +110,22 @@ struct RecipeAddView_Name: View {
         }
         .navigationTitle("레시피 등록")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("레시피 입력을 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .recipe)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
+        }
     }
 }

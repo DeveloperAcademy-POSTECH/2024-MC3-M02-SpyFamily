@@ -17,6 +17,8 @@ struct CookRecordView: View {
     
     @State var showingSelectFoodSheet: Bool = false
     @State var selectedFoodsList: [Refrigerator] = []
+    @State private var isAlertPresented = false
+
     @Query var foodsInRefri: [Refrigerator]
     
     var imageName = FoodImageName()
@@ -218,6 +220,22 @@ struct CookRecordView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
+        }
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("요리 입력을 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .main)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
         }
     }
     

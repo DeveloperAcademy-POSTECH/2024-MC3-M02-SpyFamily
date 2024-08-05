@@ -36,6 +36,8 @@ struct CookChoiceRecipeView: View {
     @Query var recipeData: [Recipe]
     @Query var foodsInRefri: [Refrigerator]
     
+    @State private var isAlertPresented = false
+    
     var foodsInRefriStrings: [String] { foodsInRefri.map {$0.food} }
     
     var recommendedRecipes: [Recipe] = []
@@ -126,6 +128,22 @@ struct CookChoiceRecipeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
+        }
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("요리 입력을 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .main)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
         }
     }
 }
