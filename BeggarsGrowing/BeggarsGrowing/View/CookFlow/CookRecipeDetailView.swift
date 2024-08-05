@@ -11,32 +11,6 @@ struct CookRecipeDetailView: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: CookViewModel
     
-    @State private var RecipeName: String = "돼지고기 김치찌개"
-    @State private var Link: String = "맛있는 김치찌개 만들기ㅣ백종원의 요리비책 가나다라마바사"
-    @State private var Foodicon: String = "carrot"
-    @State private var FoodName: [String] = [
-        "돼지고기",
-        "배추김치",
-        "양파",
-        "다진마늘"
-    ]
-    @State private var FoodAmount: [String] = [
-        "600g",
-        "100g",
-        "1알",
-        "2스푼"
-    ]
-    @State private var SauceName: [String] = [
-        "간장",
-        "소금",
-        "설탕"
-    ]
-    @State private var SauceAmount: [String] = [
-        "1스푼",
-        "2꼬집",
-        "10g"
-    ]
-    @State private var Memo: String = "며느리에게도 알려주지 않는 비법소스"
     @State var recipe: Recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
     private var imageName = FoodImageName()
 
@@ -46,7 +20,7 @@ struct CookRecipeDetailView: View {
                 .ignoresSafeArea()
             ScrollView{
                 VStack(spacing: 0){
-                    Rectangle() //레시피 이미지
+                    Rectangle()
                         .foregroundColor(.gray)
                         .frame(height: 233)
                         .padding(.bottom, 12)
@@ -67,11 +41,15 @@ struct CookRecipeDetailView: View {
                                 .foregroundColor(.blue)
                                 .bold()
                                 .padding(.trailing, 5)
-                            Text(recipe.link ?? "링크가 없습니다.")
-                                .foregroundColor(.blue)
-                                .underline()
-                                .lineLimit(1)
-                                .truncationMode(.tail) //넘치는 텍스트 말줄임표 표시
+                            Button(action:{
+                                URLUtils.openLink(urlString: recipe.link ?? "")
+                            }, label:{
+                                Text(recipe.link ?? "링크가 없습니다.")
+                                    .foregroundColor(.blue)
+                                    .underline()
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                            })
                         }
                         .padding(.bottom, 15)
                         Text("재료")
