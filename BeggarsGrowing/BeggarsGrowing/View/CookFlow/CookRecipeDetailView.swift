@@ -12,6 +12,8 @@ struct CookRecipeDetailView: View {
     @EnvironmentObject var viewModel: CookViewModel
     
     @State var recipe: Recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+    @State private var isAlertPresented = false
+
     private var imageName = FoodImageName()
 
     var body: some View {
@@ -151,6 +153,22 @@ struct CookRecipeDetailView: View {
                     
                 }
             }
+        }
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("요리 입력을 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .main)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
         }
         .onAppear{
             self.recipe = viewModel.selectedRecipe

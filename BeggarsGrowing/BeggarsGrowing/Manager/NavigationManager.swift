@@ -65,8 +65,6 @@ extension PathType {
             
         case .cookChoiceFood:
             CookChoiceFoodView()
-//                .environmentObject(CookViewModel())
-//                .navigationBarHidden(true)
             
         case .cookChoiceRecipe:
             CookChoiceRecipeView()
@@ -79,7 +77,6 @@ extension PathType {
             
         case .cookRecordCamera:
             CookCameraView()
-                .navigationBarHidden(true)
             
         case .beggarsHOF:
             BeggarsHOFView()

@@ -14,6 +14,7 @@ struct CookChoiceFoodView: View {
     @State private var showView = false
     @State var selectedTab: Int = 0
     @State var selectedFoods: [Refrigerator] = []
+    @State private var isAlertPresented = false
     
     @Query var foodsInRefri : [Refrigerator]
     
@@ -122,6 +123,23 @@ struct CookChoiceFoodView: View {
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
         }
+        .navigationBarBackButtonHidden()
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("요리하기를 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .main)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
+        }
 
         // // // //
         .mask(
@@ -137,23 +155,6 @@ struct CookChoiceFoodView: View {
             showView = true
             UINavigationBar.setAnimationsEnabled(true)
         }
-
-        //        .mask(
-        //            Circle()
-        //                .scale(showView ? 3 : 0.1) // 원의 크기 조절
-        //                .animation(.easeInOut(duration: 0.5), value: showView) // 애니메이션 설정
-        //                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 화면 크기에 맞게 원 크기 설정
-        //        )
-        //        .opacity(showView ? 1 : 0)
-        //        .animation(.easeInOut(duration: 0.5), value: showView)
-        //        .navigationDestination(for: PathType.self) { pathType in
-        //            pathType.NavigatingView()
-        //        }
-        //        .onAppear{
-        //            showView = true
-        //            UINavigationBar.setAnimationsEnabled(true)
-        //        }
-
     }
     
     // // // 냉장 // // //
