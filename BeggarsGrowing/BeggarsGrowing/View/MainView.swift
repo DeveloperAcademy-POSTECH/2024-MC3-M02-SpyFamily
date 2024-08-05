@@ -22,6 +22,7 @@ struct MainView: View {
     @State var receivedHistory: History?
     @State var shouldNavigate = false
     @State var showOverlay = false
+    @State var showStoryOverlay = false
     @State var animationToggle = false
     @State var moneyTobeChanged = 0
     
@@ -60,7 +61,6 @@ struct MainView: View {
                 Spacer()
                 
                 Button(action: {
-                    // 냉장고 버튼 액션
                     navigationManager.push(to:.refri)
                 }) {
                     Image("MainRefriButton")
@@ -70,10 +70,9 @@ struct MainView: View {
                 }
             }.padding(.horizontal, 13)
             
-            // 두번째 줄 버튼
             HStack{
                 Button(action: {
-                    // 스토리 버튼 액션
+                    showStoryOverlay = true
                 }) {
                     Image("MainStoryButton")
                         .resizable()
@@ -155,6 +154,10 @@ struct MainView: View {
         .overlay{
             if showOverlay {
                 ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()), showOverlay: $showOverlay)
+                    .transition(.opacity)
+            }
+            if showStoryOverlay {
+                StoryOverlay(showStoryOverlay: $showStoryOverlay)
                     .transition(.opacity)
             }
         }
