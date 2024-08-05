@@ -5,19 +5,18 @@
 //  Created by 이예형 on 8/2/24.
 //
 import SwiftUI
-
-struct BeggarsModel{
-    var isOpened: Bool
-    var beggarImage: Image
-}
-
+import SwiftData
 
 struct BeggarsHOFView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @EnvironmentObject var mainViewModel: MainViewModel
     
-    let beggars = [BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: true, beggarImage: Image("미스탕후루씨")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem")),BeggarsModel(isOpened: false, beggarImage: Image("LockedItem"))]
-    
-    let totalSavedMoney = 12000000
+    @AppStorage("StoryStage") var storyStage: Int = 0
+
+    @Query var beggars: [Beggars]
+
+    let beggarsList = BeggarsList()
+    @State var totalSavedMoney : Int = 0
     
     var body: some View {
         ZStack {
@@ -42,18 +41,18 @@ struct BeggarsHOFView: View {
                 
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 20) {
-                        
                         // Locked items
-                        ForEach(0..<beggars.count, id: \.self) { item in
-                            if beggars[item].isOpened == true{
-                                beggars[item].beggarImage
+                        ForEach(beggarsList.beggars.indices, id: \.self) { index in
+                            let beggar = beggarsList.beggars[index]
+                            if index <= storyStage{
+                                Image(beggar.image)
                                     .resizable()
                                     .frame(maxWidth: 110, maxHeight: 153)
                                     .aspectRatio(contentMode: .fit)
                                     .shadow(color: .black.opacity(0.25), radius: 1.61053, x: 0, y: 3.22105)
                             }
                             else{
-                                beggars[item].beggarImage
+                                Image("LockedItem")
                                     .resizable()
                                     .frame(maxWidth: 110, maxHeight: 153)
                                     .aspectRatio(contentMode: .fit)
@@ -65,6 +64,10 @@ struct BeggarsHOFView: View {
                     .padding(.horizontal,16)
                 }
             }
+        }
+        .onAppear{
+            let nowMoneyList = beggars.map{$0.nowMoney}
+            totalSavedMoney = nowMoneyList.reduce(0, +)
         }
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
@@ -86,10 +89,4 @@ struct BeggarsHOFView: View {
             }
         }
     }
-}
-
-
-
-#Preview {
-    BeggarsHOFView().environment(NavigationManager())
 }
