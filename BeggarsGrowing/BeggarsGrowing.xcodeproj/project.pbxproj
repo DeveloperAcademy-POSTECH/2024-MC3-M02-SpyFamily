@@ -187,8 +187,7 @@
 				905824482C4B904D003801D3 /* ContentView.swift */,
 				905824562C4B9C61003801D3 /* MainView.swift */,
 				6E75902F2C5C7B0700626282 /* BeggarsHOFView.swift */,
-				9095DA9C2C5F95400067D56C /* MainViewModel.swift */,
-				9095DA9E2C6124000067D56C /* MainViewOverlay */,
+				9095DA9E2C6124000067D56C /* MainTools */,
 				905824742C4BA10F003801D3 /* RefriFlow */,
 				905824752C4BA11C003801D3 /* RecipeFlow */,
 				9058245A2C4B9C95003801D3 /* CookFlow */,
@@ -204,8 +203,7 @@
 				905824692C4B9CE7003801D3 /* CookRecipeDetailView.swift */,
 				9058246B2C4B9CF5003801D3 /* CookRecordView.swift */,
 				90A4AA872C5A81E9000293F6 /* CookSlectFoodSheet.swift */,
-				90A4AA822C59DF92000293F6 /* New Group */,
-				90EB3C622C58BCAA007960FD /* CookViewModel.swift */,
+				90A4AA822C59DF92000293F6 /* CookTools */,
 			);
 			path = CookFlow;
 			sourceTree = "<group>";
@@ -248,33 +246,43 @@
 				905824612C4B9CBC003801D3 /* RecipeDetailView.swift */,
 				6E7590292C59E47B00626282 /* RecipeAddView_Name.swift */,
 				6E75902B2C59E4A000626282 /* RecipeAddView_Picture.swift */,
-				90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */,
 				6E7590252C59E42D00626282 /* RecipeAddView_Link.swift */,
 				6E75902D2C5A749A00626282 /* RecipeAddView_FoodSauce.swift */,
 				6E7590272C59E45200626282 /* RecipeAddView_Memo.swift */,
-				90A4AA892C5BDCDA000293F6 /* RecipeViewModel.swift */,
-				90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */,
-				90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */,
+				9095DAA32C6130DD0067D56C /* RecipeTools */,
 			);
 			path = RecipeFlow;
 			sourceTree = "<group>";
 		};
-		9095DA9E2C6124000067D56C /* MainViewOverlay */ = {
+		9095DA9E2C6124000067D56C /* MainTools */ = {
 			isa = PBXGroup;
 			children = (
+				9095DA9C2C5F95400067D56C /* MainViewModel.swift */,
 				6E7590202C54F45400626282 /* ResultPriceOverlay.swift */,
 				9095DA9F2C6124110067D56C /* StoryOverlay.swift */,
 			);
-			path = MainViewOverlay;
+			path = MainTools;
 			sourceTree = "<group>";
 		};
-		90A4AA822C59DF92000293F6 /* New Group */ = {
+		9095DAA32C6130DD0067D56C /* RecipeTools */ = {
 			isa = PBXGroup;
 			children = (
+				90A4AA892C5BDCDA000293F6 /* RecipeViewModel.swift */,
+				90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */,
+				90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */,
+				90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */,
+			);
+			path = RecipeTools;
+			sourceTree = "<group>";
+		};
+		90A4AA822C59DF92000293F6 /* CookTools */ = {
+			isa = PBXGroup;
+			children = (
+				90EB3C622C58BCAA007960FD /* CookViewModel.swift */,
 				90A4AA832C59DFBE000293F6 /* CameraView.swift */,
 				90A4AA852C59DFC5000293F6 /* CameraModel.swift */,
 			);
-			path = "New Group";
+			path = CookTools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
