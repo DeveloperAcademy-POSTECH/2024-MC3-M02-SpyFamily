@@ -18,7 +18,7 @@ struct CookRecordView: View {
     @State var showingSelectFoodSheet: Bool = false
     @State var selectedFoodsList: [Refrigerator] = []
     @State private var isAlertPresented = false
-
+    
     @Query var foodsInRefri: [Refrigerator]
     
     var imageName = FoodImageName()
@@ -32,18 +32,18 @@ struct CookRecordView: View {
                 }) {
                     if let selectedImage = viewModel.recentImage {
                         GeometryReader { geometry in
-                                Image(uiImage: selectedImage)
-                                    .resizable()
-                                    .scaledToFill() // Fill the width of the screen
-                                    .frame(width: geometry.size.width, height: 230) // Set the height to 230
-                                    .clipped() // Crop the image to fit the frame
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.gray, lineWidth: 1)
-                                    )
-                            }
-                            .frame(height: 230)
+                            Image(uiImage: selectedImage)
+                                .resizable()
+                                .scaledToFill() // Fill the width of the screen
+                                .frame(width: geometry.size.width, height: 230) // Set the height to 230
+                                .clipped() // Crop the image to fit the frame
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                        }
+                        .frame(height: 230)
                     } else {
                         VStack {
                             HStack(spacing: 5) {
@@ -132,10 +132,23 @@ struct CookRecordView: View {
                                         .padding(.horizontal, 16)
                                         
                                         // 기본 슬라이더
-                                        Slider(value: $viewModel.usedFoods[index].1, in: 0...100, step: 10)
-                                            .padding(.horizontal, 16)
-                                            .frame(width: 190) // 슬라이더 너비로 변경
-                                            .accentColor(.orange)
+                                        //                                        Slider(value: $viewModel.usedFoods[index].1, in: 0...100, step: 10)
+                                        //                                            .padding(.horizontal, 16)
+                                        //                                            .frame(width: 190) // 슬라이더 너비로 변경
+                                        //                                            .accentColor(.orange)
+                                        Slider(value: Binding(
+                                            get: {
+                                                guard index < viewModel.usedFoods.count else { return 0 }
+                                                return self.viewModel.usedFoods[index].1
+                                            },
+                                            set: { newValue in
+                                                guard index < viewModel.usedFoods.count else { return }
+                                                self.viewModel.usedFoods[index].1 = min(newValue, viewModel.usedFoods[index].0.amount)
+                                            }
+                                        ), in: 0...100, step: 10)
+                                        .padding(.horizontal, 16)
+                                        .frame(width: 190) // 슬라이더 너비로 변경
+                                        .accentColor(.orange)
                                     }
                                     
                                     // 슬라이더 범위 표시
