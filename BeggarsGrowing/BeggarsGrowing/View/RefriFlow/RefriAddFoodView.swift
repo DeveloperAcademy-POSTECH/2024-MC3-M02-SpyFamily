@@ -157,8 +157,3 @@ struct PriceTextfieldStyle: TextFieldStyle {
         }
     }
 }
-
-//#Preview {
-//    RefriAddFoodView()
-//        .environment(NavigationManager())
-//}

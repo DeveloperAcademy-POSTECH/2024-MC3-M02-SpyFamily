@@ -41,6 +41,7 @@
 		9095DA9D2C5F95400067D56C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DA9C2C5F95400067D56C /* MainViewModel.swift */; };
 		9095DAA02C6124110067D56C /* StoryOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DA9F2C6124110067D56C /* StoryOverlay.swift */; };
 		9095DAA22C612BAD0067D56C /* URLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9095DAA12C612BAC0067D56C /* URLUtils.swift */; };
+		9095DAA52C61C44B0067D56C /* Recipe.csv in Resources */ = {isa = PBXBuildFile; fileRef = 9095DAA42C61C44B0067D56C /* Recipe.csv */; };
 		90A4AA842C59DFBE000293F6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA832C59DFBE000293F6 /* CameraView.swift */; };
 		90A4AA862C59DFC5000293F6 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA852C59DFC5000293F6 /* CameraModel.swift */; };
 		90A4AA882C5A81E9000293F6 /* CookSlectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA872C5A81E9000293F6 /* CookSlectFoodSheet.swift */; };
@@ -48,7 +49,6 @@
 		90A4AA8C2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */; };
 		90A4AA8E2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */; };
 		90A4AA902C5F3F64000293F6 /* RecipeImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */; };
-		90EB3C5B2C5543EC007960FD /* Recipe.csv in Resources */ = {isa = PBXBuildFile; fileRef = 90EB3C5A2C5543EC007960FD /* Recipe.csv */; };
 		90EB3C5D2C57CA25007960FD /* RefriSelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C5C2C57CA25007960FD /* RefriSelectFoodSheet.swift */; };
 		90EB3C632C58BCAA007960FD /* CookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C622C58BCAA007960FD /* CookViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +90,7 @@
 		9095DA9C2C5F95400067D56C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		9095DA9F2C6124110067D56C /* StoryOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryOverlay.swift; sourceTree = "<group>"; };
 		9095DAA12C612BAC0067D56C /* URLUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUtils.swift; sourceTree = "<group>"; };
+		9095DAA42C61C44B0067D56C /* Recipe.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Recipe.csv; sourceTree = "<group>"; };
 		90A4AA832C59DFBE000293F6 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		90A4AA852C59DFC5000293F6 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 		90A4AA872C5A81E9000293F6 /* CookSlectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookSlectFoodSheet.swift; sourceTree = "<group>"; };
@@ -97,7 +98,6 @@
 		90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelectFoodSheet.swift; sourceTree = "<group>"; };
 		90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelectSauceSheet.swift; sourceTree = "<group>"; };
 		90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeImagePicker.swift; sourceTree = "<group>"; };
-		90EB3C5A2C5543EC007960FD /* Recipe.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Recipe.csv; sourceTree = "<group>"; };
 		90EB3C5C2C57CA25007960FD /* RefriSelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefriSelectFoodSheet.swift; sourceTree = "<group>"; };
 		90EB3C622C58BCAA007960FD /* CookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,7 +135,7 @@
 		9006C5992C538A6A009B5925 /* CSVfiles */ = {
 			isa = PBXGroup;
 			children = (
-				90EB3C5A2C5543EC007960FD /* Recipe.csv */,
+				9095DAA42C61C44B0067D56C /* Recipe.csv */,
 				9006C59E2C538CC9009B5925 /* Food.csv */,
 			);
 			path = CSVfiles;
@@ -344,9 +344,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E4A43AB2C5D10E20095B574 /* DungGeunMo.ttf in Resources */,
-				90EB3C5B2C5543EC007960FD /* Recipe.csv in Resources */,
 				9006C59F2C538CC9009B5925 /* Food.csv in Resources */,
 				9058244E2C4B904E003801D3 /* Preview Assets.xcassets in Resources */,
+				9095DAA52C61C44B0067D56C /* Recipe.csv in Resources */,
 				9058244B2C4B904E003801D3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

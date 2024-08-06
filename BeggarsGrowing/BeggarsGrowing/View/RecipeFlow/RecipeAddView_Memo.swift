@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
+
 struct RecipeAddView_Memo: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: RecipeViewModel
+    @EnvironmentObject var cookViewModel: CookViewModel
     @Environment(\.modelContext) private var modelContext
 
     @State private var memo = ""
     @State private var isAlertPresented = false
+    
+    @Query var filterRecipes: [FilterRecipe]
+    @Query var recipeData: [Recipe]
     
     var body: some View {
         ZStack {
@@ -93,7 +99,12 @@ struct RecipeAddView_Memo: View {
                     Button(action:{
                         DispatchQueue.main.async{
                             viewModel.inputMemo = memo
-                            modelContext.insert(viewModel.finishRecipeRecord())
+                            let newRecipe = viewModel.finishRecipeRecord()
+                            modelContext.insert(newRecipe)
+                            for recipeFood in newRecipe.foods{
+                                let filterToAdd = filterRecipes.filter{ $0.food == recipeFood}[0]
+                                filterToAdd.recipes.insert(newRecipe.id)
+                            }
                             navigationManager.pop(to: .recipe)
                         }
                     }, label:{
@@ -125,8 +136,4 @@ struct RecipeAddView_Memo: View {
             )
         }
     }
-}
-
-#Preview {
-    RecipeAddView_Memo()
 }
