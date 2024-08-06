@@ -67,6 +67,7 @@ struct RefriAddFoodView: View {
                             TextField("가격", value: $food.price, formatter: NumberFormatter())
                                 .frame(width: 109)
                                 .textFieldStyle(PriceTextfieldStyle())
+                                .keyboardType(.numberPad)
                                 .padding(.trailing, 30)
                             Toggle(isOn: $food.freezing) {
                                 Text("")
