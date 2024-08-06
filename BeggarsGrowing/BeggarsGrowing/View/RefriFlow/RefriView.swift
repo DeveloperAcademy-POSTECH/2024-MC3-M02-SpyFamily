@@ -55,15 +55,30 @@ struct RefriView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.bottom, 14)
                 
-                // 냉장고 재료 리스트
-                ScrollView {
-                    VStack(spacing: 0){
-                        ForEach(filteredFoods) { food in
-                            FoodCard(foodInRefri: food)
+                
+                // 냉장고가 비었을 때 보여주는 UI
+                if filteredFoods.isEmpty {
+                    Spacer()
+                    Image("EmptyRefri")
+                        .resizable()
+                        .frame(width: 60,height: 121)
+                    Text("냉장고가 텅 비었어요!").font(.body).fontWeight(.regular)
+                        .padding(.top, 16)
+                }
+                else{
+                    // 냉장고 재료 리스트
+                    ScrollView {
+                        VStack(spacing: 0){
+                            ForEach(filteredFoods) { food in
+                                FoodCard(foodInRefri: food)
+                            }
+                            .padding(.vertical, 10)
+                            
+                            
                         }
-                        .padding(.vertical, 10)
                     }
                 }
+                
                 Spacer()
                 Button(action: {
                     // 식재료 추가하기 동작

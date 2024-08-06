@@ -47,9 +47,9 @@ struct CookChoiceFoodView: View {
                 .padding(16)
                 
                 if selectedTab == 0 {
-                    RefriView(foods: notFreezingFoods, selectedFoods: $selectedFoods)
+                        RefriView(foods: notFreezingFoods, selectedFoods: $selectedFoods)
                 } else {
-                    FreezeView(foods: freezingFoods, selectedFoods: $selectedFoods)
+                        FreezeView(foods: freezingFoods, selectedFoods: $selectedFoods)
                 }
                 
                 Divider()
@@ -166,82 +166,97 @@ struct CookChoiceFoodView: View {
         
         var body: some View {
             VStack {
-                ScrollView {
-                    ForEach(foods, id: \.self) { food in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .opacity(0)
-                                .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black, lineWidth: 2)
-                                    .opacity(0.15))
-                                .padding(.horizontal, 16)
-                                .padding(.top,1)
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundColor(Color(red: 252/255, green: 239/255, blue: 209/255))
-                                .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2))
-                                .padding(.top, 1)
-                                .overlay(
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.orange)
-                                        .padding(.leading, 320)
-                                        .padding(.bottom, 50)
-                                )
-                                .frame(width: 361, height: 100)
-                                .opacity(selectedFoods.contains(food) ? 1 : 0)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    if selectedFoods.count >= 3 {
-                                        if selectedFoods.contains(food) {
-                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
-                                        }
-                                    } else {
-                                        if selectedFoods.contains(food) {
-                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                if foods.isEmpty{
+                    
+                    Image("EmptyRefri")
+                        .resizable()
+                        .frame(width: 60,height: 121)
+                        .padding(.top, 30)
+                    Text("아직 재료가 추가되지 않았어요.\n먼저 냉장고에 재료를 추가해주세요.")
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                    Spacer()
+                    
+                }
+                else{
+                    ScrollView {
+                        ForEach(foods, id: \.self) { food in
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .opacity(0)
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.black, lineWidth: 2)
+                                        .opacity(0.15))
+                                    .padding(.horizontal, 16)
+                                    .padding(.top,1)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(Color(red: 252/255, green: 239/255, blue: 209/255))
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2))
+                                    .padding(.top, 1)
+                                    .overlay(
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.orange)
+                                            .padding(.leading, 320)
+                                            .padding(.bottom, 50)
+                                    )
+                                    .frame(width: 361, height: 100)
+                                    .opacity(selectedFoods.contains(food) ? 1 : 0)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        if selectedFoods.count >= 3 {
+                                            if selectedFoods.contains(food) {
+                                                selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                            }
                                         } else {
-                                            selectedFoods.append(food)
+                                            if selectedFoods.contains(food) {
+                                                selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                            } else {
+                                                selectedFoods.append(food)
+                                            }
                                         }
                                     }
-                                }
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
-                                        .frame(width: 76, height: 76)
-                                        .overlay{Image(imageName.getImageName(for: food.food) ?? "")
-                                                .resizable()
-                                            .frame(width:68, height:68)}
-                                        .padding(.leading, 3)
-                                    RoundedRectangle(cornerRadius: 13.5)
-                                        .overlay(
-                                            Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 15))
-                                        )
-                                        .frame(width: 52, height: 20)
-                                        .padding(.trailing, 28)
-                                        .padding(.bottom, 68)
-                                        .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
-                                }
-                                
-                                Text(food.food)
-                                    .font(.title2)
-                                    .fontWeight(.black)
-                                
-                                Spacer()
-                                
-                                Text("남은 양")
-                                
-                                VStack {
-                                    Text("\(Int(food.amount))%")
+                                HStack {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
+                                            .frame(width: 76, height: 76)
+                                            .overlay{Image(imageName.getImageName(for: food.food) ?? "")
+                                                    .resizable()
+                                                .frame(width:68, height:68)}
+                                            .padding(.leading, 3)
+                                        RoundedRectangle(cornerRadius: 13.5)
+                                            .overlay(
+                                                Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 15))
+                                            )
+                                            .frame(width: 52, height: 20)
+                                            .padding(.trailing, 28)
+                                            .padding(.bottom, 68)
+                                            .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
+                                    }
+                                    
+                                    Text(food.food)
                                         .font(.title2)
-                                        .fontWeight(.bold)
+                                        .fontWeight(.black)
+                                    
+                                    Spacer()
+                                    
+                                    Text("남은 양")
+                                    
+                                    VStack {
+                                        Text("\(Int(food.amount))%")
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                    }
                                 }
+                                .padding(.horizontal, 25)
                             }
-                            .padding(.horizontal, 25)
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }
@@ -256,82 +271,97 @@ struct CookChoiceFoodView: View {
         
         var body: some View {
             VStack {
-                ScrollView {
-                    ForEach(foods, id: \.self) { food in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .opacity(0)
-                                .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black, lineWidth: 2)
-                                    .opacity(0.15))
-                                .padding(.horizontal, 16)
-                                .padding(.top,1)
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundColor(Color(red: 252/255, green: 239/255, blue: 209/255))
-                                .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2))
-                                .padding(.top, 1)
-                                .overlay(
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.orange)
-                                        .padding(.leading, 320)
-                                        .padding(.bottom, 50)
-                                )
-                                .frame(width: 361, height: 100)
-                                .opacity(selectedFoods.contains(food) ? 1 : 0)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    if selectedFoods.count >= 3 {
-                                        if selectedFoods.contains(food) {
-                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
-                                        }
-                                    } else {
-                                        if selectedFoods.contains(food) {
-                                            selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                if foods.isEmpty{
+                    
+                    Image("EmptyRefri")
+                        .resizable()
+                        .frame(width: 60,height: 121)
+                        .padding(.top, 30)
+                    Text("아직 재료가 추가되지 않았어요.\n먼저 냉장고에 재료를 추가해주세요.")
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                    Spacer()
+                    
+                }
+                else{
+                    ScrollView {
+                        ForEach(foods, id: \.self) { food in
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .opacity(0)
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.black, lineWidth: 2)
+                                        .opacity(0.15))
+                                    .padding(.horizontal, 16)
+                                    .padding(.top,1)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(Color(red: 252/255, green: 239/255, blue: 209/255))
+                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2))
+                                    .padding(.top, 1)
+                                    .overlay(
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.orange)
+                                            .padding(.leading, 320)
+                                            .padding(.bottom, 50)
+                                    )
+                                    .frame(width: 361, height: 100)
+                                    .opacity(selectedFoods.contains(food) ? 1 : 0)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        if selectedFoods.count >= 3 {
+                                            if selectedFoods.contains(food) {
+                                                selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                            }
                                         } else {
-                                            selectedFoods.append(food)
+                                            if selectedFoods.contains(food) {
+                                                selectedFoods.remove(at: selectedFoods.firstIndex(of:food) ?? 0)
+                                            } else {
+                                                selectedFoods.append(food)
+                                            }
                                         }
                                     }
-                                }
-                            HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
-                                        .frame(width: 76, height: 76)
-                                        .overlay{Image(imageName.getImageName(for: food.food) ?? "")
-                                                .resizable()
-                                            .frame(width:68, height:68)}
-                                        .padding(.leading, 3)
-                                    RoundedRectangle(cornerRadius: 13.5)
-                                        .overlay(
-                                            Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
-                                                .foregroundColor(.white)
-                                                .font(.system(size: 15))
-                                        )
-                                        .frame(width: 52, height: 20)
-                                        .padding(.trailing, 28)
-                                        .padding(.bottom, 68)
-                                        .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
-                                }
-                                
-                                Text(food.food)
-                                    .font(.title2)
-                                    .fontWeight(.black)
-                                
-                                Spacer()
-                                
-                                Text("남은 양")
-                                
-                                VStack {
-                                    Text("\(Int(food.amount))%")
+                                HStack {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
+                                            .frame(width: 76, height: 76)
+                                            .overlay{Image(imageName.getImageName(for: food.food) ?? "")
+                                                    .resizable()
+                                                .frame(width:68, height:68)}
+                                            .padding(.leading, 3)
+                                        RoundedRectangle(cornerRadius: 13.5)
+                                            .overlay(
+                                                Text("D+\(calculateDaysToToday(date1: food.date) ?? 0)")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 15))
+                                            )
+                                            .frame(width: 52, height: 20)
+                                            .padding(.trailing, 28)
+                                            .padding(.bottom, 68)
+                                            .foregroundColor(Color(red: 152/255, green: 76/255, blue: 60/255))
+                                    }
+                                    
+                                    Text(food.food)
                                         .font(.title2)
-                                        .fontWeight(.bold)
+                                        .fontWeight(.black)
+                                    
+                                    Spacer()
+                                    
+                                    Text("남은 양")
+                                    
+                                    VStack {
+                                        Text("\(Int(food.amount))%")
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                    }
                                 }
+                                .padding(.horizontal, 25)
                             }
-                            .padding(.horizontal, 25)
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }

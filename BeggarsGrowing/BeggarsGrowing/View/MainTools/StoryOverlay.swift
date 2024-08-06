@@ -30,7 +30,10 @@ struct StoryOverlay: View {
                         showStoryOverlay = false
                     }
                 }, label:{
-                    Text("닫기")
+                    Image("StoryDismiss")
+                        .resizable()
+                        .frame(maxWidth: 230, maxHeight: 70)
+                        .padding(.top)
                     //여기에 닫기 버튼 들어가야 함. 현재 닫기 텍스트로 대체
                 })
             }

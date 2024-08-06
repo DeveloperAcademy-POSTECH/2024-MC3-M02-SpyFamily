@@ -17,7 +17,7 @@ struct BeggarsHOFView: View {
 
     let beggarsList = BeggarsList()
     @State var totalSavedMoney : Int = 0
-    
+    let beggarCardImage = [Image("JungleBeggarCard"),Image("TexiBeggarCard"),Image("DancerBeggarCard"),Image("FreezeBeggarCard")]
     var body: some View {
         ZStack {
             Color(red: 255/255, green: 250/255, blue: 233/255)
@@ -45,7 +45,7 @@ struct BeggarsHOFView: View {
                         ForEach(beggarsList.beggars.indices, id: \.self) { index in
                             let beggar = beggarsList.beggars[index]
                             if index <= storyStage{
-                                Image(beggar.image)
+                                beggarCardImage[index]
                                     .resizable()
                                     .frame(maxWidth: 110, maxHeight: 153)
                                     .aspectRatio(contentMode: .fit)
