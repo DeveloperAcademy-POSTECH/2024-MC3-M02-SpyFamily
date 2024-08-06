@@ -12,9 +12,12 @@ import SwiftData
 struct RecipeView: View {
     @Environment(NavigationManager.self) var navigationManager
     @EnvironmentObject var viewModel: RecipeViewModel
+    @EnvironmentObject var cookViewModel: CookViewModel
     @Environment(\.modelContext) private var modelContext
     
     @Query var recipes: [Recipe]
+    @Query var filterRecipes: [FilterRecipe]
+    @Query var foodsInRefri: [Refrigerator]
     
     var body: some View {
         ZStack {
@@ -107,6 +110,14 @@ struct RecipeView: View {
                         .frame(maxWidth: 300, maxHeight: 60)
                         .aspectRatio(contentMode: .fit)
                     .padding(.bottom, 80)})
+            }
+        }
+        .onChange(of:recipes){
+            DispatchQueue.main.async{
+                cookViewModel.foodsInRefri = foodsInRefri
+                cookViewModel.recipeData = recipes
+                cookViewModel.recipeIdsforFilter = filterRecipes
+                cookViewModel.checkRefriFoodsInRecipe()
             }
         }
         .navigationTitle("레시피 관리")

@@ -36,9 +36,12 @@ struct CookChoiceRecipeView: View {
     @Query var recipeData: [Recipe]
     @Query var foodsInRefri: [Refrigerator]
     
+    @State private var isAlertPresented = false
+    
     var foodsInRefriStrings: [String] { foodsInRefri.map {$0.food} }
     
-    var recommendedRecipes: [Recipe] = []
+//    var recommendedRecipes: [Recipe] = []
+    @State var sortedRecommendedRecipes: [Recipe] = []
     
     var body: some View {
         ZStack {
@@ -53,18 +56,18 @@ struct CookChoiceRecipeView: View {
                 VStack {
                     ScrollView {
                         ForEach(viewModel.recommendedRecipeByRefri, id: \.self) { recipe in
-//                            let sortedFoods: [String] = {
-//                                var includedFoodsInRefri: [String] = []
-//                                var remainingFoods: [String] = []
-//                                for food in recipe.foods {
-//                                    if foodsInRefriStrings.contains(food) {
-//                                        includedFoodsInRefri.append(food)
-//                                    } else {
-//                                        remainingFoods.append(food)
-//                                    }
-//                                }
-//                                return includedFoodsInRefri + remainingFoods
-//                            }()
+                            //                            let sortedFoods: [String] = {
+                            //                                var includedFoodsInRefri: [String] = []
+                            //                                var remainingFoods: [String] = []
+                            //                                for food in recipe.foods {
+                            //                                    if foodsInRefriStrings.contains(food) {
+                            //                                        includedFoodsInRefri.append(food)
+                            //                                    } else {
+                            //                                        remainingFoods.append(food)
+                            //                                    }
+                            //                                }
+                            //                                return includedFoodsInRefri + remainingFoods
+                            //                            }()
                             
                             Button(action: {
                                 viewModel.selectedRecipe = recipe
@@ -93,17 +96,17 @@ struct CookChoiceRecipeView: View {
                                                     }
                                                     .padding(.leading, 8)
                                                     HStack(spacing: 0) {
-//                                                        ForEach(recipe.foods, id: \.self) { ingredients in
-//                                                            Text(sortedFoods[ingredients])
-//                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-//                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-//                                                                .lineLimit(1)
-//                                                            //마지막 쉼표 빼는거
-//                                                            if ingredients != sortedFoods.count - 1 {
-//                                                                Text(", ")
-//                                                                    .foregroundColor(.black)
-//                                                            }
-//                                                        }
+                                                        //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
+                                                        //                                                            Text(sortedFoods[ingredients])
+                                                        //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
+                                                        //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
+                                                        //                                                                .lineLimit(1)
+                                                        //                                                            //마지막 쉼표 빼는거
+                                                        //                                                            if ingredients != sortedFoods.count - 1 {
+                                                        //                                                                Text(", ")
+                                                        //                                                                    .foregroundColor(.black)
+                                                        //                                                            }
+                                                        //                                                        }
                                                     }
                                                     .lineLimit(1)
                                                     .truncationMode(.tail)
@@ -121,11 +124,38 @@ struct CookChoiceRecipeView: View {
                 }
             }
         }
-
+        .onAppear{
+            sortRecommendedRecipes()
+        }
         .navigationTitle("레시피 선택")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
+        }
+        .navigationBarItems(trailing: Button(action: {
+            isAlertPresented.toggle()
+        }) {
+            Image(systemName: "xmark")
+                .foregroundColor(.black)
+        })
+        .alert(isPresented: $isAlertPresented) {
+            Alert(
+                title: Text("경고"),
+                message: Text("요리 입력을 중단하시겠습니까?"),
+                primaryButton: .destructive(Text("닫기")) {
+                    navigationManager.pop(to: .main)
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
+        }
+    }
+    
+    private func sortRecommendedRecipes() {
+        let selectedFoods = viewModel.selectedFoods.map { $0.food }
+        self.sortedRecommendedRecipes = viewModel.recommendedRecipeByRefri.sorted {
+            let firstMatchCount = $0.foods.filter { selectedFoods.contains($0) }.count
+            let secondMatchCount = $1.foods.filter { selectedFoods.contains($0) }.count
+            return firstMatchCount > secondMatchCount
         }
     }
 }

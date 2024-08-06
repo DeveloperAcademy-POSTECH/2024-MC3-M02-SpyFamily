@@ -41,11 +41,16 @@ struct RecipeDetailView: View {
                                 .foregroundColor(.blue)
                                 .bold()
                                 .padding(.trailing, 5)
-                            Text(recipe.link ?? "")
-                                .foregroundColor(.blue)
-                                .underline()
-                                .lineLimit(1)
-                                .truncationMode(.tail) //넘치는 텍스트 말줄임표 표시
+                            Button(action:{
+                                URLUtils.openLink(urlString: recipe.link ?? "")
+                            }, label:{
+                                Text(recipe.link ?? "")
+                                    .foregroundColor(.blue)
+                                    .underline()
+                                    .lineLimit(1)
+                                    .truncationMode(.tail) //넘치는 텍스트 말줄임표 표시
+                            })
+                            
                         }
                         .padding(.bottom, 15)
                         Text("재료")

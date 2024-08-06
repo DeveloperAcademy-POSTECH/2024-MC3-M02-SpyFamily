@@ -15,7 +15,7 @@ class FilterRecipe {
     @Attribute(.unique) var id: UUID = UUID()
     /// 요리명
     var food: String
-    /// 링크
+    /// 
     var recipes: Set<UUID> = []
     
     init(id: UUID = UUID(), food: String, recipes: Set<UUID>) {

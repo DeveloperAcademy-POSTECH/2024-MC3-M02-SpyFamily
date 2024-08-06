@@ -15,6 +15,7 @@ struct RecipeAddView_Picture: View {
     
     @State private var showingImagePicker = false
     @State private var image: UIImage?
+    @State private var isAlertPresented = false
     
     var body: some View {
         ZStack {
@@ -117,6 +118,22 @@ struct RecipeAddView_Picture: View {
             }
             .navigationTitle("레시피 등록")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button(action: {
+                isAlertPresented.toggle()
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+            })
+            .alert(isPresented: $isAlertPresented) {
+                Alert(
+                    title: Text("경고"),
+                    message: Text("레시피 입력을 중단하시겠습니까?"),
+                    primaryButton: .destructive(Text("닫기")) {
+                        navigationManager.pop(to: .recipe)
+                    },
+                    secondaryButton: .cancel(Text("취소"))
+                )
+            }
         }
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: self.$image)

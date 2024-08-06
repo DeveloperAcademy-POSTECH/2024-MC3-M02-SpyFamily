@@ -47,9 +47,16 @@ struct RefriAddFoodView: View {
                 ScrollView {
                     ForEach($foodsToAdd, id:\.id) { $food in
                         HStack(spacing: 0){
-                            Image(systemName: "minus.circle")
-                                .resizable()
-                                .frame(width: 20, height: 20)
+                            Button(action:{
+                                if let index = foodsToAdd.firstIndex(where: { $0.id == food.id }) {
+                                    foodsToAdd.remove(at: index)
+                                }
+                            }, label:{
+                                Image(systemName: "minus.circle")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            })
+                            
                             Image(imageName.getImageName(for: food.food) ?? "")
                                 .resizable()
                                 .frame(width:32, height:32)
@@ -60,6 +67,7 @@ struct RefriAddFoodView: View {
                             TextField("가격", value: $food.price, formatter: NumberFormatter())
                                 .frame(width: 109)
                                 .textFieldStyle(PriceTextfieldStyle())
+                                .keyboardType(.numberPad)
                                 .padding(.trailing, 30)
                             Toggle(isOn: $food.freezing) {
                                 Text("")
@@ -87,7 +95,7 @@ struct RefriAddFoodView: View {
                 })
                 .padding(.bottom, 54)
             }
-
+            
             .padding(.horizontal, 16)
         }
         .navigationBarBackButtonHidden()
@@ -157,8 +165,3 @@ struct PriceTextfieldStyle: TextFieldStyle {
         }
     }
 }
-
-//#Preview {
-//    RefriAddFoodView()
-//        .environment(NavigationManager())
-//}

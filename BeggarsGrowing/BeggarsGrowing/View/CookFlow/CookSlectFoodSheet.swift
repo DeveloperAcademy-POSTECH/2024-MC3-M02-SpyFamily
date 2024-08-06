@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct CookSelectFoodSheetView: View {
+    @EnvironmentObject var viewModel: CookViewModel
+    
     @State var searchText = ""
     @State var selectedIngredients: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
@@ -36,11 +38,6 @@ struct CookSelectFoodSheetView: View {
                     .bold()
                 Spacer()
                 Button(action: {
-                    // 완료 버튼 액션
-                    
-                    //                        for food in selectedIngredients {
-                    //                            selectedFoodsList.append(Refrigerator(food: food, price: 0, amount: 1.0, freezing: false, date: Date()))
-                    //                        }
                     presentationMode.wrappedValue.dismiss()
                     
                 }) {
@@ -60,36 +57,39 @@ struct CookSelectFoodSheetView: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(selectedFoodsList.contains(food) ? Color.yellow.opacity(0.3) : Color(red: 242/255, green: 245/255, blue: 240/255))
                             
-                            HStack {
-                                Button(action: {
-                                    if selectedFoodsList.contains(food) {
-                                        selectedFoodsList.removeAll { $0 == food }
-                                    } else {
-                                        selectedFoodsList.append(food)
-                                    }
-                                }) {
+                            Button(action:{
+                                if selectedFoodsList.contains(food) {
+                                    selectedFoodsList.removeAll { $0 == food }
+                                } else {
+                                    selectedFoodsList.append(food)
+                                }
+                            }, label:{
+                                HStack {
+                                    
                                     Image(systemName: selectedFoodsList.contains(food) ? "checkmark.square.fill" : "square")
                                         .font(.title3)
                                         .foregroundColor(.orange)
+                                    Image(imageName.getImageName(for: foodName) ?? "")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .padding(.leading)
+                                    
+                                    Text(foodName)
+                                        .font(.body)
+                                        .foregroundColor(.black)
+                                    
+                                    Spacer()
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                                
-                                Image(imageName.getImageName(for: foodName) ?? "")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .padding(.leading)
-                                
-                                Text(foodName)
-                                    .font(.body)
-                                    .foregroundColor(.black)
-                                
-                                Spacer()
-                            }
-                            .padding()
+                                .padding()
+                            })
+                            
                         }
                     }
                 }
             }
+        }
+        .onAppear{
+            
         }
         .padding(.horizontal)
     }

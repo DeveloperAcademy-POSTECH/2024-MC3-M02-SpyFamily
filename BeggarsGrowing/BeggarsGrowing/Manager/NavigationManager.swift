@@ -24,6 +24,7 @@ enum PathType: Hashable {
     case recipeAddName
     case recipeAddPicture
     case recipeAddFoodSauce
+    case beggarsHOF
 }
 
 extension PathType {
@@ -64,8 +65,6 @@ extension PathType {
             
         case .cookChoiceFood:
             CookChoiceFoodView()
-//                .environmentObject(CookViewModel())
-//                .navigationBarHidden(true)
             
         case .cookChoiceRecipe:
             CookChoiceRecipeView()
@@ -78,7 +77,9 @@ extension PathType {
             
         case .cookRecordCamera:
             CookCameraView()
-                .navigationBarHidden(true)
+            
+        case .beggarsHOF:
+            BeggarsHOFView()
         }
     }
 }

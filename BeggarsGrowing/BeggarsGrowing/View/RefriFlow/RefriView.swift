@@ -12,9 +12,12 @@ import SwiftData
 struct RefriView: View {
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var viewModel: CookViewModel
     
-    @Query private var foodsInRefri : [Refrigerator]
-    
+    @Query var foodsInRefri : [Refrigerator]
+    @Query var recipeData : [Recipe]
+    @Query var filterRecipes : [FilterRecipe]
+
     // 세그먼트 컨트롤
     @State private var selectedTab = 0
     let tabOptions = ["냉장", "냉동"]
@@ -61,7 +64,7 @@ struct RefriView: View {
                         .padding(.vertical, 10)
                     }
                 }
-            Spacer()
+                Spacer()
                 Button(action: {
                     // 식재료 추가하기 동작
                     navigationManager.push(to: .refriAddFood)
@@ -80,11 +83,11 @@ struct RefriView: View {
         }
         .navigationBarBackButtonHidden()
         .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("냉장고")
-                        .font(.system(size: 20))
-                        .fontWeight(.heavy)
-                }
+            ToolbarItem(placement: .principal) {
+                Text("냉장고")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+            }
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     navigationManager.pop()
@@ -93,13 +96,22 @@ struct RefriView: View {
                         .foregroundColor(.black)
                 }
             }
+        }
+        .onChange(of:foodsInRefri){
+            DispatchQueue.main.async{
+                viewModel.foodsInRefri = foodsInRefri
+                viewModel.recipeData = recipeData
+                viewModel.recipeIdsforFilter = filterRecipes
+                viewModel.checkRefriFoodsInRecipe()
             }
+        }
     }
 }
 
 struct FoodCard: View {
     var foodInRefri: Refrigerator
     @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var viewModel: CookViewModel
     
     @State var showingDeleteAlert = false
     
@@ -161,7 +173,9 @@ struct FoodCard: View {
                 .alert(isPresented: $showingDeleteAlert){
                     Alert(title: Text("\(foodInRefri.food)를 삭제하시겠습니까?"),
                           primaryButton: .destructive(Text("삭제"), action: {
-                        modelContext.delete(foodInRefri)
+                        DispatchQueue.main.async{
+                            modelContext.delete(foodInRefri)
+                        }
                     }),
                           secondaryButton: .cancel(Text("취소"))
                     )
@@ -186,9 +200,4 @@ func formattedDate(date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
     return formatter.string(from: date)
-}
-
-#Preview {
-    RefriView()
-        .environment(NavigationManager())
 }
