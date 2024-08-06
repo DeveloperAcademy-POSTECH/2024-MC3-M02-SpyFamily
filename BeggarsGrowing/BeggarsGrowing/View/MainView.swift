@@ -40,7 +40,6 @@ struct MainView: View {
         
         VStack {
             // 커스텀 프로그레스 바
-            Text("\(storyStage)")
             CustomProgressBar(value: Float(mainViewModel.nowBeggar.nowMoney), maxValue: Float(mainViewModel.nowBeggar.goalMoney))
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
