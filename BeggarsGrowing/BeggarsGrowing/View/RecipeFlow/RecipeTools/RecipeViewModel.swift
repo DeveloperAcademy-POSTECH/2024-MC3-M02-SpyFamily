@@ -12,6 +12,7 @@ import SwiftData
 class RecipeViewModel : ObservableObject {
     
     @Published var selectedRecipeforDetail: Recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
+    @Published var dictionaryForFilterRecipe: [String: Set<UUID>] = [:]
     
     @Published var inputName: String = ""
     @Published var inputImage: UIImage?
@@ -23,15 +24,9 @@ class RecipeViewModel : ObservableObject {
     @Published var inputMemo: String = ""
     
     func finishRecipeRecord() -> Recipe{
-        let menu = inputName
-        let link = inputLink
-        let foods = inputFoods
-        let foodsAmount = inputFoodsAmount
+        
         let recipeId = UUID()
         let imageName = saveImageToDocumentsDirectory(image: inputImage, id: recipeId) // 이미지 저장 함수 호출
-        let sauces = inputSauces
-        let saucesAmount = inputSaucesAmount
-        let memo = inputMemo
         
         let recipeToAdd = Recipe(menu: inputName, link: inputLink, foods: inputFoods, foodsAmount: inputFoodsAmount, image:imageName, sauces:inputSauces, saucesAmount: inputSaucesAmount, memo: inputMemo)
         print("Recipe Add Success")

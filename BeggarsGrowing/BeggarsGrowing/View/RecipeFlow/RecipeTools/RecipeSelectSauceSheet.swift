@@ -10,20 +10,21 @@ import SwiftUI
 
 struct RecipeSelectSauceSheetView: View {
     @State private var searchText = ""
-    @State private var selectedIngredients: Set<String> = []
+    @State private var selectedSauces: Set<String> = []
     @Environment(\.presentationMode) var presentationMode
-    
-    let foods = FoodImageName().ingredients
-    
+        
     @Binding var selectedSaucesList: [String]
     @Binding var selectedSaucesAmountList: [String]
     
-    var filteredFoods: [Food] {
+    let sauces = sauceData().sauces
+    
+    var filteredSauces: [String] {
         if searchText.isEmpty {
-            return foods
+            return sauces
         } else {
-            return foods.filter { $0.name.contains(searchText) }
+            return sauces.filter {$0.contains(searchText)}
         }
+        
     }
     
     var body: some View {
@@ -36,8 +37,8 @@ struct RecipeSelectSauceSheetView: View {
                 Button(action: {
                     // 완료 버튼 액션
                     DispatchQueue.main.async{
-                        for food in selectedIngredients {
-                            selectedSaucesList.append(food)
+                        for sauce in selectedSauces {
+                            selectedSaucesList.append(sauce)
                             selectedSaucesAmountList.append("")
                         }
                         presentationMode.wrappedValue.dismiss()
@@ -59,42 +60,42 @@ struct RecipeSelectSauceSheetView: View {
             
             ScrollView {
                 VStack(spacing: 0) {
-                    ForEach(filteredFoods, id: \.name) { food in
+                    ForEach(filteredSauces, id:\.self) { sauce in
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(selectedIngredients.contains(food.name) ? Color.yellow.opacity(0.3) : Color(red: 242/255, green: 245/255, blue: 240/255))
+                                .fill(selectedSauces.contains(sauce) ? Color.yellow.opacity(0.3) : Color(red: 242/255, green: 245/255, blue: 240/255))
                                 .frame(height: 50)
-                            HStack(spacing: 0){
-                                Button(action: {
-                                    if selectedIngredients.contains(food.name) {
-                                        selectedIngredients.remove(food.name)
-                                    } else {
-                                        selectedIngredients.insert(food.name)
-                                    }
-                                }) {
-                                    Image(systemName: selectedIngredients.contains(food.name) ? "checkmark.square.fill" : "square")
+                            Button(action:{
+                                if selectedSauces.contains(sauce) {
+                                    selectedSauces.remove(sauce)
+                                } else {
+                                    selectedSauces.insert(sauce)
+                                }
+                            }, label:{
+                                HStack(spacing: 0){
+                                    Image(systemName: selectedSauces.contains(sauce) ? "checkmark.square.fill" : "square")
                                         .font(.title3)
                                         .foregroundColor(.orange)
+                                        .padding(.leading, 15)
+//                                    Image(sauce)
+//                                        .resizable()
+//                                        .frame(width: 30, height: 30)
+//                                        .padding(.leading, 20)
+                                    Text(sauce)
+                                        .font(.body)
+                                        .foregroundColor(.black)
+                                        .padding(.leading, 10)
+                                    
+                                    Spacer()
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                                .padding(.leading, 15)
-                                Image(food.imageName)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .padding(.leading, 20)
-                                Text(food.name)
-                                    .font(.body)
-                                    .foregroundColor(.black)
-                                    .padding(.leading, 10)
-
-                                Spacer()
-                            }
+                            })
+                            
                         }
                         .padding(.bottom, 8)
                     }
                 }
                 .padding(.horizontal, 16)
-
+                
             } // scrl
         } //v
     }

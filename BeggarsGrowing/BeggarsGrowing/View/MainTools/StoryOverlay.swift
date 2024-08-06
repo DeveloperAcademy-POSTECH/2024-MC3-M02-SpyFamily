@@ -13,6 +13,8 @@ struct StoryOverlay: View {
     let beggarsList = BeggarsList().beggars
     
     @Binding var showStoryOverlay : Bool
+    @Binding var isAnimating: Bool
+    var animationNamespace: Namespace.ID
     
     var body: some View {
         ZStack {
@@ -24,7 +26,9 @@ struct StoryOverlay: View {
             VStack{
                 Text(beggarsList[storyStage].story)
                 Button(action:{
-                    showStoryOverlay = false
+                    withAnimation(.spring()) {
+                        showStoryOverlay = false
+                    }
                 }, label:{
                     Text("닫기")
                     //여기에 닫기 버튼 들어가야 함. 현재 닫기 텍스트로 대체
@@ -35,6 +39,11 @@ struct StoryOverlay: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black.opacity(0.5))
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            withAnimation(.spring()) {
+                isAnimating.toggle()
+            }
+        }
     }
 }
 

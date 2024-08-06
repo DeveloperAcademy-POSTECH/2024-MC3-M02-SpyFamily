@@ -33,10 +33,6 @@ struct ContentView: View {
             .navigationDestination(for: PathType.self) { pathType in
                 pathType.NavigatingView()
             }
-            ForEach(filterRecipes) { recipe in
-                Text(recipe.food)
-                Text(recipe.recipes.map {$0.uuidString}.joined(separator: "\n") )
-            }
         }
         .environment(navigationManager)
         .onAppear {
