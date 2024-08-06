@@ -40,7 +40,6 @@ struct CookChoiceRecipeView: View {
     
     var foodsInRefriStrings: [String] { foodsInRefri.map {$0.food} }
     
-//    var recommendedRecipes: [Recipe] = []
     @State var sortedRecommendedRecipes: [Recipe] = []
     
     var body: some View {
@@ -55,7 +54,7 @@ struct CookChoiceRecipeView: View {
                 
                 VStack {
                     ScrollView {
-                        ForEach(viewModel.recommendedRecipeByRefri, id: \.self) { recipe in
+                        ForEach(sortedRecommendedRecipes, id: \.self) { recipe in
                             //                            let sortedFoods: [String] = {
                             //                                var includedFoodsInRefri: [String] = []
                             //                                var remainingFoods: [String] = []
@@ -211,7 +210,10 @@ struct CookChoiceRecipeView: View {
             }
         }
         .onAppear{
-            sortRecommendedRecipes()
+            DispatchQueue.main.async{
+                viewModel.filterRecipeBySelectedFoods()
+                sortRecommendedRecipes()
+            }
         }
         .navigationTitle("레시피 선택")
         .navigationBarTitleDisplayMode(.inline)
@@ -238,7 +240,7 @@ struct CookChoiceRecipeView: View {
     
     private func sortRecommendedRecipes() {
         let selectedFoods = viewModel.selectedFoods.map { $0.food }
-        self.sortedRecommendedRecipes = viewModel.recommendedRecipeByRefri.sorted {
+        self.sortedRecommendedRecipes = viewModel.filteredRecipesBySelectedFoods.sorted {
             let firstMatchCount = $0.foods.filter { selectedFoods.contains($0) }.count
             let secondMatchCount = $1.foods.filter { selectedFoods.contains($0) }.count
             return firstMatchCount > secondMatchCount

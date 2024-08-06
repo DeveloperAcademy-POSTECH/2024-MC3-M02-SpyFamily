@@ -21,6 +21,8 @@ class CookViewModel : ObservableObject {
     @Published var filteredRecipeIDsByRefri: Set<UUID> = []
     @Published var recommendedRecipeByRefri: [Recipe] = []
     
+    @Published var filteredRecipesBySelectedFoods: [Recipe] = []
+    
     @Published var recentImage: UIImage?
     
     @Published var usedFoods: [(Refrigerator, Double)] = []
@@ -39,6 +41,17 @@ class CookViewModel : ObservableObject {
         self.recommendedRecipeByRefri = recipeData.filter { filteredRecipeIDsByRefri.contains($0.id) }
         print(self.recommendedRecipeByRefri)
         print("filtered \(filteredRecipeIDsByRefri)")
+    }
+    
+    func filterRecipeBySelectedFoods() {
+        filteredRecipesBySelectedFoods.removeAll()
+        for food in selectedFoods{
+            for recipe in recommendedRecipeByRefri.filter{ $0.foods.contains(food.food)}{
+                filteredRecipesBySelectedFoods.append(recipe)
+            }
+        }
+        let forSetList = Set(filteredRecipesBySelectedFoods)
+        filteredRecipesBySelectedFoods = Array(forSetList)
     }
     
     func finishCookRecord() -> History{
@@ -61,8 +74,6 @@ class CookViewModel : ObservableObject {
     func reset() {
         self.selectedFoods = []
         self.selectedRecipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
-        self.foodsInRefri = []
-        self.recipeData = []
         self.recentImage = nil
         self.usedFoods = []
     }

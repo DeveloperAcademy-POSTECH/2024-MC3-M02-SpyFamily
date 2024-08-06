@@ -101,8 +101,10 @@ struct CookChoiceFoodView: View {
                 
                 // 선택한 재료를 토대로 레시피 추천
                 Button(action: {
-                    viewModel.selectedFoods = selectedFoods
-                    navigationManager.push(to: .cookChoiceRecipe)
+                    DispatchQueue.main.async{
+                        viewModel.selectedFoods = selectedFoods
+                        navigationManager.push(to: .cookChoiceRecipe)
+                    }
                 }, label: {
                     Image("NextButton")
                         .padding(.bottom, 12)
