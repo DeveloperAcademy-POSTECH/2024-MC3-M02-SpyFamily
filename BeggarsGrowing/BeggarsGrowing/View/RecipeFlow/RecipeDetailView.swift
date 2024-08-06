@@ -20,10 +20,28 @@ struct RecipeDetailView: View {
                 .ignoresSafeArea()
             ScrollView{
                 VStack(spacing: 0){
-                    Rectangle() //레시피 이미지
-                        .foregroundColor(.gray)
-                        .frame(height: 233)
-                        .padding(.bottom, 12)
+                    if let recipeImage = recipe.image {
+                        if isValidUUID(uuidString: recipeImage){
+                            if let loadedImage = loadImage(imageName: recipeImage) {
+                                Image(uiImage: loadedImage)
+                                    .resizable()
+                                    .frame(height: 233)
+                                    .cornerRadius(4)
+                                    .padding(12)
+                            } else {
+                                Rectangle() //레시피 이미지
+                                    .foregroundColor(.gray)
+                                    .frame(height: 233)
+                                    .padding(12)
+                            }
+                        } else {
+                            Image(recipeImage)
+                                .resizable()
+                                .frame(height: 233)
+                                .cornerRadius(4)
+                                .padding(12)
+                        }
+                    }
                     VStack(alignment: .leading, spacing: 0){
                         HStack{
                             Text(recipe.menu)
@@ -101,7 +119,7 @@ struct RecipeDetailView: View {
                                 .padding(.trailing, 20)
                             }
                         }
-
+                        
                         Text("메모")
                             .font(.system(size: 17))
                             .fontWeight(.heavy)
