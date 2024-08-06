@@ -26,6 +26,9 @@ struct MainView: View {
     @State var animationToggle = false
     @State var moneyTobeChanged = 0
     
+    @State private var isAnimating = false
+    @Namespace private var animationNamespace
+    
     @State private var progressValue: Float = 25000
     @State private var maxValue: Float = 20000
     
@@ -71,14 +74,7 @@ struct MainView: View {
             }.padding(.horizontal, 13)
             
             HStack{
-                Button(action: {
-                    showStoryOverlay = true
-                }) {
-                    Image("MainStoryButton")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 77)
-                }
+                
                 Spacer()
                 
                 Button(action: {
@@ -93,11 +89,20 @@ struct MainView: View {
                 
             }.padding(.horizontal, 13)
             
-            
-            Image(mainViewModel.nowBeggar.image)
-                .resizable()
-                .frame(maxWidth: 190,maxHeight: 286)
-                .scaledToFit()
+            Button(action: {
+                withAnimation(.spring()) {
+                    isAnimating.toggle()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showStoryOverlay = true
+                    }
+                }            }) {
+                    Image(mainViewModel.nowBeggar.image)
+                        .resizable()
+                        .frame(maxWidth: 190,maxHeight: 286)
+                        .scaledToFit()
+                        .scaleEffect(isAnimating ? 1.1 : 1.0)
+                        .matchedGeometryEffect(id: "image", in: animationNamespace)
+                }
             
             // Text Box
             ZStack(alignment: .top) {
@@ -157,8 +162,9 @@ struct MainView: View {
                     .transition(.opacity)
             }
             if showStoryOverlay {
-                StoryOverlay(showStoryOverlay: $showStoryOverlay)
+                StoryOverlay(showStoryOverlay: $showStoryOverlay, isAnimating: $isAnimating, animationNamespace: animationNamespace)
                     .transition(.opacity)
+                    .zIndex(1)
             }
         }
         // 배경 이미지
