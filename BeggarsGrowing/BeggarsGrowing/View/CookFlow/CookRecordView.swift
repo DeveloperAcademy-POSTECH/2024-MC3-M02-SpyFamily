@@ -31,15 +31,19 @@ struct CookRecordView: View {
                     navigationManager.push(to: .cookRecordCamera)
                 }) {
                     if let selectedImage = viewModel.recentImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                        GeometryReader { geometry in
+                                Image(uiImage: selectedImage)
+                                    .resizable()
+                                    .scaledToFill() // Fill the width of the screen
+                                    .frame(width: geometry.size.width, height: 230) // Set the height to 230
+                                    .clipped() // Crop the image to fit the frame
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.gray, lineWidth: 1)
+                                    )
+                            }
                             .frame(height: 230)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
                     } else {
                         VStack {
                             HStack(spacing: 5) {
