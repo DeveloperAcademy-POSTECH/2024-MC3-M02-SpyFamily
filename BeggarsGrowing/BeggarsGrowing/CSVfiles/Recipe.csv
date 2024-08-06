@@ -1,4 +1,50 @@
 menu,link,foods,foodsAmount,image,sauces,saucesAmount,memo
-계란볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"계란,양파","100g,반개",EggFriedRice,"간장,참기름","한큰술,5ml",
-야채볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"당근,사과","1개, 1/4개",VegetableFriedRice,"식용유,고춧가루","한바퀴,두숟갈",가나다라마바사
-돼지고기볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"돼지고기","600g",PorkFriedRice,"굴소스","1큰술",
+달걀볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs,"""대파,달걀""","""40g,2개""",EggFriedRice,"""식용유,진간장,맛소금""","""4큰술,1/2큰술,1g""",
+초계라면,https://www.youtube.com/watch?v=EhTxL1sWnMI&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr,"""닭고기,오이,청양고추""","""50g,15g,1/3개""",ChogyeRamen,"""식초,설탕,겨자""","""3큰술,1/3큰술,1큰술""",
+들기름막라면,https://www.youtube.com/watch?v=wTtHP5qFOio&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=3,"""쪽파""","""5g""",OilRamen,"""국간장,설탕,들기름""","""1큰술,1/4큰술,2큰술""",
+치즈닭갈비,https://www.youtube.com/watch?v=MXuYLMtdfWc,"""닭고기,양파,대파,양배추""","""350g,1개,1대,1/4개""",CheeseDakgalbi,"""고추장,진간장,굴소스,설탕,고춧가루,다진마늘,후추""","""1스푼,1스푼,1스푼,2스푼,2스푼,1스푼,조금""",
+애호박찌개,https://www.youtube.com/watch?v=MXuYLMtdfWc,"""돼지고기,양파,애호박""","""200g,1개,1/2개""",SquashSoup,"""식용유,고추장,다진마늘,고춧가루""","""2스푼,1스푼,1스푼,1스푼""",
+돼지쌈장,https://www.youtube.com/watch?v=w99UZpoYoa8,"""돼지고기,양파,청양고추""","""500g,1/2개,2개""",PorkSsamjang,"""식용유,다진마늘,쌈장,돈가스소스,설탕,고춧가루""","""2스푼,2스푼,2스푼,2스푼,1스푼,1스푼""",
+양파계란조림,https://www.youtube.com/watch?v=o9BHS3mavQ0&t=3s,"""달걀,양파""","""3개,1/2개""",OnionEggBoiled,"""식용유,고추장,굴소스,설탕,고춧가루,다진마늘""","""2스푼,1/2스푼,1스푼,1스푼,1스푼,1/2스푼""",
+삼겹살구이,https://www.youtube.com/watch?v=JpP1b4zW0xg,"""돼지고기,마늘,꽈리고추""","""400g,1줌,1줌""",GrilledPork,"""멸치액젓,굴소스,설탕,식초,후추""","""1스푼,1스푼,1스푼,1스푼,조금""",
+차돌밥,https://www.youtube.com/watch?v=Rhorjv__9_I,"""소고기,팽이버섯,쪽파,달걀""","""150g,1개,1단,1개""",BeefBrisketRice,"""진간장,설탕,고춧가루,식초,참기름,통깨""","""2스푼,1/2스푼,1스푼,1스푼,1스푼,1스푼""",
+통마늘닭볶음,https://www.youtube.com/watch?v=pXdu3RtN3aE,"""닭고기,마늘,청양고추""","""350g,400g,2개""",StirFriedGarlicChicken,"""식용유,소금,굴소스,돈가스소스,설탕""","""2스푼,조금,1스푼,1스푼,1/2스푼""",
+햄감자채볶음,https://www.youtube.com/watch?v=7VNH9Fvvus0&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=9,"""감자,햄,양파,당근,대파""","""2개,1통,1/4개,약간,약간""",StirFriedHamSlicedPotato,"""식용유,소금,후추""","""3큰술,1/4큰술,약간""",
+부대볶음,https://www.youtube.com/watch?v=SILoOGBiAyA&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=25,"""양배추,양파,대파""","""1/4개,1/4개,1/3개""",BudaeBokkume,"""정수물,식용유,케첩,물엿,간마늘,설탕,굵은고춧가루,진간장,베이크드빈스,후추가루""","""1/5컵,3큰술,1과1/2큰술,1큰술,1큰술,1큰술,1큰술,1큰술,2큰술,약간""",슬라이스 치즈
+메추리알장조림,https://www.youtube.com/watch?v=RmZyxKOUbfs&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=32,"""꽈리고추,통마늘,청양고추""","""16개,10개,3개""",MechurieJangjorim,"""정수물,진간장,황설탕""","""720ml,200g,1/2컵""",삶은 메추리알 1kg
+참치김치찌개,https://www.youtube.com/watch?v=e--h7ax_6pQ&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=34,"""신김치,양파,두부,참치캔,대파,청양고추""","""1컵,1/2개,1/2팩,1/2캔,1/3대,1개""",TunaGimchijjigae,"""정수물,국간장,간마늘,굵은고춧가루,황설탕""","""400ml,2큰술,1큰술,2큰술,1/4큰술""",멸치다시다를 넣으면 더욱 진한 맛을 낼 수 있다. 멸치다시다를 사용할 경우 국간장의 양을 줄인다.
+카레라면,https://www.youtube.com/watch?v=9Wvd9VL0OpM&list=PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr&index=48,"""카레,버터""","""1개,2큰술""",CurryRamen,"""간마늘,후추가루""","""1/5큰술,약간""",
+케찹계란밥,https://www.youtube.com/watch?v=94709t6ecnk,"""달걀""","""1개""",KetchupEggRice,"""고추장,케찹,버터""","""1/3스푼,3스푼,조금""",
+순두부계란조림,https://www.youtube.com/watch?v=Mf_nsvHsUJU,"""달걀,양파""","""3개,1/2개""",BoiledTofuEgg,"""고추장,진간장,설탕,고춧가루,다진마늘""","""1/2스푼,1스푼,1스푼,1스푼,1/2스푼""",
+삼겹살부추무침,https://www.youtube.com/watch?v=jDz7_KiY0w8,"""돼지고기,부추""","""200g,1개""",PorkChubuMuchim,"""소금,고춧가루,식초,참기름""","""1/4스푼,1/2스푼,1스푼,1스푼""",참소스 180ml
+양배추강된장,https://www.youtube.com/watch?v=s1AHkXIVr_0,"""양배추,돼지고기""","""1/2통,200g""",CabbageSoyBeanPaste,"""된장,고추장,설탕,다진마늘""","""2스푼,1/2스푼,1/2스푼,1스푼""",
+김치삼겹볶음,https://www.youtube.com/watch?v=yMGBNlyq6Qo,"""돼지고기,양파,대파,김치""","""500g,1개,1대,1/4포기""",StirFriedKimchiPork,"""설탕,고춧가루,멸치액젓,굴소스,참기름""","""1스푼,2스푼,2스푼,1스푼,1스푼""",
+바싹대패구이,https://www.youtube.com/watch?v=EHyuvIc4jmE,"""돼지고기,대파""","""300g,1줌""",GrilledPlane,"""다진마늘,진간장,굴소스,설탕,식초,참기름""","""1/2스푼,1스푼,1스푼,1스푼,1스푼,1스푼""",
+새우계란덮밥,https://www.youtube.com/watch?v=3_x5zj0b62o,"""냉동새우,달걀,양파""","""100g,3개,1개""",ShrimpEggRice,"""식용유,다진마늘,진간장,설탕,돈까스소스,케찹""","""2스푼,1/2스푼,1스푼,1/3스푼,1스푼,1스푼""",
+양배추목살덮밥,https://www.youtube.com/watch?v=yKcw_-TABDM,"""돼지고기,양배추,달걀""","""250g,1/4개,1개""",CabbagePorkRice,"""식용유,소금,후추,굴소스,돈가스소스,설탕""","""2스푼,조금,조금,1스푼,1스푼,1스푼""",
+콩나물덮밥,https://www.youtube.com/watch?v=5fi5PSK32qM,"""돼지고기,콩나물,대파,달걀""","""150g,150g,1대,1개""",BeanSproutsRice,"""진간장,설탕,고춧가루,참기름""","""2스푼,1/2스푼,1스푼,1스푼""",
+뚝배기치즈밥,https://www.youtube.com/watch?v=ClCC3H7ceF4,"""햄,양파""","""60g,1/2개""",TtukbaegiCheeseRice,"""식용유,고추장,돈가스소스,설탕""","""2스푼,1/2스푼,2스푼,1/2스푼""","""옥수수 통조림, 모짜렐라 치즈"""
+팽이버섯덮밥,https://www.youtube.com/watch?v=03Yl1ZIUuTM,"""팽이버섯,양파""","""300g,1/2개""",EnokiMushroomRice Bowl,"""고추장,돈가스소스,설탕,후추,참기름""","""1/2스푼,2스푼,1/2스푼,조금,조금""",
+김치볶음밥,https://www.youtube.com/watch?v=9uNNY-78-Zg,"""김치,대파,달걀""","""3스푼,1대,1개""",KimchiFriedRice,"""진간장,설탕,고춧가루,쌈장,마요네즈,식용유""","""1/2스푼,1/2스푼,1/2스푼,1/2스푼,1,2스푼""",모짜렐라 치즈
+삼겹양배추덮밥,https://www.youtube.com/watch?v=0dI5URtcX0A,"""돼지고기,양배추,대파""","""250g,250g,1단""",SamgyeopCabbageRiceBowl,"""다진마늘,고춧가루,된장,굴소스,설탕""","""1스푼,1스푼,1/2스푼,1스푼,1스푼""",
+대패숙주볶음밥,https://www.youtube.com/watch?v=MwmxZcuXmjo,"""돼지고기,숙주,부추""","""200g,1줌,1줌""",DaepaeSukjuFriedRice,"""다진마늘,멸치액젓,굴소스,설탕,식초""","""1스푼,1스푼,1/2스푼,1/2스푼,1스푼""",
+나폴리탄스파게티,https://www.youtube.com/watch?v=QW_7h71oiw0,"""소시지,양파,피망,달걀""","""200g,1/2개,1/4개,1개""",NeapolitanSpaghetti,"""식용유,케찹,돈가스소스""","""2스푼,5스푼,2스푼""",파스타면
+감자전,https://www.youtube.com/watch?v=T-Q8LUlkWj4,"""감자,양파,돼지고기""","""5알,1/2개,40g""",PotatoPancakes,"""소금,식용유""","""1/4스푼,5스푼""",
+양송이파스타,https://www.youtube.com/watch?v=V2BdvjNj28M,"""양파,양송이버섯,버터,우유""","""1개,60g,1스푼,2컵""",MushroomPasta,"""식용유""","""2스푼""",파스타면
+쌈장돼지숙주볶음,https://www.youtube.com/watch?v=4STedxyR8qc,"""돼지고기,양파,숙주""","""200g,1/2개,1줌""",StirFriedPorkBelly,"""식용유,소금,쌈장,돈가스소스,설탕""","""2스푼,조금,1스푼,1스푼,1/2스푼""",
+양배추덮밥,https://www.youtube.com/watch?v=Djo_xRjQjv8,"""돼지고기,양배추""","""200g,1/4개""",CabbageRiceBowl,"""소금,후추,다진마늘,설탕,굴소스,돈가스소스""","""조금,조금,1/2스푼,1/2스푼,1스푼,1스푼""",
+콩나물찌개,https://www.youtube.com/watch?v=ItQtrM8p6A0,"""돼지고기,대파,콩나물,양파""","""150g,1대,2줌,1/4개""",BeanSproutStew,"""식용유,다진마늘,고춧가루,멸치액젓""","""2스푼,1스푼,1스푼,1스푼""",
+치킨난반,https://www.youtube.com/watch?v=JQUeuvCH1V0,"""닭고기,달걀,양파""","""350g,2개,1/2개""",ChickenNanban,"""소금,전분가루,식용유,진간장,설탕,식초,마요네즈,케찹""","""조금,3스푼,2스푼,2스푼,2스푼,2스푼,3스푼,1스푼""",
+순두부참치비빔밥,https://www.youtube.com/watch?v=Nhiv2vKg13A,"""순두부,양파""","""1/2개,1/2개""",SundubuTunaBibimbap,"""고추장,진간장,설탕,케찹,다진마늘,참기름""","""1스푼,1스푼,1스푼,1/2스푼,1/2스푼,1스푼""",참치캔
+단무지카레볶음밥,https://www.youtube.com/watch?v=hyCfPckKBiw,"""대파,달걀""","""1개,2개""",RadishCurryFriedRice,"""식용유,카레가루,케찹,참기름""","""2스푼,2스푼,1/2스푼,1/3스푼""",단무지
+허니치킨,https://www.youtube.com/watch?v=bqG9VAyv_Oc,"""닭고기""","""350g""",HoneyChicken,"""소금,후추,굴소스,식초,감자전분,식용유,진간장,꿀,다진마늘""","""조금,조금,1스푼,2스푼,5스푼,2스푼,2스푼,2스푼,1/2스푼""",
+오므라이스,https://www.youtube.com/watch?v=AlK2Gl6kHZI,"""양파,당근,달걀""","""1/6개,1/4컵""",OmeletteRice,"""밀가루,식용유,케첩,간장,설탕,식초,미림,소고기다시다""","""1스푼,4스푼,2스푼,3스푼,2스푼,1스푼,2스푼,1/3스푼""",
+달걀볶음밥,https://www.youtube.com/watch?v=kR77WlHRZrs&t=3s,"""대파,달걀""","""1/2컵,2개""",EggFriedRice,"""식용유,진간장,맛소금""","""4스푼,1/2스푼,1g""",
+달걀말이,https://www.youtube.com/watch?v=T7YJviWhquo,"""달걀,당근,대파""","""6,1/5컵,1/2컵""",EggRoll,"""꽃소금,설탕,식용유""","""1/6스푼,조금,3스푼""",
+소고기미역국,https://www.youtube.com/watch?v=xsTFsunt6-8,"""소고기""","""100g""",BeefSeaweedSoup,"""참기름,국간장,다진마늘,멸치액젓""","""2스푼,3스푼,2/3스푼,2스푼""",자른미역 1/3컵
+돼지고기김치찌개,https://www.youtube.com/watch?v=qWbHSOplcvY,"""돼지고기,신김치,청양고추,대파""","""130g,3컵,2개,2/3대""",PorkKimchiStew,"""다진마늘,고춧가루,국간장,새우젓""","""1스푼,2스푼,1스푼,1스푼""",
+소불고기,https://www.youtube.com/watch?v=nVzwOOJLt24,"""소고기,양파,표고버섯,대파,고추""","""500g,1/2개,2개,1대,1개""",BeefBulgogi,"""설탕,물엿,다진마늘,진간장,참기름""","""3스푼,1스푼,1스푼,5스푼,3스푼""",
+춘천닭갈비,https://www.youtube.com/watch?v=HI8DlDs1gko,"""닭고기,감자,양파,청양고추,대파,양배추,마늘""","""350g,1/2개,1/2개,2개,1컵,1컵,15개""",ChuncheonDakgalbi,"""고추장,설탕,고춧가루,맛술,진간장,다진마늘,참기름""","""1컵,1컵,1컵,1컵,1컵,1컵,2스푼""",
+콩나물불고기,https://www.youtube.com/watch?v=BDexkgHaEek,"""돼지고기,콩나물,대파""","""300g,300g,1대""",BeanSproutBulgogi,"""식용유,설탕,진간장,고추장,굴소스,다진마늘,고춧가루,후추""","""2스푼,1스푼,1스푼,1스푼,1스푼,1스푼,1스푼,1스푼""",
+달걀두부조림,https://www.youtube.com/watch?v=HzA9yr7OJk8,"""두부,팽이버섯,달걀,양파,대파,청양고추""","""1모,1개,1개,1/2개,1대,1개""",StewedEggTofu,"""진간장,멸치액젓,굴소스,설탕,고춧가루,다진마늘""","""1스푼,1스푼,1스푼,1스푼,2스푼,1스푼""",
+소보로덮밥,https://www.youtube.com/watch?v=FS30zCcz02M,"""돼지고기,달걀,대파""","""150g,3알,1줌""",SoboroRiceBowl,"""소금,설탕,다진마늘,진간장,설탕,식초""","""조금,조금,1/2스푼,2스푼,1스푼,1스푼""",

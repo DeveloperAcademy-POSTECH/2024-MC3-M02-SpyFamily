@@ -55,7 +55,7 @@ struct CookChoiceRecipeView: View {
                 
                 VStack {
                     ScrollView {
-                        ForEach(sortedRecommendedRecipes, id: \.self) { recipe in
+                        ForEach(viewModel.recommendedRecipeByRefri, id: \.self) { recipe in
                             //                            let sortedFoods: [String] = {
                             //                                var includedFoodsInRefri: [String] = []
                             //                                var remainingFoods: [String] = []
