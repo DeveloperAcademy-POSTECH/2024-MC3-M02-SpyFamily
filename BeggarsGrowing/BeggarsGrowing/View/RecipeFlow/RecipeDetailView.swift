@@ -20,10 +20,28 @@ struct RecipeDetailView: View {
                 .ignoresSafeArea()
             ScrollView{
                 VStack(spacing: 0){
-                    Rectangle() //레시피 이미지
-                        .foregroundColor(.gray)
-                        .frame(height: 233)
-                        .padding(.bottom, 12)
+                    if let recipeImage = recipe.image {
+                        if isValidUUID(uuidString: recipeImage){
+                            if let loadedImage = loadImage(imageName: recipeImage) {
+                                Image(uiImage: loadedImage)
+                                    .resizable()
+                                    .frame(height: 233)
+                                    .cornerRadius(4)
+                                    .padding(12)
+                            } else {
+                                Rectangle() //레시피 이미지
+                                    .foregroundColor(.gray)
+                                    .frame(height: 233)
+                                    .padding(12)
+                            }
+                        } else {
+                            Image(recipeImage)
+                                .resizable()
+                                .frame(height: 233)
+                                .cornerRadius(4)
+                                .padding(12)
+                        }
+                    }
                     VStack(alignment: .leading, spacing: 0){
                         HStack{
                             Text(recipe.menu)
@@ -135,8 +153,20 @@ struct RecipeDetailView: View {
         }
     }
 }
+func loadImage(imageName: String) -> UIImage? {
+    let fileManager = FileManager.default
+    let imagePath = getDocumentsDirectory().appendingPathComponent("\(imageName).png").path
+    if fileManager.fileExists(atPath: imagePath) {
+        return UIImage(contentsOfFile: imagePath)
+    }
+    return nil
+}
 
-#Preview {
-    CookRecipeDetailView()
-        .environment(NavigationManager())
+func getDocumentsDirectory() -> URL {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    return paths[0]
+}
+
+func isValidUUID(uuidString: String) -> Bool {
+    return UUID(uuidString: uuidString) != nil
 }

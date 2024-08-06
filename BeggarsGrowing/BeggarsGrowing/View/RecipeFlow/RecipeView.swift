@@ -135,22 +135,5 @@ struct RecipeView: View {
             print("Failed to save context: \(error.localizedDescription)")
         }
     }
-    
-    func loadImage(imageName: String) -> UIImage? {
-        let fileManager = FileManager.default
-        let imagePath = getDocumentsDirectory().appendingPathComponent("\(imageName).png").path
-        if fileManager.fileExists(atPath: imagePath) {
-            return UIImage(contentsOfFile: imagePath)
-        }
-        return nil
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    func isValidUUID(uuidString: String) -> Bool {
-        return UUID(uuidString: uuidString) != nil
-    }
+ 
 }
