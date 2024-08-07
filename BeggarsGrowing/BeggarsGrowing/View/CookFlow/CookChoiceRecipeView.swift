@@ -40,7 +40,6 @@ struct CookChoiceRecipeView: View {
     
     var foodsInRefriStrings: [String] { foodsInRefri.map {$0.food} }
     
-//    var recommendedRecipes: [Recipe] = []
     @State var sortedRecommendedRecipes: [Recipe] = []
     
     var body: some View {
@@ -55,7 +54,7 @@ struct CookChoiceRecipeView: View {
                 
                 VStack {
                     ScrollView {
-                        ForEach(viewModel.recommendedRecipeByRefri, id: \.self) { recipe in
+                        ForEach(sortedRecommendedRecipes, id: \.self) { recipe in
                             //                            let sortedFoods: [String] = {
                             //                                var includedFoodsInRefri: [String] = []
                             //                                var remainingFoods: [String] = []
@@ -76,45 +75,131 @@ struct CookChoiceRecipeView: View {
                                 navigationManager.push(to: .cookRecipeDetail)},
                                    label: {
                                 ZStack {
-                                    Image(recipe.image ?? "")
-                                        .resizable()
-                                        .frame(width: 330, height: 180)
-                                        .cornerRadius(8, corners: [.topLeft, .topRight])
-                                        .overlay(
-                                            ZStack {
-                                                Rectangle()
-                                                    .frame(width: 330, height: 70)
-                                                    .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
-                                                    .foregroundColor(.white)
-                                                VStack(spacing: 0) {
-                                                    HStack {
-                                                        Text(recipe.menu)
-                                                            .font(.headline)
-                                                            .foregroundColor(.black)
-                                                            .padding(.bottom, 10)
-                                                        Spacer()
-                                                    }
-                                                    .padding(.leading, 8)
-                                                    HStack(spacing: 0) {
-                                                        //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
-                                                        //                                                            Text(sortedFoods[ingredients])
-                                                        //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-                                                        //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-                                                        //                                                                .lineLimit(1)
-                                                        //                                                            //마지막 쉼표 빼는거
-                                                        //                                                            if ingredients != sortedFoods.count - 1 {
-                                                        //                                                                Text(", ")
-                                                        //                                                                    .foregroundColor(.black)
-                                                        //                                                            }
-                                                        //                                                        }
-                                                    }
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                                    .padding(.leading, 8)
-                                                }
+                                    if let recipeImage = recipe.image {
+                                        if isValidUUID(uuidString: recipeImage){
+                                            if let loadedImage = loadImage(imageName: recipeImage) {
+                                                Image(uiImage: loadedImage)
+                                                    .resizable()
+                                                    .frame(width: 330, height: 180)
+                                                    .cornerRadius(8, corners: [.topLeft, .topRight])
+                                                    .overlay(
+                                                        ZStack {
+                                                            Rectangle()
+                                                                .frame(width: 330, height: 70)
+                                                                .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
+                                                                .foregroundColor(.white)
+                                                            VStack(spacing: 0) {
+                                                                HStack {
+                                                                    Text(recipe.menu)
+                                                                        .font(.headline)
+                                                                        .foregroundColor(.black)
+                                                                        .padding(.bottom, 10)
+                                                                    Spacer()
+                                                                }
+                                                                .padding(.leading, 8)
+                                                                HStack(spacing: 0) {
+                                                                    //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
+                                                                    //                                                            Text(sortedFoods[ingredients])
+                                                                    //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
+                                                                    //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
+                                                                    //                                                                .lineLimit(1)
+                                                                    //                                                            //마지막 쉼표 빼는거
+                                                                    //                                                            if ingredients != sortedFoods.count - 1 {
+                                                                    //                                                                Text(", ")
+                                                                    //                                                                    .foregroundColor(.black)
+                                                                    //                                                            }
+                                                                    //                                                        }
+                                                                }
+                                                                .lineLimit(1)
+                                                                .truncationMode(.tail)
+                                                                .padding(.leading, 8)
+                                                            }
+                                                        }
+                                                            .padding(.top, 240)
+                                                    )
+                                            } else {
+                                                Image("")
+                                                    .resizable()
+                                                    .frame(width: 330, height: 180)
+                                                    .cornerRadius(8, corners: [.topLeft, .topRight])
+                                                    .overlay(
+                                                        ZStack {
+                                                            Rectangle()
+                                                                .frame(width: 330, height: 70)
+                                                                .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
+                                                                .foregroundColor(.white)
+                                                            VStack(spacing: 0) {
+                                                                HStack {
+                                                                    Text(recipe.menu)
+                                                                        .font(.headline)
+                                                                        .foregroundColor(.black)
+                                                                        .padding(.bottom, 10)
+                                                                    Spacer()
+                                                                }
+                                                                .padding(.leading, 8)
+                                                                HStack(spacing: 0) {
+                                                                    //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
+                                                                    //                                                            Text(sortedFoods[ingredients])
+                                                                    //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
+                                                                    //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
+                                                                    //                                                                .lineLimit(1)
+                                                                    //                                                            //마지막 쉼표 빼는거
+                                                                    //                                                            if ingredients != sortedFoods.count - 1 {
+                                                                    //                                                                Text(", ")
+                                                                    //                                                                    .foregroundColor(.black)
+                                                                    //                                                            }
+                                                                    //                                                        }
+                                                                }
+                                                                .lineLimit(1)
+                                                                .truncationMode(.tail)
+                                                                .padding(.leading, 8)
+                                                            }
+                                                        }
+                                                            .padding(.top, 240)
+                                                    )
                                             }
-                                                .padding(.top, 240)
-                                        )
+                                        } else {
+                                            Image(recipeImage)
+                                                .resizable()
+                                                .frame(width: 330, height: 180)
+                                                .cornerRadius(8, corners: [.topLeft, .topRight])
+                                                .overlay(
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .frame(width: 330, height: 70)
+                                                            .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
+                                                            .foregroundColor(.white)
+                                                        VStack(spacing: 0) {
+                                                            HStack {
+                                                                Text(recipe.menu)
+                                                                    .font(.headline)
+                                                                    .foregroundColor(.black)
+                                                                    .padding(.bottom, 10)
+                                                                Spacer()
+                                                            }
+                                                            .padding(.leading, 8)
+                                                            HStack(spacing: 0) {
+                                                                //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
+                                                                //                                                            Text(sortedFoods[ingredients])
+                                                                //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
+                                                                //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
+                                                                //                                                                .lineLimit(1)
+                                                                //                                                            //마지막 쉼표 빼는거
+                                                                //                                                            if ingredients != sortedFoods.count - 1 {
+                                                                //                                                                Text(", ")
+                                                                //                                                                    .foregroundColor(.black)
+                                                                //                                                            }
+                                                                //                                                        }
+                                                            }
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                            .padding(.leading, 8)
+                                                        }
+                                                    }
+                                                        .padding(.top, 240)
+                                                )
+                                        }
+                                    }
                                 }
                                 .padding(.bottom, 80)
                             })
@@ -125,7 +210,10 @@ struct CookChoiceRecipeView: View {
             }
         }
         .onAppear{
-            sortRecommendedRecipes()
+            DispatchQueue.main.async{
+                viewModel.filterRecipeBySelectedFoods()
+                sortRecommendedRecipes()
+            }
         }
         .navigationTitle("레시피 선택")
         .navigationBarTitleDisplayMode(.inline)
@@ -152,7 +240,7 @@ struct CookChoiceRecipeView: View {
     
     private func sortRecommendedRecipes() {
         let selectedFoods = viewModel.selectedFoods.map { $0.food }
-        self.sortedRecommendedRecipes = viewModel.recommendedRecipeByRefri.sorted {
+        self.sortedRecommendedRecipes = viewModel.filteredRecipesBySelectedFoods.sorted {
             let firstMatchCount = $0.foods.filter { selectedFoods.contains($0) }.count
             let secondMatchCount = $1.foods.filter { selectedFoods.contains($0) }.count
             return firstMatchCount > secondMatchCount

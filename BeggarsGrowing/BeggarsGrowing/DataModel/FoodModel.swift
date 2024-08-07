@@ -17,7 +17,7 @@ struct FoodImageName {
     let ingredients: [Food] = [
         Food(name: "돼지고기", imageName: "Pork"),
         Food(name: "당근", imageName: "Carrot"),
-        Food(name: "계란", imageName: "Egg"),
+        Food(name: "달걀", imageName: "Egg"),
         Food(name: "양파", imageName: "Onion"),
         Food(name: "대파", imageName: "GreenOnion"),
         Food(name: "감자", imageName: "Potato"),

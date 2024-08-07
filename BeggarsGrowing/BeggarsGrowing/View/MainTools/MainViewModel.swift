@@ -12,14 +12,20 @@ import SwiftData
 class MainViewModel : ObservableObject {
     
     @AppStorage("StoryStage") var storyStage: Int = 0
-    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0
-    
+//    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0
+//    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0 {
+//            didSet {
+//                objectWillChange.send()
+//            }
+//        }
+    @Published var moneyForSave: Int = 0
     @Published var beggars: [Beggars] = []
     @Published var nowBeggar: Beggars = Beggars(stage: 0, name: "", image: "", goalMoney: 0, nowMoney: 0)
     
     func giveMoneyToBeggars() -> Int{
         
         var returnMoney = 0
+        print("\(moneyForSave)")
         
         let nowBeggar = beggars.filter{ $0.stage == storyStage}[0]
         let differenceGoalandNowMoney = nowBeggar.goalMoney - nowBeggar.nowMoney

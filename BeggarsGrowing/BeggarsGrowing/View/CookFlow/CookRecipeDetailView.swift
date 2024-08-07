@@ -13,19 +13,37 @@ struct CookRecipeDetailView: View {
     
     @State var recipe: Recipe = Recipe(menu: "", foods: [""], foodsAmount: [""])
     @State private var isAlertPresented = false
-
+    
     private var imageName = FoodImageName()
-
+    
     var body: some View {
         ZStack{
             Color(red: 255 / 255, green: 250 / 255, blue: 233 / 255)
                 .ignoresSafeArea()
             ScrollView{
                 VStack(spacing: 0){
-                    Rectangle()
-                        .foregroundColor(.gray)
-                        .frame(height: 233)
-                        .padding(.bottom, 12)
+                    if let recipeImage = recipe.image {
+                        if isValidUUID(uuidString: recipeImage){
+                            if let loadedImage = loadImage(imageName: recipeImage) {
+                                Image(uiImage: loadedImage)
+                                    .resizable()
+                                    .frame(height: 233)
+                                    .cornerRadius(4)
+                                    .padding(12)
+                            } else {
+                                Rectangle() //레시피 이미지
+                                    .foregroundColor(.gray)
+                                    .frame(height: 233)
+                                    .padding(12)
+                            }
+                        } else {
+                            Image(recipeImage)
+                                .resizable()
+                                .frame(height: 233)
+                                .cornerRadius(4)
+                                .padding(12)
+                        }
+                    }
                     VStack(alignment: .leading, spacing: 0){
                         HStack{
                             Text(recipe.menu)
@@ -117,7 +135,7 @@ struct CookRecipeDetailView: View {
                             .fontWeight(.heavy)
                             .padding(.top, 18)
                             .padding(.bottom, 8)
-
+                        
                         
                         Divider()
                             .frame(minHeight: 1)
