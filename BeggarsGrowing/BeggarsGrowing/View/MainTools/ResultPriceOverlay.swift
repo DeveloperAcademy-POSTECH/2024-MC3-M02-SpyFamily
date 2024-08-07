@@ -35,8 +35,10 @@ struct ResultPriceOverlay: View {
                     .multilineTextAlignment(.center)
                 
                 Button(action: {
-                    showOverlay = false
-                    moneyForSave = historyToShow.savedMoney
+                    DispatchQueue.main.async{
+                        moneyForSave = historyToShow.savedMoney
+                        showOverlay = false
+                    }
                 }) {
                     Image("OverlayButton")
                         .resizable()

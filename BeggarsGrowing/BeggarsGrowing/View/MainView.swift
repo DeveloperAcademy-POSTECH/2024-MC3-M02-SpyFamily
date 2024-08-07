@@ -39,12 +39,18 @@ struct MainView: View {
     var body: some View {
         
         VStack {
+            Text("\(storyStage)")
+            Text("\(moneyForSave)")
+            Text("\(animationToggle)")
+            Text("\(showOverlay)")
             // 커스텀 프로그레스 바
             CustomProgressBar(value: Float(mainViewModel.nowBeggar.nowMoney), maxValue: Float(mainViewModel.nowBeggar.goalMoney))
                 .frame(height: 40)
                 .padding(EdgeInsets(top: 30, leading: 27, bottom: 30, trailing: 27))
                 .onChange(of:animationToggle){
+                    print("onchange animationToggle")
                     if animationToggle == true{
+                        print("if animationToggle true")
                         successAnimation()
                     }
                 }
@@ -194,7 +200,9 @@ struct MainView: View {
             }
         }
         .onChange(of:showOverlay) {
+            print(".Onchange showOVerlay")
             if showOverlay == false{
+                print("if showOverlay = false")
                 checkSaveMoney()
                 for usedFood in viewModel.usedFoods {
                     if let index = foodsInRefri.firstIndex(where: { $0.id == usedFood.0.id }) {
@@ -212,27 +220,37 @@ struct MainView: View {
     }
     
     func successAnimation() {
+        print("successAnimation Start")
         DispatchQueue.main.async{
             withAnimation(Animation.easeInOut(duration: 3.0)) {
+                print(moneyTobeChanged)
                 mainViewModel.nowBeggar.nowMoney = self.moneyTobeChanged
+                print("nowMoney = moneyTobeChanged")
             }
-            animationToggle.toggle()
+            
             if mainViewModel.nowBeggar.nowMoney == mainViewModel.nowBeggar.goalMoney{
+                print("nowMoney == goalMoney")
                 if BeggarsList().beggars.count > storyStage {
                     storyStage += 1
                     let newBeggar = BeggarsList().beggars[storyStage]
                     modelContext.insert(Beggars(stage: storyStage, name: newBeggar.name, image: newBeggar.image, goalMoney: newBeggar.goalMoney, nowMoney: 0))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
                         navigationManager.push(to:.beggarsHOF)
+                        
                     }
                 }
             }
         }
-        
+        animationToggle = false
     }
     func checkSaveMoney() {
+        print(moneyForSave)
+        mainViewModel.moneyForSave = moneyForSave
         moneyTobeChanged = mainViewModel.giveMoneyToBeggars()
-        animationToggle.toggle()
+        self.moneyForSave = mainViewModel.moneyForSave
+        print(moneyTobeChanged)
+        animationToggle = true
+        print("animationToggle = true")
     }
 }
 
