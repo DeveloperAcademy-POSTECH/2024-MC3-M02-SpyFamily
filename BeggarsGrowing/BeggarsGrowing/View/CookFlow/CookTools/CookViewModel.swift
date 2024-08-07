@@ -26,6 +26,7 @@ class CookViewModel : ObservableObject {
     @Published var recentImage: UIImage?
     
     @Published var usedFoods: [(Refrigerator, Double)] = []
+    @Published var foodsUsage: [(Refrigerator, Double)] = []
     
     func checkRefriFoodsInRecipe() {
         filteredRecipeIDsByRefri.removeAll()
@@ -57,7 +58,20 @@ class CookViewModel : ObservableObject {
     func finishCookRecord() -> History{
         let menu = selectedRecipe.menu
         let foods = usedFoods.map { $0.0.food }
-        let foodsPrice = usedFoods.map { Int(Double($0.0.price) * ($0.1 / Double(100))) }
+//        let foodsUsage = usedFoods.map { ($0, (Double($0.0.amount) / Double(100)) * (Double($0.1) / Double(100))) }
+//        let foodsPrice = foodsUsage.map { Int(Double($0.0.price) * (Double($0.0.amount) * ($0.1 / Double(100))) ) }
+        let foodsUsage = usedFoods.map { food in
+            let amountPercentage = Double(food.0.amount) / 100.0
+            let usagePercentage = Double(food.1) / 100.0
+            return (food.0, amountPercentage * usagePercentage)
+        }
+        self.foodsUsage = foodsUsage
+        let foodsPrice = foodsUsage.map { foodUsage in
+            let price = Double(foodUsage.0.price)
+//            let amount = Double(foodUsage.0.amount)
+            let usage = foodUsage.1
+            return Int(price * usage)
+        }
         let menuPrice = foodsPrice.reduce(0, +)
         var savedMoney = 0
         
