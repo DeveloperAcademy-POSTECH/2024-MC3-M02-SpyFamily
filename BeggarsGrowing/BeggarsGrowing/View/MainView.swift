@@ -39,10 +39,7 @@ struct MainView: View {
     var body: some View {
         
         VStack {
-            Text("\(storyStage)")
-            Text("\(moneyForSave)")
-            Text("\(animationToggle)")
-            Text("\(showOverlay)")
+
             // 커스텀 프로그레스 바
             CustomProgressBar(value: Float(mainViewModel.nowBeggar.nowMoney), maxValue: Float(mainViewModel.nowBeggar.goalMoney))
                 .frame(height: 40)
@@ -204,9 +201,9 @@ struct MainView: View {
             if showOverlay == false{
                 print("if showOverlay = false")
                 checkSaveMoney()
-                for usedFood in viewModel.usedFoods {
+                for usedFood in viewModel.foodsUsage {
                     if let index = foodsInRefri.firstIndex(where: { $0.id == usedFood.0.id }) {
-                        foodsInRefri[index].amount -= usedFood.1
+                        foodsInRefri[index].amount -= usedFood.1 * 100
                         if foodsInRefri[index].amount <= 0 {
                             DispatchQueue.main.async{
                                 foodsInRefri[index].amount = 0
