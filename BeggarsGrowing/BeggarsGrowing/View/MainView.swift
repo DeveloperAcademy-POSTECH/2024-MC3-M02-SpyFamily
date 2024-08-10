@@ -170,7 +170,7 @@ struct MainView: View {
             }
         }
         // 배경 이미지
-        .background(Image("MainBG01")
+        .background(Image("MainBG\(storyStage)")
             .resizable()
             .scaledToFill()
             .edgesIgnoringSafeArea(.all))
