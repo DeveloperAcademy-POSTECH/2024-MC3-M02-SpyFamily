@@ -119,27 +119,28 @@ struct RecipeDetailView: View {
                                 .padding(.trailing, 20)
                             }
                         }
-                        
-                        Text("메모")
-                            .font(.system(size: 17))
-                            .fontWeight(.heavy)
-                            .padding(.top, 18)
-                            .padding(.bottom, 8)
-                        
-                        
-                        Divider()
-                            .frame(minHeight: 1)
-                            .background(Color.black)
-                            .padding(.bottom, 8)
-                        ZStack(alignment: .topLeading){
-                            RoundedRectangle(cornerRadius: 6)
-                                .frame(height: 200)
-                                .foregroundColor(Color(red: 252 / 255, green: 239 / 255, blue: 209 / 255))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .stroke(Color.gray, lineWidth: 1))
-                            Text(recipe.memo ?? "")
-                                .padding(10)
+                        if recipe.memo != ""{
+                            Text("메모")
+                                .font(.system(size: 17))
+                                .fontWeight(.heavy)
+                                .padding(.top, 18)
+                                .padding(.bottom, 8)
+                            
+                            
+                            Divider()
+                                .frame(minHeight: 1)
+                                .background(Color.black)
+                                .padding(.bottom, 8)
+                            ZStack(alignment: .topLeading){
+                                RoundedRectangle(cornerRadius: 6)
+                                    .frame(height: 200)
+                                    .foregroundColor(Color(red: 252 / 255, green: 239 / 255, blue: 209 / 255))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .stroke(Color.gray, lineWidth: 1))
+                                Text(recipe.memo ?? "")
+                                    .padding(10)
+                            }
                         }
                     }
                     .padding(.horizontal, 16)
