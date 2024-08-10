@@ -49,6 +49,7 @@
 		90A4AA8C2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */; };
 		90A4AA8E2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */; };
 		90A4AA902C5F3F64000293F6 /* RecipeImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */; };
+		90A542322C67AFE400B0F694 /* BeggarsHOFStoryOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A542312C67AFE400B0F694 /* BeggarsHOFStoryOverlay.swift */; };
 		90EB3C5D2C57CA25007960FD /* RefriSelectFoodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C5C2C57CA25007960FD /* RefriSelectFoodSheet.swift */; };
 		90EB3C632C58BCAA007960FD /* CookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EB3C622C58BCAA007960FD /* CookViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		90A4AA8B2C5CF9A9000293F6 /* RecipeSelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelectFoodSheet.swift; sourceTree = "<group>"; };
 		90A4AA8D2C5CF9BB000293F6 /* RecipeSelectSauceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelectSauceSheet.swift; sourceTree = "<group>"; };
 		90A4AA8F2C5F3F64000293F6 /* RecipeImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeImagePicker.swift; sourceTree = "<group>"; };
+		90A542312C67AFE400B0F694 /* BeggarsHOFStoryOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeggarsHOFStoryOverlay.swift; sourceTree = "<group>"; };
 		90EB3C5C2C57CA25007960FD /* RefriSelectFoodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefriSelectFoodSheet.swift; sourceTree = "<group>"; };
 		90EB3C622C58BCAA007960FD /* CookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,6 +261,7 @@
 			children = (
 				9095DA9C2C5F95400067D56C /* MainViewModel.swift */,
 				6E7590202C54F45400626282 /* ResultPriceOverlay.swift */,
+				90A542312C67AFE400B0F694 /* BeggarsHOFStoryOverlay.swift */,
 				9095DA9F2C6124110067D56C /* StoryOverlay.swift */,
 			);
 			path = MainTools;
@@ -360,6 +363,7 @@
 			files = (
 				900E953D2C4FF06800092CC2 /* HistoryModel.swift in Sources */,
 				905824622C4B9CBC003801D3 /* RecipeDetailView.swift in Sources */,
+				90A542322C67AFE400B0F694 /* BeggarsHOFStoryOverlay.swift in Sources */,
 				90A4AA862C59DFC5000293F6 /* CameraModel.swift in Sources */,
 				9058246C2C4B9CF5003801D3 /* CookRecordView.swift in Sources */,
 				900E953F2C4FF23000092CC2 /* BeggarsModel.swift in Sources */,
