@@ -27,7 +27,6 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
-// // //
 
 struct CookChoiceRecipeView: View {
     @Environment(NavigationManager.self) var navigationManager
@@ -55,18 +54,7 @@ struct CookChoiceRecipeView: View {
                 VStack {
                     ScrollView {
                         ForEach(sortedRecommendedRecipes, id: \.self) { recipe in
-                            //                            let sortedFoods: [String] = {
-                            //                                var includedFoodsInRefri: [String] = []
-                            //                                var remainingFoods: [String] = []
-                            //                                for food in recipe.foods {
-                            //                                    if foodsInRefriStrings.contains(food) {
-                            //                                        includedFoodsInRefri.append(food)
-                            //                                    } else {
-                            //                                        remainingFoods.append(food)
-                            //                                    }
-                            //                                }
-                            //                                return includedFoodsInRefri + remainingFoods
-                            //                            }()
+                            let sortedFoods = sortFoods(recipeFoods: recipe.foods, selectedFoods: viewModel.selectedFoods.map{$0.food})
                             
                             Button(action: {
                                 viewModel.selectedRecipe = recipe
@@ -98,17 +86,19 @@ struct CookChoiceRecipeView: View {
                                                                 }
                                                                 .padding(.leading, 8)
                                                                 HStack(spacing: 0) {
-                                                                    //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
-                                                                    //                                                            Text(sortedFoods[ingredients])
-                                                                    //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-                                                                    //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-                                                                    //                                                                .lineLimit(1)
-                                                                    //                                                            //마지막 쉼표 빼는거
-                                                                    //                                                            if ingredients != sortedFoods.count - 1 {
-                                                                    //                                                                Text(", ")
-                                                                    //                                                                    .foregroundColor(.black)
-                                                                    //                                                            }
-                                                                    //                                                        }
+                                                                    ForEach(sortedFoods[0], id: \.self) { ingredient in
+                                                                        Text("#\(ingredient) ")
+                                                                            .foregroundColor(Color(red: 64/255, green: 198/255, blue: 137/255))
+                                                                            .fontWeight(.bold)
+                                                                            .lineLimit(1)
+                                                                    }
+                                                                    ForEach(sortedFoods[1], id: \.self) { ingredient in
+                                                                        Text("#\(ingredient) ")
+                                                                            .foregroundColor(.black)
+                                                                            .fontWeight(.regular)
+                                                                            .lineLimit(1)
+                                                                    }
+                                                                    Spacer()
                                                                 }
                                                                 .lineLimit(1)
                                                                 .truncationMode(.tail)
@@ -138,17 +128,19 @@ struct CookChoiceRecipeView: View {
                                                                 }
                                                                 .padding(.leading, 8)
                                                                 HStack(spacing: 0) {
-                                                                    //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
-                                                                    //                                                            Text(sortedFoods[ingredients])
-                                                                    //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-                                                                    //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-                                                                    //                                                                .lineLimit(1)
-                                                                    //                                                            //마지막 쉼표 빼는거
-                                                                    //                                                            if ingredients != sortedFoods.count - 1 {
-                                                                    //                                                                Text(", ")
-                                                                    //                                                                    .foregroundColor(.black)
-                                                                    //                                                            }
-                                                                    //                                                        }
+                                                                    ForEach(sortedFoods[0], id: \.self) { ingredient in
+                                                                        Text("#\(ingredient) ")
+                                                                            .foregroundColor(Color(red: 64/255, green: 198/255, blue: 137/255))
+                                                                            .fontWeight(.bold)
+                                                                            .lineLimit(1)
+                                                                    }
+                                                                    ForEach(sortedFoods[1], id: \.self) { ingredient in
+                                                                        Text("#\(ingredient) ")
+                                                                            .foregroundColor(.black)
+                                                                            .fontWeight(.regular)
+                                                                            .lineLimit(1)
+                                                                    }
+                                                                    Spacer()
                                                                 }
                                                                 .lineLimit(1)
                                                                 .truncationMode(.tail)
@@ -179,17 +171,19 @@ struct CookChoiceRecipeView: View {
                                                             }
                                                             .padding(.leading, 8)
                                                             HStack(spacing: 0) {
-                                                                //                                                        ForEach(recipe.foods, id: \.self) { ingredients in
-                                                                //                                                            Text(sortedFoods[ingredients])
-                                                                //                                                                .foregroundColor(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? Color(red: 64/255, green: 198/255, blue: 137/255) : .black)
-                                                                //                                                                .fontWeight(recipe.foodsInRefri.contains(sortedFoods[ingredients]) ? .bold : .regular)
-                                                                //                                                                .lineLimit(1)
-                                                                //                                                            //마지막 쉼표 빼는거
-                                                                //                                                            if ingredients != sortedFoods.count - 1 {
-                                                                //                                                                Text(", ")
-                                                                //                                                                    .foregroundColor(.black)
-                                                                //                                                            }
-                                                                //                                                        }
+                                                                ForEach(sortedFoods[0], id: \.self) { ingredient in
+                                                                    Text("#\(ingredient) ")
+                                                                        .foregroundColor(Color(red: 64/255, green: 198/255, blue: 137/255))
+                                                                        .fontWeight(.bold)
+                                                                        .lineLimit(1)
+                                                                }
+                                                                ForEach(sortedFoods[1], id: \.self) { ingredient in
+                                                                    Text("#\(ingredient) ")
+                                                                        .foregroundColor(.black)
+                                                                        .fontWeight(.regular)
+                                                                        .lineLimit(1)
+                                                                }
+                                                                Spacer()
                                                             }
                                                             .lineLimit(1)
                                                             .truncationMode(.tail)
@@ -245,5 +239,20 @@ struct CookChoiceRecipeView: View {
             let secondMatchCount = $1.foods.filter { selectedFoods.contains($0) }.count
             return firstMatchCount > secondMatchCount
         }
+    }
+    
+    func sortFoods(recipeFoods: [String], selectedFoods: [String]) -> [[String]] {
+        var selectingFoodsInRecipe: [String] = []
+        var remainingFoods: [String] = []
+        
+        for food in recipeFoods {
+            if selectedFoods.contains(food) {
+                selectingFoodsInRecipe.append(food)
+            } else {
+                remainingFoods.append(food)
+            }
+        }
+        
+        return [selectingFoodsInRecipe, remainingFoods]
     }
 }
