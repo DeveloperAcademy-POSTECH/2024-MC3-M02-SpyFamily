@@ -12,9 +12,14 @@ struct BeggarsHOFView: View {
     @EnvironmentObject var mainViewModel: MainViewModel
     
     @AppStorage("StoryStage") var storyStage: Int = 0
+    @AppStorage("MoneyFoRSave") var moneyForSave: Int = 0
 
     @Query var beggars: [Beggars]
 
+    @State var showStoryOverlayToggle: Bool = false
+    @State var overlayIndex: Int = 0
+    @State var showOverlayForNewBeggar: Bool = false
+    
     let beggarsList = BeggarsList()
     @State var totalSavedMoney : Int = 0
     let beggarCardImage = [Image("JungleBeggarCard"),Image("TexiBeggarCard"),Image("DancerBeggarCard"),Image("FreezeBeggarCard")]
@@ -43,13 +48,19 @@ struct BeggarsHOFView: View {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 20) {
                         // Locked items
                         ForEach(beggarsList.beggars.indices, id: \.self) { index in
-                            let beggar = beggarsList.beggars[index]
                             if index <= storyStage{
-                                beggarCardImage[index]
-                                    .resizable()
-                                    .frame(maxWidth: 110, maxHeight: 153)
-                                    .aspectRatio(contentMode: .fit)
-                                    .shadow(color: .black.opacity(0.25), radius: 1.61053, x: 0, y: 3.22105)
+                                Button(action:{
+                                    DispatchQueue.main.async{
+                                        overlayIndex = index
+                                        showStoryOverlayToggle = true
+                                    }
+                                }, label:{
+                                    beggarCardImage[index]
+                                        .resizable()
+                                        .frame(maxWidth: 110, maxHeight: 153)
+                                        .aspectRatio(contentMode: .fit)
+                                        .shadow(color: .black.opacity(0.25), radius: 1.61053, x: 0, y: 3.22105)
+                                })
                             }
                             else{
                                 Image("LockedItem")
@@ -65,9 +76,20 @@ struct BeggarsHOFView: View {
                 }
             }
         }
+        .overlay{
+            if showStoryOverlayToggle {
+                BeggarsHOFStoryOverlay(showStoryOverlay: $showStoryOverlayToggle, overlayIndex: $overlayIndex, showOverlayForNewBeggar: $showOverlayForNewBeggar)
+            }
+        }
         .onAppear{
             let nowMoneyList = beggars.map{$0.nowMoney}
             totalSavedMoney = nowMoneyList.reduce(0, +)
+            
+            if moneyForSave > 0 {
+                showOverlayForNewBeggar = true
+                showStoryOverlayToggle = true
+            }
+            
         }
         .navigationDestination(for: PathType.self) { pathType in
             pathType.NavigatingView()
