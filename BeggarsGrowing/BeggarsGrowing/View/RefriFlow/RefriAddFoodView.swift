@@ -78,11 +78,10 @@ struct RefriAddFoodView: View {
                         .padding(.vertical, 4)
                     }
                     .padding(.leading, 16)
-                    .padding(.trailing, 25)
                     Spacer()
                 }
             } //-- v스택 끝
-            
+            .padding(.horizontal, 16)
             VStack(spacing: 0){
                 Spacer()
                 Button(action: {
