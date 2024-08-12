@@ -107,7 +107,7 @@ struct CookRecordView: View {
                                     .padding(.leading, 16)
                                 
                                 Spacer()
-                                Text("\(Int(food.amount-viewModel.usedFoods[index].1))%")
+                                Text("\(Int(food.amount) - Int(food.amount*(viewModel.usedFoods[index].1 / Double(100))))%")
                                 Spacer()
                                 
                                 VStack {
@@ -131,21 +131,7 @@ struct CookRecordView: View {
                                         }
                                         .padding(.horizontal, 16)
                                         
-                                        // 기본 슬라이더
-                                        //                                        Slider(value: $viewModel.usedFoods[index].1, in: 0...100, step: 10)
-                                        //                                            .padding(.horizontal, 16)
-                                        //                                            .frame(width: 190) // 슬라이더 너비로 변경
-                                        //                                            .accentColor(.orange)
-                                        Slider(value: Binding(
-                                            get: {
-                                                guard index < viewModel.usedFoods.count else { return 0 }
-                                                return self.viewModel.usedFoods[index].1
-                                            },
-                                            set: { newValue in
-                                                guard index < viewModel.usedFoods.count else { return }
-                                                self.viewModel.usedFoods[index].1 = min(newValue, viewModel.usedFoods[index].0.amount)
-                                            }
-                                        ), in: 0...100, step: 10)
+                                        Slider(value: $viewModel.usedFoods[index].1, in: 0...100, step: 10)
                                         .padding(.horizontal, 16)
                                         .frame(width: 190) // 슬라이더 너비로 변경
                                         .accentColor(.orange)
