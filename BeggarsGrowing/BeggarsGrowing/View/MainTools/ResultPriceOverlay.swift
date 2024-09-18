@@ -17,36 +17,84 @@ struct ResultPriceOverlay: View {
     // 애니메이션을 위한 변수
     @State private var animationCurrentIndex: Int = 0
     
+    @State private var detailListOfUsedFoods: Bool = false
     
     var body: some View {
         ZStack {
             Image("MainResultOverlay")
                 .resizable()
+                .frame(width: 343, height: 500)
+                .scaledToFit()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 343, height: 370)
             
             VStack(spacing: 20) {
                 Text("추정 소요금액")
-                    .font(.title)
+                    .font(.DGMTitle2)
                     .fontWeight(.bold)
                     .padding(.top, 20)
                 
-                Text("이번 요리에서는 총\n\(historyToShow.menuPrice)원이 소요되었어요.")
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 20)
-                ForEach(0..<animationCurrentIndex, id: \.self) { index in
-                    if historyToShow.foodsPrice[index] != 0{
-                        HStack{
-                            Text(historyToShow.foods[index])
-                            Text("\(historyToShow.foodsPrice[index])")
-                        }
-                        .transition(.slide)
-                        
+                VStack(spacing:15){
+                    HStack{
+                        Text("외식 평균")
+                            .frame(width:100)
+                            .font(.DGMTitle3)
+                        Spacer()
+                        Text("13,000")
+                            .font(.custom("DungGeunMo", size: 25))
                     }
-                }
-                
-                Text("총 \(historyToShow.savedMoney)을 아끼셨군요!\n거지에게 기부해주세요.")
-                    .multilineTextAlignment(.center)
+                    HStack{
+                        Text("요리 비용")
+                            .frame(width:100)
+                            .font(.DGMTitle3)
+                        Spacer()
+                        Button(action:{
+                            detailListOfUsedFoods.toggle()
+                        }, label:{
+                            Image(systemName: "magnifyingglass.circle.fill")
+                                .resizable()
+                                .frame(width:20, height:20)
+                        })
+                        Text("\(historyToShow.menuPrice)")
+                            .font(.custom("DungGeunMo", size: 25))
+                    }
+                    if detailListOfUsedFoods{
+                        if animationCurrentIndex > 3 {
+                            ScrollView{
+                                VStack{
+                                    ForEach(0..<animationCurrentIndex, id: \.self) { index in
+                                        if historyToShow.foodsPrice[index] != 0{
+                                            HStack{
+                                                Text(historyToShow.foods[index])
+                                                Spacer()
+                                                Text("\(historyToShow.foodsPrice[index])")
+                                            }.font(.DGMBody)
+                                                .frame(width:150)
+                                        }
+                                    }
+                                }
+                            }.frame(height:100)
+                        } else{
+                            ForEach(0..<animationCurrentIndex, id: \.self) { index in
+                                if historyToShow.foodsPrice[index] != 0{
+                                    HStack{
+                                        Text(historyToShow.foods[index])
+                                        Spacer()
+                                        Text("\(historyToShow.foodsPrice[index])")
+                                    }.font(.DGMBody)
+                                        .frame(width:150)
+                                }
+                            }
+                        }
+                    }
+                    HStack{
+                        Text("아낀 금액")
+                            .frame(width:100)
+                            .font(.DGMTitle3)
+                        Spacer()
+                        Text("\(historyToShow.savedMoney)")
+                            .font(.custom("DungGeunMo", size: 35))
+                    }
+                }.frame(width:225)
                 
                 Button(action: {
                     DispatchQueue.main.async{
