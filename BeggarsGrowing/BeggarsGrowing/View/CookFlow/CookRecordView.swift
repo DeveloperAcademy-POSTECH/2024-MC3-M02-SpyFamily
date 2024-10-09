@@ -68,6 +68,7 @@ struct CookRecordView: View {
                 HStack{
                     Text("재료를 얼마나 사용하셨나요?")
                         .font(.title3)
+                    
                     Spacer()
                     
                     // 재료 추가 버튼
@@ -88,6 +89,7 @@ struct CookRecordView: View {
                         ForEach(viewModel.usedFoods.indices, id: \.self) { index in
                             let food = viewModel.usedFoods[index].0
                             let foodName = food.food
+                            let amountRemained = Int(food.amount) - Int(food.amount*(viewModel.usedFoods[index].1 / Double(100)))
                             HStack {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
@@ -97,17 +99,29 @@ struct CookRecordView: View {
                                         .resizable()
                                         .frame(width: 60, height: 60)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
+                                            ZStack{
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .stroke(Color(red: 152/255, green: 76/255, blue: 60/255), lineWidth: 2)
+                                                VStack{
+                                                    RoundedRectangle(cornerRadius: 5)
+                                                        .frame(width: 60, height: 60 - (60 * CGFloat(amountRemained) / 100))
+                                                        .foregroundStyle(
+                                                            Color.black
+                                                                .opacity(0.5)
+                                                        )
+                                                    Spacer()
+                                                        .frame(height:60 * CGFloat(amountRemained) / 100)
+                                                }.frame(height:60)
+                                            }
+                                            
                                         )
+                                    
+                                    
                                 }
-                                
+                                Spacer()
                                 Text(foodName)
                                     .font(.body)
                                     .padding(.leading, 16)
-                                
-                                Spacer()
-                                Text("\(Int(food.amount) - Int(food.amount*(viewModel.usedFoods[index].1 / Double(100))))%")
                                 Spacer()
                                 
                                 VStack {
@@ -252,4 +266,16 @@ struct CookRecordView: View {
 
 extension Notification.Name {
     static let finishCookRecordNotification = Notification.Name("finishCookRecordNotification")
+}
+
+struct TriangleView: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        
+        return path
+    }
 }
