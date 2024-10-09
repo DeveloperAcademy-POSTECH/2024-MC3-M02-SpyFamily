@@ -36,6 +36,7 @@ struct ContentView: View {
         }
         .environment(navigationManager)
         .onAppear {
+            navigationManager.push(to: .main)
             DispatchQueue.main.async{
                 viewModel.foodsInRefri = foodsInRefri
                 viewModel.recipeData = recipeData

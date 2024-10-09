@@ -160,7 +160,7 @@ struct CookRecordView: View {
                 }
                 
                 
-                if viewModel.recentImage != nil {
+                if viewModel.recentImage == nil {
                     Text("사진을 등록하셔야 해요!")
                         .font(.footnote)
                         .padding(EdgeInsets(top: 6, leading: 30, bottom: 6, trailing: 30))
