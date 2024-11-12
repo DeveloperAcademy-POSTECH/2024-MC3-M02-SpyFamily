@@ -538,6 +538,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeggarsGrowing/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "밥줄거지";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "당신의 요리 사진을 촬영하기 위한 사진 촬영을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "레시피 등록을 위한 사진 등록을 위해 앨범 접근을 허용해주세요.";
@@ -576,6 +577,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BeggarsGrowing/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "밥줄거지";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "당신의 요리 사진을 촬영하기 위한 사진 촬영을 허용해주세요.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "레시피 등록을 위한 사진 등록을 위해 앨범 접근을 허용해주세요.";
