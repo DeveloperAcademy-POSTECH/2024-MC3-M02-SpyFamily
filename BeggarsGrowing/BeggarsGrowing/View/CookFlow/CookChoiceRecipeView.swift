@@ -53,7 +53,8 @@ struct CookChoiceRecipeView: View {
                 
                 VStack {
                     ScrollView {
-                        ForEach(sortedRecommendedRecipes, id: \.self) { recipe in
+                        ForEach(sortedRecommendedRecipes.indices, id: \.self) { index in
+                            let recipe = sortedRecommendedRecipes[index]
                             let sortedFoods = sortFoods(recipeFoods: recipe.foods, selectedFoods: viewModel.selectedFoods.map{$0.food})
                             
                             Button(action: {
@@ -198,6 +199,7 @@ struct CookChoiceRecipeView: View {
                                 .padding(.bottom, 80)
                             })
                             .shadow(color: Color(red: 196/255, green: 196/255, blue: 196/255), radius: 5)
+                            .accessibilityIdentifier("CookSelectRecipeButton\(index)")
                         }
                     }
                 }

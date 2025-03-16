@@ -44,6 +44,7 @@ struct RefriSelectFoodSheetView: View {
                         .font(.system(size: 16))
                         .fontWeight(.heavy)
                 }
+                .accessibilityIdentifier("RefriSelectFoodForAddSelectButton")
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 26)
@@ -68,7 +69,6 @@ struct RefriSelectFoodSheetView: View {
                                 }
                             }, label:{
                                 HStack(spacing: 0){
-                                    
                                     Image(systemName: selectedIngredients.contains(food.name) ? "checkmark.square.fill" : "square")
                                         .font(.title3)
                                         .foregroundColor(.orange)
@@ -82,10 +82,10 @@ struct RefriSelectFoodSheetView: View {
                                         .font(.body)
                                         .foregroundColor(.black)
                                         .padding(.leading, 10)
-                                    
                                     Spacer()
                                 }
                             })
+                            .accessibilityIdentifier("RefriAdd\(food.imageName)FoodButton")
                             
                         }
                         .padding(.bottom, 8)

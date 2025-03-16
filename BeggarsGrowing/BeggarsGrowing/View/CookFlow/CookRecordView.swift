@@ -63,6 +63,7 @@ struct CookRecordView: View {
                             .stroke(Color.gray, lineWidth: 1))
                     }
                 }
+                .accessibilityIdentifier("CookOpenCameraButton")
                 
                 // 재료 사용량 타이틀
                 HStack{
@@ -149,8 +150,8 @@ struct CookRecordView: View {
                                         .padding(.horizontal, 16)
                                         .frame(width: 190) // 슬라이더 너비로 변경
                                         .accentColor(.orange)
+                                        .accessibilityIdentifier("CookFoodUsageSlider\(index)")
                                     }
-                                    
                                     // 슬라이더 범위 표시
                                     HStack(alignment:.center) {
                                         Text("0").font(.caption2)
@@ -216,6 +217,7 @@ struct CookRecordView: View {
                             .aspectRatio(contentMode: .fit)
                             .padding(EdgeInsets(top: 0, leading: 46, bottom: 0, trailing: 46))
                     }
+                    .accessibilityIdentifier("CookCompleteButton")
                 }
             }
             .padding()

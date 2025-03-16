@@ -164,6 +164,7 @@ struct CookRecipeDetailView: View {
                             .aspectRatio(contentMode: .fit)
                     })
                     .padding(.bottom, 66)
+                    .accessibilityIdentifier("CookCertificateButton")
                     .navigationDestination(for: PathType.self) { pathType in
                         pathType.NavigatingView()
                     }

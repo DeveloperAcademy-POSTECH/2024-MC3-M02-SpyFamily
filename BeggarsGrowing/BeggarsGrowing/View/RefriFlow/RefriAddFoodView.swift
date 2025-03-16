@@ -45,7 +45,9 @@ struct RefriAddFoodView: View {
                 }
                 .padding(.bottom, 15)
                 ScrollView {
-                    ForEach($foodsToAdd, id:\.id) { $food in
+                    ForEach(foodsToAdd.indices, id:\.self) { index in
+                        let food = foodsToAdd[index]
+                        
                         HStack(spacing: 0){
                             Button(action:{
                                 if let index = foodsToAdd.firstIndex(where: { $0.id == food.id }) {
@@ -64,16 +66,18 @@ struct RefriAddFoodView: View {
                             Text(food.food)
                                 .padding(.leading, 8)
                             Spacer()
-                            TextField("가격", value: $food.price, formatter: NumberFormatter())
+                            TextField("가격", value: $foodsToAdd[index].price, formatter: NumberFormatter())
                                 .frame(width: 109)
                                 .textFieldStyle(PriceTextfieldStyle())
                                 .keyboardType(.numberPad)
                                 .padding(.trailing, 30)
-                            Toggle(isOn: $food.freezing) {
+                                .accessibilityIdentifier("RefriAddFoodPriceTextField\(index)")
+                            Toggle(isOn: $foodsToAdd[index].freezing) {
                                 Text("")
                             }
                             .toggleStyle(CheckboxToggleStyle())
                             .padding(.trailing, 10)
+                            .accessibilityIdentifier("RefriAddFoodIsFreezeCheckBox\(index)")
                         }
                         .padding(.vertical, 4)
                     }
@@ -92,6 +96,7 @@ struct RefriAddFoodView: View {
                 }, label: {
                     Image("AddComplete")
                 })
+                .accessibilityIdentifier("RefriAddFoodCompleteButton")
                 .padding(.bottom, 54)
             }
             
@@ -115,6 +120,7 @@ struct RefriAddFoodView: View {
                         .foregroundColor(.orange)
                         .padding(.trailing, 8)
                 })
+                .accessibilityIdentifier("RefriAddFoodPlusButton")
             }
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {

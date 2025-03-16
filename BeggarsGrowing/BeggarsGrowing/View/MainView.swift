@@ -73,6 +73,7 @@ struct MainView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 77)
                 }
+                .accessibilityIdentifier("RefriEntranceButton")
             }.padding(.horizontal, 13)
             
             HStack{
@@ -156,6 +157,7 @@ struct MainView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 230, maxHeight: 70)
             }
+            .accessibilityIdentifier("CookStartButton")
             .padding(.bottom, 50)
         }
         .overlay{

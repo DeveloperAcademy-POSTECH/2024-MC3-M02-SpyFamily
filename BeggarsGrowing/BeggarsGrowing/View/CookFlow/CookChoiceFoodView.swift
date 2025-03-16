@@ -109,6 +109,7 @@ struct CookChoiceFoodView: View {
                     Image("NextButton")
                         .padding(.bottom, 12)
                 })
+                .accessibilityIdentifier("cookSelectRefriFoodCompleteButton")
                 
                 // 재료 선택없이 레시피 추천
                 Button(action: {navigationManager.push(to: .cookChoiceRecipe)}, label: {
@@ -169,7 +170,6 @@ struct CookChoiceFoodView: View {
         var body: some View {
             VStack {
                 if foods.isEmpty{
-                    
                     Image("EmptyRefri")
                         .resizable()
                         .frame(width: 60,height: 121)
@@ -183,7 +183,8 @@ struct CookChoiceFoodView: View {
                 }
                 else{
                     ScrollView {
-                        ForEach(foods, id: \.self) { food in
+                        ForEach(foods.indices, id: \.self) { index in
+                            let food = foods[index]
                             ZStack {
                                 RoundedRectangle(cornerRadius: 8)
                                     .opacity(0)
@@ -219,6 +220,7 @@ struct CookChoiceFoodView: View {
                                             }
                                         }
                                     }
+                                    .accessibilityIdentifier("CookSelectRefriFoodButton\(index)")
                                 HStack {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)

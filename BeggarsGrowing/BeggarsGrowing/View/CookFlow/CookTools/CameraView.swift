@@ -61,6 +61,7 @@ struct CookCameraView: View {
                             .padding()
                             .foregroundStyle(.white)
                     }
+                    .accessibilityIdentifier("CookTakePhotoButton")
                     
                     Spacer()
                     

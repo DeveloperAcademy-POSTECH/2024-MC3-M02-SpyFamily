@@ -45,7 +45,6 @@ struct RefriView: View {
                         Text(tabOptions[index])
                             .fontWeight(selectedTab == index ? .bold : .light)
                             .tag(index)
-                        
                     }
                 }
                 .padding(2)
@@ -73,8 +72,6 @@ struct RefriView: View {
                                 FoodCard(foodInRefri: food)
                             }
                             .padding(.vertical, 10)
-                            
-                            
                         }
                     }
                 }
@@ -89,6 +86,7 @@ struct RefriView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(EdgeInsets(top: 0, leading: 46, bottom: 0, trailing: 46))
                 }
+                .accessibilityIdentifier("AddFoodStartButton")
                 .padding(.bottom, 54)
             }
             .padding(.horizontal, 16)
