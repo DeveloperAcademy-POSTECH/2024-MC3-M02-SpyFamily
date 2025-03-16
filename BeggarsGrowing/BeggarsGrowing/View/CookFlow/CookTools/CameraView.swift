@@ -79,6 +79,7 @@ struct CookCameraView: View {
             }
             .foregroundColor(.white)
         }
+        .accessibilityIdentifier("CookCameraView")
         .opacity(viewModel.shutterEffect ? 0 : 1)
     }
 }

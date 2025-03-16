@@ -120,7 +120,7 @@ struct CookChoiceFoodView: View {
                 Spacer()
             }
         }
-        
+        .accessibilityIdentifier("CookChoiceFoodView")
         .navigationTitle("재료 선택")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: PathType.self) { pathType in

@@ -95,6 +95,7 @@ struct RefriSelectFoodSheetView: View {
                 
             } // scrl
         } //v
+        .accessibilityIdentifier("RefriSelectFoodSheetView")
     }
 }
 

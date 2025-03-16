@@ -225,6 +225,7 @@ struct CookRecordView: View {
                 // ImagePickerView() // 이미지 선택 뷰 추가 필요
             }
         }
+        .accessibilityIdentifier("CookRecordView")
         .sheet(isPresented: $showingSelectFoodSheet,
                onDismiss: {
             viewModel.usedFoods = selectedFoodsList.map{ ($0, 0) }

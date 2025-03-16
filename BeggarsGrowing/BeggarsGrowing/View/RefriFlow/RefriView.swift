@@ -94,6 +94,7 @@ struct RefriView: View {
                 pathType.NavigatingView()
             }
         }
+        .accessibilityIdentifier("RefriView")
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .principal) {
