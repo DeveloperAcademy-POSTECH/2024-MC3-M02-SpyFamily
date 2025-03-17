@@ -175,7 +175,8 @@ struct CookRecordView: View {
                 }
                 
                 
-                if viewModel.recentImage == nil {
+//                if viewModel.recentImage == nil {
+                if false {
                     Text("사진을 등록하셔야 해요!")
                         .font(.footnote)
                         .padding(EdgeInsets(top: 6, leading: 30, bottom: 6, trailing: 30))
@@ -225,7 +226,6 @@ struct CookRecordView: View {
                 // ImagePickerView() // 이미지 선택 뷰 추가 필요
             }
         }
-        .accessibilityIdentifier("CookRecordView")
         .sheet(isPresented: $showingSelectFoodSheet,
                onDismiss: {
             viewModel.usedFoods = selectedFoodsList.map{ ($0, 0) }

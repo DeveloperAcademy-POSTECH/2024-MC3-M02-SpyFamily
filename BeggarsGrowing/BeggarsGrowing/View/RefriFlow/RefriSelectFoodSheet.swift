@@ -85,7 +85,7 @@ struct RefriSelectFoodSheetView: View {
                                     Spacer()
                                 }
                             })
-                            .accessibilityIdentifier("RefriAdd\(food.imageName)FoodButton")
+                            .accessibilityIdentifier("RefriAddFoodButton\(food.imageName)")
                             
                         }
                         .padding(.bottom, 8)
@@ -95,7 +95,6 @@ struct RefriSelectFoodSheetView: View {
                 
             } // scrl
         } //v
-        .accessibilityIdentifier("RefriSelectFoodSheetView")
     }
 }
 

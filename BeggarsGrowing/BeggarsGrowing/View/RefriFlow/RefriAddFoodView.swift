@@ -102,7 +102,6 @@ struct RefriAddFoodView: View {
             
             .padding(.horizontal, 16)
         }
-        .accessibilityIdentifier("RefriAddFoodView")
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .principal) {

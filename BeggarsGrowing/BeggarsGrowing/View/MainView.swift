@@ -160,7 +160,6 @@ struct MainView: View {
             .accessibilityIdentifier("CookStartButton")
             .padding(.bottom, 50)
         }
-        .accessibilityIdentifier("MainView")
         .overlay{
             if showOverlay {
                 ResultPriceOverlay(historyToShow: receivedHistory ?? History(menu: "", foods: [""], foodsPrice: [0], menuPrice: 0, savedMoney: 0, date: Date()), showOverlay: $showOverlay)
@@ -289,7 +288,6 @@ struct CustomProgressBar: View {
                     )
                     .padding(.horizontal, 6)
             }
-            .accessibilityIdentifier("MainView")
         }
         .frame(height: 40)
         .overlay(

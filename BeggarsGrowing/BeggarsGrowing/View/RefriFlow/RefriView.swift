@@ -94,7 +94,6 @@ struct RefriView: View {
                 pathType.NavigatingView()
             }
         }
-        .accessibilityIdentifier("RefriView")
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -109,6 +108,7 @@ struct RefriView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.black)
                 }
+                .accessibilityIdentifier("BackButton")
             }
         }
         .onChange(of:foodsInRefri){

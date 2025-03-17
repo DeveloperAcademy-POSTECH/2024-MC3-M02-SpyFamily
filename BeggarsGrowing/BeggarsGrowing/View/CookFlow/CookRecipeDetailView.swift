@@ -175,7 +175,6 @@ struct CookRecipeDetailView: View {
                 pathType.NavigatingView()
             }
         }
-        .accessibilityIdentifier("CookRecipeDetailView")
         .navigationBarItems(trailing: Button(action: {
             isAlertPresented.toggle()
         }) {

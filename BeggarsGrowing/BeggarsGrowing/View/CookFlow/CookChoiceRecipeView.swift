@@ -205,7 +205,6 @@ struct CookChoiceRecipeView: View {
                 }
             }
         }
-        .accessibilityIdentifier("CookChoiceRecipeView")
         .onAppear{
             DispatchQueue.main.async{
                 viewModel.filterRecipeBySelectedFoods()
