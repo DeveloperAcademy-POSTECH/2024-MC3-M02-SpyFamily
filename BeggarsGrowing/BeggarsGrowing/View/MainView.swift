@@ -289,6 +289,7 @@ struct CustomProgressBar: View {
                     )
                     .padding(.horizontal, 6)
             }
+            .accessibilityIdentifier("MainView")
         }
         .frame(height: 40)
         .overlay(
