@@ -107,6 +107,7 @@ struct ResultPriceOverlay: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 220, minHeight: 60)
                 }
+                .accessibilityIdentifier("CloseResultOverlayButton")
                 .padding(.bottom, 20)
             }
             .onAppear {

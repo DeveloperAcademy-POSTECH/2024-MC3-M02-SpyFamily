@@ -147,10 +147,10 @@ struct CookRecordView: View {
                                         .padding(.horizontal, 16)
                                         
                                         Slider(value: $viewModel.usedFoods[index].1, in: 0...100, step: 10)
-                                        .padding(.horizontal, 16)
-                                        .frame(width: 190) // 슬라이더 너비로 변경
-                                        .accentColor(.orange)
-                                        .accessibilityIdentifier("CookFoodUsageSlider\(index)")
+                                            .padding(.horizontal, 16)
+                                            .frame(width: 190) // 슬라이더 너비로 변경
+                                            .accentColor(.orange)
+                                            .accessibilityIdentifier("CookFoodUsageSlider\(index)")
                                     }
                                     // 슬라이더 범위 표시
                                     HStack(alignment:.center) {
@@ -175,7 +175,7 @@ struct CookRecordView: View {
                 }
                 
                 
-//                if viewModel.recentImage == nil {
+                //                if viewModel.recentImage == nil {
                 if false {
                     Text("사진을 등록하셔야 해요!")
                         .font(.footnote)
